@@ -1,15 +1,15 @@
+// server.js
 const express = require('express');
 const cors = require('cors');
+const { Readable } = require('stream');
 
 const app = express();
 app.use(express.json());
-
-// 允許所有來源或指定你的前端網址
 app.use(cors());
 
 app.post('/api/forge', async (req, res) => {
   try {
-    const { topic, platform, audience, tone } = req.body;
+    const { topic, platform, audience, tone, action, seed, temperature } = req.body;
     const DIFY_API_KEY = process.env.DIFY_API_KEY;
     const DIFY_API_URL = process.env.DIFY_API_URL || 'https://api.dify.ai/v1/workflows/run';
 
@@ -17,7 +17,8 @@ app.post('/api/forge', async (req, res) => {
       return res.status(500).json({ error: 'Missing DIFY_API_KEY on server' });
     }
 
-    const response = await fetch(DIFY_API_URL, {
+    // 向 Dify 發起流式 (streaming) 請求
+    const difyResponse = await fetch(DIFY_API_URL, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${DIFY_API_KEY}`,
@@ -25,28 +26,42 @@ app.post('/api/forge', async (req, res) => {
       },
       body: JSON.stringify({
         inputs: {
-          topic: topic,
-          platform: platform,
+          topic,
+          platform,
           target_audience: audience,
-          tone: tone || 'authoritative'
+          tone: tone || 'authoritative',
+          action: action || 'generate',
+          temperature: temperature || 0.7
         },
-        response_mode: 'blocking',
+        response_mode: 'streaming', // 開啟流式模式
         user: 'flameforge_client'
       })
     });
 
-    if (!response.ok) {
-      const errText = await response.text();
-      return res.status(response.status).json({ error: 'Dify forge failed', details: errText });
+    if (!difyResponse.ok) {
+      const errText = await difyResponse.text();
+      return res.status(difyResponse.status).json({ error: 'Dify forge failed', details: errText });
     }
 
-    const data = await response.json();
-    res.json(data);
+    // 建立標準 SSE 響應標頭
+    res.setHeader('Content-Type', 'text/event-stream; charset=utf-8');
+    res.setHeader('Cache-Control', 'no-cache, no-transform');
+    res.setHeader('Connection', 'keep-alive');
+    res.setHeader('X-Accel-Buffering', 'no'); // 禁止代理快取
+
+    // 將 Dify 數據流直通客戶端
+    if (difyResponse.body) {
+      Readable.fromWeb(difyResponse.body).pipe(res);
+    } else {
+      res.end();
+    }
   } catch (error) {
-    console.error('Forge Gateway Error:', error);
-    res.status(500).json({ error: 'Internal gateway error' });
+    console.error('Forge Streaming Gateway Error:', error);
+    if (!res.headersSent) {
+      res.status(500).json({ error: 'Internal gateway streaming error' });
+    }
   }
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`FlameForge Gateway running on port ${PORT}`));
+app.listen(PORT, () => console.log(`FlameForge Streaming Gateway running on port ${PORT}`));
