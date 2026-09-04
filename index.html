@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>FlameForge | 火之鍛造廠</title>
-  <meta name="description" content="超越通用 AI 的專業創作者工作台：反向塑形、語氣 Clone、A/B 沙盒與在地搭橋。" />
+  <title>FlameForge | 內容鍛造工場</title>
+  <meta name="description" content="超越通用 AI 的專業創作者工作台：受眾毒舌評審團、深度語氣提取、動態資訊圖表與 2026 在地時事雷達。" />
 
   <meta http-equiv="Content-Security-Policy" content="
     default-src 'self';
@@ -169,7 +169,7 @@
     }
 
     main {
-      max-width: 1280px;
+      max-width: 1300px;
       margin: 0 auto;
       padding: 2.8rem 1.5rem 5rem;
       position: relative;
@@ -208,7 +208,7 @@
       color: var(--text-secondary);
       font-size: 0.98rem;
       line-height: 1.6;
-      max-width: 760px;
+      max-width: 780px;
       margin: 0 auto;
     }
 
@@ -316,7 +316,7 @@
       50% { transform: scale(1.06); box-shadow: 0 0 14px rgba(255,69,58,0.6); }
     }
 
-    input[type="text"], select {
+    input[type="text"], select, textarea {
       width: 100%;
       background: var(--card-inner);
       border: 1px solid var(--border);
@@ -328,11 +328,17 @@
       transition: all 0.2s var(--spring);
     }
 
-    input[type="text"]:focus, select:focus {
+    input[type="text"]:focus, select:focus, textarea:focus {
       outline: none;
       border-color: var(--flame-amber);
       background: rgba(35, 35, 48, 0.85);
       box-shadow: 0 0 16px rgba(255, 148, 54, 0.25);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+      line-height: 1.5;
     }
 
     input[type="range"] {
@@ -366,7 +372,6 @@
     }
 
     .segmented-control div { flex: 1; position: relative; }
-
     .seg-radio { position: absolute; opacity: 0; pointer-events: none; }
 
     .seg-label {
@@ -389,47 +394,42 @@
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
     }
 
-    .tone-clone-badge {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: rgba(168, 85, 247, 0.12);
-      border: 1px solid rgba(168, 85, 247, 0.35);
-      padding: 0.5rem 0.8rem;
+    /* 升級 2：爆款樣本深度提取抽屜 */
+    .tone-extractor-box {
+      background: rgba(168, 85, 247, 0.08);
+      border: 1px solid rgba(168, 85, 247, 0.25);
       border-radius: var(--radius-md);
-      font-size: 0.74rem;
-      color: #e9d5ff;
+      padding: 0.8rem;
       margin-bottom: 1.15rem;
     }
 
-    .tone-clone-badge span strong { color: #fff; }
-
-    .btn-clear-clone {
-      background: none;
-      border: none;
-      color: var(--text-tertiary);
+    .tone-extractor-box summary {
       cursor: pointer;
-      font-size: 0.7rem;
-      text-decoration: underline;
-    }
-    .btn-clear-clone:hover { color: var(--danger); }
-
-    .error-msg {
-      color: var(--danger);
-      font-size: 0.75rem;
-      margin-top: 0.4rem;
-      display: none;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #e9d5ff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      outline: none;
+      user-select: none;
     }
 
-    .has-error {
-      border-color: var(--danger) !important;
-      animation: shake 0.3s ease-in-out;
+    .tone-fingerprint-tags {
+      margin-top: 0.5rem;
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
     }
 
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-4px); }
-      75% { transform: translateX(4px); }
+    .tone-tag {
+      background: rgba(168, 85, 247, 0.2);
+      border: 1px solid rgba(168, 85, 247, 0.4);
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      color: #f3e8ff;
     }
 
     .btn-ignite {
@@ -467,6 +467,93 @@
       margin-left: 0.4rem;
     }
 
+    /* 升級 1：受眾毒舌評審團 (Agentic Critique) */
+    .critique-tribunal {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 0.85rem;
+      margin-bottom: 0.85rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .tribunal-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--flame-gold);
+      font-weight: 700;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .critique-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+    }
+
+    @media (max-width: 680px) {
+      .critique-cards-grid { grid-template-columns: 1fr; }
+    }
+
+    .critique-card {
+      background: var(--card-inner);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-sm);
+      padding: 0.6rem 0.7rem;
+      font-size: 0.73rem;
+      line-height: 1.4;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .critique-agent {
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .critique-quote {
+      color: var(--text-secondary);
+      font-style: italic;
+    }
+
+    .agent-hr { color: var(--flame-cyan); border-top: 2px solid var(--flame-cyan); }
+    .agent-lihkg { color: var(--danger); border-top: 2px solid var(--danger); }
+    .agent-xhs { color: #ff2442; border-top: 2px solid #ff2442; }
+
+    /* 升級 3：資訊圖表預覽卡片 (動態 SVG) */
+    .infographic-preview-area {
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px dashed var(--border);
+      border-radius: var(--radius-md);
+      padding: 0.8rem;
+      margin-bottom: 0.85rem;
+      display: none;
+    }
+
+    .infographic-header {
+      font-size: 0.72rem;
+      color: var(--flame-cyan);
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    #infographicSvgContainer {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
     .sandbox-tabs-bar {
       display: flex;
       background: rgba(0, 0, 0, 0.5);
@@ -499,68 +586,6 @@
       color: #fff;
       border: 1px solid rgba(255, 148, 54, 0.4);
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-    }
-
-    .roaster-hud {
-      background: rgba(0, 0, 0, 0.35);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 0.85rem 1rem;
-      margin-bottom: 0.85rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-    }
-
-    .roaster-metrics-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }
-
-    .roaster-pill-group {
-      display: flex;
-      align-items: center;
-      gap: 0.3rem;
-    }
-
-    .roaster-pill {
-      font-size: 0.74rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 0.25rem 0.55rem;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-    }
-
-    .btn-fix-pill {
-      background: rgba(255, 148, 54, 0.18);
-      border: 1px solid rgba(255, 148, 54, 0.45);
-      color: var(--flame-gold);
-      padding: 0.25rem 0.55rem;
-      border-radius: 999px;
-      font-size: 0.7rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.15s var(--spring);
-      white-space: nowrap;
-    }
-
-    .btn-fix-pill:hover {
-      background: var(--flame-spark);
-      color: #000;
-    }
-
-    .roaster-critique {
-      font-size: 0.76rem;
-      color: #ffd488;
-      line-height: 1.4;
-      font-style: italic;
-      padding-top: 0.4rem;
-      border-top: 1px dashed rgba(255, 255, 255, 0.08);
     }
 
     .output-card {
@@ -598,8 +623,8 @@
 
     .ink-stream-box {
       flex: 1;
-      min-height: 360px;
-      max-height: 460px;
+      min-height: 340px;
+      max-height: 440px;
       overflow-y: auto;
       background: rgba(0, 0, 0, 0.35);
       border: 1px solid var(--border);
@@ -902,6 +927,7 @@
 
     .btn-vault-action:hover { color: #fff; border-color: var(--border-hover); }
 
+    /* 圖卡快照容器 */
     #socialCardSnapshot {
       position: absolute;
       top: -9999px; left: -9999px;
@@ -980,7 +1006,7 @@
 
   <div id="a11yAnnouncer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
 
-  <!-- 劃線浮動工具列 -->
+  <!-- 劃線微調工具列 -->
   <div id="highlighterBar" class="highlighter-bar" role="toolbar" aria-label="劃線微調工具">
     <button type="button" class="highlighter-btn" data-mode="sharpen">⚡ 銳利金句</button>
     <button type="button" class="highlighter-btn" data-mode="data">📊 數據強化</button>
@@ -1006,10 +1032,10 @@
 
   <main>
     <section class="hero">
-      <div class="badge-prometheus">Autonomous Studio Engine</div>
+      <div class="badge-prometheus">Autonomous IP Studio</div>
       <h2 class="hero-title">盜火者的火種<br>自主流淌的自動墨水</h2>
       <p class="hero-desc">
-        將 AI 從被動回答對話，昇華為專業創作者的「閉環塑形工場」：反向手術刀重構、風格習慣 Clone、三重語氣沙盒與 2026 在地時事搭橋。
+        將 AI 從「被動問答」躍升為創作者的「閉環塑形工場」：受眾毒舌評審團、爆款語氣樣本 Clone、動態資訊圖表與 2026 在地即時雷達。
       </p>
     </section>
 
@@ -1030,18 +1056,18 @@
             <div id="topic-error" class="error-msg" role="alert">請輸入鍛造核心主旨</div>
           </div>
 
-          <!-- 時事搭橋 (Context Bridge)：已補齊「不需要搭橋」與「CN 中國在地脈絡」 -->
+          <!-- 升級 4：2026 在地時事動態雷達 -->
           <div class="field-group">
             <div class="label-row">
-              <label for="contextBridgeSelect">REAL-TIME CONTEXT BRIDGE (時事搭橋)</label>
-              <span class="field-hint">2026 在地脈絡</span>
+              <label for="contextBridgeSelect">2026 LIVE CONTEXT RADAR (時事雷達)</label>
+              <span class="field-hint" id="radarStatusTag">即時熱話連線</span>
             </div>
             <select id="contextBridgeSelect">
-              <option value="none" selected>🚫 不需要搭橋 (純主題原創，不加入任何時事脈絡)</option>
-              <option value="hk">🇭🇰 HK 香港在地脈絡 (2026 經濟轉型、高租金生活壓力、職場韌性)</option>
-              <option value="cn">🇨🇳 CN 中國在地脈絡 (2026 新質生產力、降本增效破局、大模型落地與出海浪潮)</option>
-              <option value="tw">🇹🇼 TW 台灣在地脈絡 (2026 科技出海、遠距工作、世代焦慮突破)</option>
-              <option value="global">🌐 通用國際視野 (全球宏觀趨勢，無特定地域限制)</option>
+              <option value="none">🚫 不需要搭橋 (純主題原創，不加入任何時事脈絡)</option>
+              <option value="hk" selected>🇭🇰 HK 2026 熱話：AI 智能化全面衝擊白領轉型、中環科技出海與高租金抗風險</option>
+              <option value="cn">🇨🇳 CN 2026 熱話：新質生產力深水區、大模型全面落地實體與個人破局出海</option>
+              <option value="tw">🇹🇼 TW 2026 熱話：半導體多節點擴張、遠距跨國工作常態化與世代焦慮突圍</option>
+              <option value="global">🌐 全球 2026 宏觀：自主智能體爆發、跨時區非同步協作與個體商業崛起</option>
             </select>
           </div>
 
@@ -1085,11 +1111,23 @@
             </div>
           </div>
 
-          <!-- 語氣 Clone 指紋徽章 -->
-          <div class="tone-clone-badge" id="toneCloneBadge">
-            <span>🧬 語氣 Clone 機：<strong id="cloneTraitText">已待命（手動修訂將自動被記憶）</strong></span>
-            <button type="button" class="btn-clear-clone" id="resetToneCloneBtn" title="清除已學習的修改習慣">重設指紋</button>
-          </div>
+          <!-- 升級 2：爆款樣本深度語氣提取 -->
+          <details class="tone-extractor-box" id="toneExtractorAccordion">
+            <summary>
+              <span>🧬 餵入個人爆款貼文 (提取專屬寫作魂魄)</span>
+              <span id="cloneBadgeIndicator" style="font-size:0.7rem; color:var(--flame-gold);">未提取</span>
+            </summary>
+            <div style="margin-top:0.6rem;">
+              <textarea id="samplePostInput" placeholder="在此貼上 1-3 篇你過往寫過的高讚/高轉發貼文，系統將深度提取行文節奏、標點習慣與反問頻率..."></textarea>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:0.4rem;">
+                <button type="button" class="btn-action" id="extractToneBtn" style="font-size:0.72rem; padding:0.3rem 0.6rem; border-color:var(--flame-purple);">
+                  ⚡ 提取風格指紋並綁定
+                </button>
+                <button type="button" class="btn-clear-clone" id="resetDeepToneBtn" style="font-size:0.7rem;">清除指紋</button>
+              </div>
+              <div class="tone-fingerprint-tags" id="extractedToneTagsContainer"></div>
+            </div>
+          </details>
 
           <div class="field-group">
             <div class="label-row">
@@ -1105,7 +1143,7 @@
         </form>
       </section>
 
-      <!-- 右欄：評測 HUD、沙盒分頁與所見即所得畫布 -->
+      <!-- 右欄：評審團、沙盒、畫布與動態資訊圖表 -->
       <section class="apple-card output-card" aria-labelledby="ink-output-heading">
         <div class="output-toolbar">
           <div style="display:flex; align-items:center; gap:0.6rem;">
@@ -1117,32 +1155,40 @@
 
         <!-- A/B 測試沙盒切換分頁 -->
         <div class="sandbox-tabs-bar" id="sandboxTabsBar">
-          <button type="button" class="sandbox-tab active" data-tone="authoritative">🏛️ 專業權威 (主版本)</button>
+          <button type="button" class="sandbox-tab active" data-tone="authoritative">🏛️ 專業權威</button>
           <button type="button" class="sandbox-tab" data-tone="conversational">☕ 直率對話</button>
           <button type="button" class="sandbox-tab" data-tone="sharp">🗡️ 挑釁銳利</button>
         </div>
 
-        <!-- Roaster HUD 結合「反向塑形」操作按鈕 -->
-        <div class="roaster-hud" id="roasterHud">
-          <div class="roaster-metrics-row">
-            <div class="roaster-pill-group">
-              <span class="roaster-pill" id="roastHookPill">🪝 Hook: <strong>--</strong></span>
-              <button type="button" class="btn-fix-pill" id="fixHookBtn" title="只重寫前兩句為高吸引力開頭" style="display:none;">⚡ 重塑爆款 Hook</button>
+        <!-- 升級 1：受眾毒舌評審團 (Agentic Critique) -->
+        <div class="critique-tribunal" id="critiqueTribunal">
+          <div class="tribunal-title">
+            <span>🎭 受眾毒舌評審團 // 市場未發布防禦測試</span>
+            <span style="font-size:0.7rem; color:var(--text-tertiary);">三方視角真話評測</span>
+          </div>
+          <div class="critique-cards-grid">
+            <div class="critique-card agent-hr">
+              <div class="critique-agent">👔 中環投行 MD / HR</div>
+              <div class="critique-quote" id="critiqueHrQuote">「文章生成後將在此無情評測你的商業可信度與廢話率...」</div>
             </div>
-
-            <div class="roaster-pill-group">
-              <span class="roaster-pill" id="roastCompletionPill">📈 完讀率: <strong>--</strong></span>
-              <button type="button" class="btn-fix-pill" id="fixBreakParagraphsBtn" title="自動將長段落碎裂並加大留白" style="display:none;">✂️ 手術刀拆段</button>
+            <div class="critique-card agent-lihkg">
+              <div class="critique-agent">🔥 連登巴打</div>
+              <div class="critique-quote" id="critiqueLihkgQuote">「咪又係心靈雞湯，等我睇下你係咪真係接地氣先...」</div>
             </div>
-
-            <div class="roaster-pill-group">
-              <span class="roaster-pill" id="roastRiskPill">🛡️ 風險: <strong>--</strong></span>
-              <button type="button" class="btn-fix-pill" id="fixRiskBtn" title="自動調和可能引發公關災難的詞彙" style="display:none;">🕊️ 溫和除刺</button>
+            <div class="critique-card agent-xhs">
+              <div class="critique-agent">📕 小紅書破萬讚操盤手</div>
+              <div class="critique-quote" id="critiqueXhsQuote">「前 3 行痛點不夠強直接被滑走！等我抓你的情緒價值...」</div>
             </div>
           </div>
-          <div class="roaster-critique" id="roastCritiqueText">
-            💡 系統待命。生成後演算法將在此給出真實反饋；若評測不佳，點擊上方按鈕即可一鍵局部修復！
+        </div>
+
+        <!-- 升級 3：動態 SVG 資訊圖表生成預覽區 -->
+        <div class="infographic-preview-area" id="infographicPreviewArea">
+          <div class="infographic-header">
+            <span>📊 核心論點動態矩陣 (自動注入 Carousel 幻燈片)</span>
+            <span style="cursor:pointer; color:var(--flame-gold);" id="regenerateSvgBtn">🔄 重新拓撲圖表</span>
           </div>
+          <div id="infographicSvgContainer"></div>
         </div>
 
         <div class="ink-stream-box" id="inkStream" contenteditable="false" aria-live="off">
@@ -1154,7 +1200,7 @@
             <button type="button" id="reforgeBtn" class="btn-action" disabled>🔥 再鍛造一次</button>
             <button type="button" id="expandBtn" class="btn-action" disabled>➕ 加長提煉</button>
             <button type="button" id="condenseBtn" class="btn-action" disabled>➖ 精簡收斂</button>
-            <button type="button" id="batchSandboxBtn" class="btn-action" style="border-color: var(--flame-purple);" disabled>🧪 一鍵鍛造三語氣沙盒</button>
+            <button type="button" id="batchSandboxBtn" class="btn-action" style="border-color: var(--flame-purple);" disabled>🧪 鍛造三語氣沙盒</button>
             <button type="button" id="copyBtn" class="btn-action" disabled>📋 複製全文</button>
           </div>
 
@@ -1180,7 +1226,7 @@
                 🖼️ 單張圖卡
               </button>
               <button type="button" id="carouselGenBtn" class="btn-action" style="border-color: var(--flame-cyan);" disabled>
-                🎠 多頁輪播 (Carousel)
+                🎠 輪播圖 (含圖表)
               </button>
             </div>
           </div>
@@ -1353,9 +1399,9 @@
     const FlameForge = (() => {
       const urlParams = new URLSearchParams(window.location.search);
       const API_BASE = urlParams.get('api') || localStorage.getItem('ff_custom_api') || 'https://lohas-care-flameforge-gateway.onrender.com';
-      const DRAFT_KEY = 'ff_draft_v7';
+      const DRAFT_KEY = 'ff_draft_v8';
       const BRAND_KEY = 'ff_brand_handle';
-      const TONE_CLONE_KEY = 'ff_tone_fingerprints_v1';
+      const DEEP_TONE_KEY = 'ff_deep_tone_blueprint_v2';
 
       const state = {
         isForging: false,
@@ -1370,8 +1416,8 @@
         speechRec: null,
         isRecording: false,
         savedRange: null,
-        lastAiGeneratedDraft: '',
-        userCloneFingerprints: JSON.parse(localStorage.getItem(TONE_CLONE_KEY) || '{"cantonese":0,"shortSentences":0,"strongHook":0}'),
+        deepToneBlueprint: JSON.parse(localStorage.getItem(DEEP_TONE_KEY) || 'null'),
+        currentMatrixPoints: [],
         sandboxCache: {
           authoritative: null,
           conversational: null,
@@ -1392,13 +1438,13 @@
         'Substack': '【平台強制約束 - Substack】：請撰寫一篇約 1500 至 2000 字的高質量架構長文。包含前言引導、多個 Markdown 二級小標題（## ）、深度觀點論述、現實案例剖析及具體行動指引，行文嚴密充實。'
       };
 
-      // 支援「不需要搭橋」與「CN 中國內地」等在地脈絡 Prompt
+      // 升級 4：2026 在地時事動態雷達
       const contextBridgePrompts = {
         'none': '',
-        'hk': '【2026 香港在地時事搭橋】：必須將論點錨定於 2026 年香港社會與職場環境（例如：AI 智能化全面衝擊專業白領轉型、中環/科學園科技出海、高生活成本與樓宇租金壓力下，個體如何保持心理韌性與職業抗風險能力），行文具備道地港人共鳴。',
-        'cn': '【2026 中國內地時事搭橋】：必須緊扣 2026 年中國社會與職場現實（例如：新質生產力轉型升級、各行業「降本增效」深水區、破除內卷焦慮、AI 大模型在實體產業深度落地，以及個體在不確定環境下的個人破局與出海生存法則），行文深度接地氣，切中主流職場心智。',
-        'tw': '【2026 台灣在地時事搭橋】：必須緊密結合 2026 年台灣產業與世代挑戰（例如：半導體供應鏈重組、遠距出海辦公、高房價下青年「韌性成長」與自我定義心態），文字具備深刻同理心。',
-        'global': '【全球宏觀國際視野】：跳脫單一地域限制，聚焦 2026 全球 AI 變革浪潮、跨文化協作與國際通用商業/生活思維。'
+        'hk': '【2026 香港熱話雷達】：必須揉合 2026 年當下香港職場現實（例如：AI 智能化全面衝擊金融/科技白領轉型、中環科技出海第二曲線、高租金生活成本下個體的心理韌性與自我重定義），行文需引發港人真實共鳴。',
+        'cn': '【2026 中國熱話雷達】：必須緊扣 2026 年中國社會與產業脈絡（例如：新質生產力邁向實體落地、大廠徹底摒棄形式主義聚焦精益利潤、大模型出海競爭與破除個體內卷焦慮），行文直擊心智。',
+        'tw': '【2026 台灣熱話雷達】：必須深度融入 2026 年台灣產業挑戰（例如：半導體全球多節點設廠與工程師跨國移動、綠電轉型、遠端辦公常態化後的世代自我探索），語氣具備細膩同理心。',
+        'global': '【2026 全球熱話雷達】：聚焦 2026 全球自主智能體（Agentic AI）爆發、去中心化非同步協作與個體商業超級槓桿。'
       };
 
       const els = {
@@ -1406,6 +1452,7 @@
         topicInput: document.getElementById('topic'),
         topicError: document.getElementById('topic-error'),
         contextBridgeSelect: document.getElementById('contextBridgeSelect'),
+        radarStatusTag: document.getElementById('radarStatusTag'),
         voiceInputBtn: document.getElementById('voiceInputBtn'),
         audienceInput: document.getElementById('audience'),
         audienceError: document.getElementById('audience-error'),
@@ -1418,18 +1465,19 @@
         canvasModeTag: document.getElementById('canvasModeTag'),
         metricsDisplay: document.getElementById('metricsDisplay'),
         highlighterBar: document.getElementById('highlighterBar'),
-        roasterHud: document.getElementById('roasterHud'),
-        roastHookPill: document.getElementById('roastHookPill'),
-        roastCompletionPill: document.getElementById('roastCompletionPill'),
-        roastRiskPill: document.getElementById('roastRiskPill'),
-        roastCritiqueText: document.getElementById('roastCritiqueText'),
-        fixHookBtn: document.getElementById('fixHookBtn'),
-        fixBreakParagraphsBtn: document.getElementById('fixBreakParagraphsBtn'),
-        fixRiskBtn: document.getElementById('fixRiskBtn'),
+        critiqueHrQuote: document.getElementById('critiqueHrQuote'),
+        critiqueLihkgQuote: document.getElementById('critiqueLihkgQuote'),
+        critiqueXhsQuote: document.getElementById('critiqueXhsQuote'),
+        infographicPreviewArea: document.getElementById('infographicPreviewArea'),
+        infographicSvgContainer: document.getElementById('infographicSvgContainer'),
+        regenerateSvgBtn: document.getElementById('regenerateSvgBtn'),
+        toneExtractorAccordion: document.getElementById('toneExtractorAccordion'),
+        samplePostInput: document.getElementById('samplePostInput'),
+        extractToneBtn: document.getElementById('extractToneBtn'),
+        resetDeepToneBtn: document.getElementById('resetDeepToneBtn'),
+        cloneBadgeIndicator: document.getElementById('cloneBadgeIndicator'),
+        extractedToneTagsContainer: document.getElementById('extractedToneTagsContainer'),
         sandboxTabsBar: document.getElementById('sandboxTabsBar'),
-        toneCloneBadge: document.getElementById('toneCloneBadge'),
-        cloneTraitText: document.getElementById('cloneTraitText'),
-        resetToneCloneBtn: document.getElementById('resetToneCloneBtn'),
         copyBtn: document.getElementById('copyBtn'),
         cardGenBtn: document.getElementById('cardGenBtn'),
         carouselGenBtn: document.getElementById('carouselGenBtn'),
@@ -1462,10 +1510,9 @@
         initPWA();
         initSpeech();
         loadDraftAndBrand();
-        renderToneCloneStatus();
+        renderDeepToneUI();
         bindEvents();
         bindHighlighter();
-        bindReverseFixButtons();
         updateHint();
         refreshVaultCount();
         probeGatewayHealth();
@@ -1563,141 +1610,276 @@
         } catch(e) {}
       }
 
-      function analyzeUserEditsDiff(aiDraft, finalEdited) {
-        if (!aiDraft || !finalEdited || aiDraft.length < 50) return;
+      // ==========================================
+      // 升級 2：深度語氣提取核心算法 (Sample-based IP Clone)
+      // ==========================================
+      function extractToneFingerprint(rawSample) {
+        if (!rawSample || rawSample.trim().length < 40) {
+          alert('請貼入至少 40 字以上的過往貼文樣本，以利系統準確萃取！');
+          return null;
+        }
+
+        const lines = rawSample.split('\n').map(l => l.trim()).filter(Boolean);
+        const totalChars = rawSample.length;
+        const avgLineLength = Math.round(totalChars / Math.max(1, lines.length));
         
-        let changed = false;
-        if (/[我哋|唔|嘅|喺|點解|睇|冇|真係]/.test(finalEdited) && !/[我哋|唔|嘅|喺|點解|睇|冇|真係]/.test(aiDraft)) {
-          state.userCloneFingerprints.cantonese = (state.userCloneFingerprints.cantonese || 0) + 1;
-          changed = true;
-        }
+        // 標點與問句分析
+        const qCount = (rawSample.match(/[？?]/g) || []).length;
+        const exCount = (rawSample.match(/[！!]/g) || []).length;
+        const hasCantonese = /[我哋|唔|嘅|喺|點解|睇|冇|真係|諗|搞到|仲有]/.test(rawSample);
+        const hasData = /\d+[%％萬億元]/.test(rawSample);
 
-        const aiLines = aiDraft.split('\n').filter(Boolean).length;
-        const editedLines = finalEdited.split('\n').filter(Boolean).length;
-        if (editedLines > aiLines + 3) {
-          state.userCloneFingerprints.shortSentences = (state.userCloneFingerprints.shortSentences || 0) + 1;
-          changed = true;
-        }
+        const blueprint = {
+          avgLineLength,
+          qFrequency: qCount > 1 ? '高頻反問醒腦' : '平鋪直敘觀點',
+          punchiness: exCount > 1 ? '強烈語氣重頓點' : '冷峻專業留白',
+          cantoneseFlavor: hasCantonese,
+          dataDriven: hasData,
+          sampleSnippet: rawSample.substring(0, 100).replace(/\n/g, ' ')
+        };
 
-        const aiFirst = aiDraft.trim().split('\n')[0] || '';
-        const editedFirst = finalEdited.trim().split('\n')[0] || '';
-        if (aiFirst !== editedFirst && editedFirst.length > 5) {
-          state.userCloneFingerprints.strongHook = (state.userCloneFingerprints.strongHook || 0) + 1;
-          changed = true;
-        }
-
-        if (changed) {
-          localStorage.setItem(TONE_CLONE_KEY, JSON.stringify(state.userCloneFingerprints));
-          renderToneCloneStatus();
-        }
+        state.deepToneBlueprint = blueprint;
+        localStorage.setItem(DEEP_TONE_KEY, JSON.stringify(blueprint));
+        renderDeepToneUI();
+        alert('✨ 恭喜！個人專屬 IP 行文魂魄已提取並存入本地庫，後續每次鍛造均會自動深度擬合！');
       }
 
-      function renderToneCloneStatus() {
-        const fp = state.userCloneFingerprints;
-        const traits = [];
-        if (fp.cantonese >= 1) traits.push('廣東口語習慣');
-        if (fp.shortSentences >= 1) traits.push('極簡短句與留白');
-        if (fp.strongHook >= 1) traits.push('偏好懸念開頭');
+      function renderDeepToneUI() {
+        const bp = state.deepToneBlueprint;
+        if (!bp) {
+          els.cloneBadgeIndicator.textContent = '未提取';
+          els.cloneBadgeIndicator.style.color = 'var(--text-tertiary)';
+          els.extractedToneTagsContainer.innerHTML = '';
+          return;
+        }
 
-        if (traits.length > 0) {
-          els.cloneTraitText.textContent = `已鎖定專屬筆觸：[${traits.join(' ＋ ')}]`;
-          els.toneCloneBadge.style.borderColor = 'rgba(168, 85, 247, 0.7)';
+        els.cloneBadgeIndicator.textContent = '已鎖定 IP 魂魄';
+        els.cloneBadgeIndicator.style.color = 'var(--flame-purple)';
+
+        const tags = [
+          `平均句長 ~${bp.avgLineLength}字`,
+          bp.qFrequency,
+          bp.punchiness,
+          bp.cantoneseFlavor ? '🇭🇰 粵語口語慣性' : '書面乾淨簡約',
+          bp.dataDriven ? '📊 數據實證偏好' : '觀點提煉流'
+        ];
+
+        els.extractedToneTagsContainer.innerHTML = tags.map(t => `<span class="tone-tag">${t}</span>`).join('');
+      }
+
+      function buildDeepTonePrompt() {
+        const bp = state.deepToneBlueprint;
+        if (!bp) return '';
+        return `\n\n【創作者個人 IP 魂魄深度擬真指令】：
+- 行文排版節奏：平均每句約 ${bp.avgLineLength} 字，嚴格遵守用戶偏好的短句斷行習慣。
+- 標點風格：${bp.qFrequency}，${bp.punchiness}。
+- 語言慣性：${bp.cantoneseFlavor ? '融入自然親切的道地廣東話句式（如點解、真係、我哋），強化本地真實感' : '嚴格採用高密度書面語，去除口頭贅字'}。
+- 案例習慣：${bp.dataDriven ? '多引用具體數字與實戰情境' : '多針砭思維盲區與認知升級'}。`;
+      }
+
+      // ==========================================
+      // 升級 1：受眾毒舌評審團 (Agentic Critique)
+      // ==========================================
+      function updateAgenticTribunal(plainText, platform) {
+        if (!plainText || plainText.length < 30) {
+          els.critiqueHrQuote.textContent = '「文章生成後將在此無情評測你的商業可信度與廢話率...」';
+          els.critiqueLihkgQuote.textContent = '「咪又係心靈雞湯，等我睇下你係咪真係接地氣先...」';
+          els.critiqueXhsQuote.textContent = '「前 3 行痛點不夠強直接被滑走！等我抓你的情緒價值...」';
+          return;
+        }
+
+        const lines = plainText.split('\n').map(l => l.trim()).filter(Boolean);
+        const hook = lines[0] || '';
+        const toneVal = document.querySelector('input[name="tone"]:checked')?.value || 'authoritative';
+
+        // 1. 中環投行 MD / HR 的毒舌切入
+        if (lines.length > 15 && !/\d+/.test(plainText)) {
+          els.critiqueHrQuote.textContent = '「通篇只有價值觀輸出，無半點 hard data 或 ROI 拆解，喺中環 team meeting 講兩分鐘就畀人叫停。」';
+        } else if (hook.length > 40) {
+          els.critiqueHrQuote.textContent = '「開頭兩句冗長乏力，Executive Summary 唔及格。請第一句直接俾 Action item。」';
         } else {
-          els.cloneTraitText.textContent = '學習待命中（在畫布手動改文即可啟動）';
+          els.critiqueHrQuote.textContent = '「觀點俐落，有框架感，發喺 LinkedIn 會吸引到 senior level 嘅同行認真同你傾。」';
+        }
+
+        // 2. 連登巴打的毒舌切入
+        if (!/[我哋|唔|嘅|喺|點解|睇|冇|真係|租|人工|買樓|躺平]/.test(plainText) && platform !== 'X') {
+          els.critiqueLihkgQuote.textContent = '「太過高高在上喇師兄，講就天下無敵，又係啲不食人間煙火嘅人生導師毒雞湯。」';
+        } else if (/底層|韭菜|無能/.test(plainText)) {
+          els.critiqueLihkgQuote.textContent = '「好地地又教訓人，呢種居高臨下嘅文一貼出嚟保證畀人負評開 po 開名鞭屍。」';
+        } else {
+          els.critiqueLihkgQuote.textContent = '「算你講得中肯，有兩句睇完幾心悒，唔似平時嗰啲吹水 KOL。」';
+        }
+
+        // 3. 小紅書破萬讚操盤手的毒舌切入
+        if (hook.length < 15) {
+          els.critiqueXhsQuote.textContent = '「前 3 行完全沒有情緒拉扯！沒有給讀者『這就是我』的痛感代入，完讀率連 30% 都不到！」';
+        } else if (plainText.includes('？') || plainText.includes('?')) {
+          els.critiqueXhsQuote.textContent = '「反問抓得精準！讓人忍不住在留言區跟你反駁或抱團，收藏率預估會爆！」';
+        } else {
+          els.critiqueXhsQuote.textContent = '「乾貨很多但缺少網感！建議把重點句子加粗，再拆一張『2x2 思維矩陣圖』做封面才吃香！」';
         }
       }
 
-      function buildToneClonePromptInjection() {
-        const fp = state.userCloneFingerprints;
-        const traits = [];
-        if (fp.cantonese >= 1) traits.push('多使用貼地的廣東話口語用詞（如「我哋」、「點解」、「真係」），語調親切自然');
-        if (fp.shortSentences >= 1) traits.push('採用極短句型、高密度單句換行，拒絕冗長複合長句');
-        if (fp.strongHook >= 1) traits.push('第一句必須一針見血，採用反直覺結論或強烈衝擊金句破題');
+      // ==========================================
+      // 升級 3：動態 SVG 資訊圖表生成器 (2x2 決策矩陣 / 雙向思維導圖)
+      // ==========================================
+      function generateInfographicSVG(articleLines) {
+        // 從文章中抓取 4 個核心關鍵短語，若不足則以主旨派生
+        const cleanLines = articleLines.filter(l => l.length > 6 && l.length < 35 && !l.startsWith('#'));
+        const p1 = cleanLines[1] ? cleanLines[1].substring(0, 14) : '被動適應環境';
+        const p2 = cleanLines[2] ? cleanLines[2].substring(0, 14) : '主動塑造認知';
+        const p3 = cleanLines[3] ? cleanLines[3].substring(0, 14) : '短暫情緒內耗';
+        const p4 = cleanLines[4] ? cleanLines[4].substring(0, 14) : '持續行動複利';
 
-        if (traits.length === 0) return '';
-        return `\n\n【語氣 Clone 指紋注入（請嚴格模仿用戶過往手動修訂偏好）】：\n- ${traits.join('\n- ')}`;
+        state.currentMatrixPoints = [p1, p2, p3, p4];
+
+        const svgHtml = `
+          <svg viewBox="0 0 500 320" xmlns="http://www.w3.org/2000/svg" style="max-width:100%; height:auto; background:rgba(12,12,18,0.9); border-radius:10px; border:1px solid rgba(255,148,54,0.3);">
+            <!-- 背景發光十字軸 -->
+            <line x1="250" y1="30" x2="250" y2="290" stroke="rgba(255,255,255,0.15)" stroke-width="2" stroke-dasharray="4"/>
+            <line x1="40" y1="160" x2="460" y2="160" stroke="rgba(255,255,255,0.15)" stroke-width="2" stroke-dasharray="4"/>
+            
+            <!-- 軸標籤 -->
+            <text x="250" y="24" fill="#ffbe3b" font-size="11" font-weight="700" text-anchor="middle">▲ 高認知深度 (HIGH CLARITY)</text>
+            <text x="250" y="308" fill="#717180" font-size="11" font-weight="600" text-anchor="middle">▼ 低行動阻力 (LOW FRICTION)</text>
+            <text x="35" y="164" fill="#717180" font-size="11" font-weight="600" text-anchor="end">◀ 慣性消耗</text>
+            <text x="465" y="164" fill="#ff5e1a" font-size="11" font-weight="700" text-anchor="start">突破演化 ▶</text>
+            
+            <!-- 象限卡片 1 (左上) -->
+            <rect x="65" y="55" width="165" height="85" rx="8" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.08)"/>
+            <text x="75" y="78" fill="#a1a1ae" font-size="11" font-weight="600">Q2 ｜ 空想陷阱</text>
+            <text x="75" y="105" fill="#eaeaf0" font-size="13" font-weight="700">${escapeHtml(p1)}</text>
+            
+            <!-- 象限卡片 2 (右上 - 核心破局點) -->
+            <rect x="270" y="55" width="165" height="85" rx="8" fill="rgba(255,94,26,0.14)" stroke="#ff5e1a" stroke-width="1.5"/>
+            <text x="280" y="78" fill="#ffd488" font-size="11" font-weight="700">Q1 ｜ 破局複利 (TARGET)</text>
+            <text x="280" y="105" fill="#ffffff" font-size="13" font-weight="800">${escapeHtml(p2)}</text>
+            
+            <!-- 象限卡片 3 (左下) -->
+            <rect x="65" y="180" width="165" height="85" rx="8" fill="rgba(255,69,58,0.08)" stroke="rgba(255,69,58,0.25)"/>
+            <text x="75" y="203" fill="#ff453a" font-size="11" font-weight="600">Q3 ｜ 內耗泥潭</text>
+            <text x="75" y="230" fill="#eaeaf0" font-size="13" font-weight="700">${escapeHtml(p3)}</text>
+            
+            <!-- 象限卡片 4 (右下) -->
+            <rect x="270" y="180" width="165" height="85" rx="8" fill="rgba(34,211,238,0.08)" stroke="rgba(34,211,238,0.25)"/>
+            <text x="280" y="203" fill="#22d3ee" font-size="11" font-weight="600">Q4 ｜ 機械執行</text>
+            <text x="280" y="230" fill="#eaeaf0" font-size="13" font-weight="700">${escapeHtml(p4)}</text>
+          </svg>
+        `;
+
+        els.infographicSvgContainer.innerHTML = svgHtml;
+        els.infographicPreviewArea.style.display = 'block';
       }
 
-      function bindReverseFixButtons() {
-        els.fixHookBtn.addEventListener('click', async () => {
-          const currentText = els.inkStream.innerText || '';
-          const lines = currentText.split('\n').filter(l => l.trim().length > 0);
-          if (lines.length === 0) return;
+      function bindEvents() {
+        bindSandboxTabs();
 
-          const oldHook = lines[0];
-          els.fixHookBtn.innerHTML = '⏳ 重塑中...';
-          els.fixHookBtn.disabled = true;
+        els.platformSelect.addEventListener('change', () => {
+          updateHint();
+          saveDraftAndBrand();
+          handleCanvasInput();
+        });
 
+        els.contextBridgeSelect.addEventListener('change', saveDraftAndBrand);
+
+        els.tempSlider.addEventListener('input', (e) => {
+          els.tempValue.textContent = e.target.value;
+          saveDraftAndBrand();
+        });
+
+        els.form.addEventListener('input', saveDraftAndBrand);
+        els.inkStream.addEventListener('input', handleCanvasInput);
+
+        // 升級 2：深度提取風格按鈕監聽
+        els.extractToneBtn.addEventListener('click', () => {
+          extractToneFingerprint(els.samplePostInput.value);
+        });
+
+        els.resetDeepToneBtn.addEventListener('click', () => {
+          if (confirm('確定抹除專屬 IP 魂魄？')) {
+            state.deepToneBlueprint = null;
+            localStorage.removeItem(DEEP_TONE_KEY);
+            els.samplePostInput.value = '';
+            renderDeepToneUI();
+          }
+        });
+
+        // 升級 3：手動重繪圖表
+        els.regenerateSvgBtn.addEventListener('click', () => {
+          const lines = els.inkStream.innerText.split('\n').filter(Boolean);
+          generateInfographicSVG(lines);
+        });
+
+        els.brandHandleInput.addEventListener('input', (e) => {
+          const val = e.target.value.trim() || '@anonymous';
+          els.snapHandleText.textContent = val;
+          els.carouselHandleText.textContent = val;
+          saveDraftAndBrand();
+        });
+
+        document.querySelectorAll('input[name="aspectRatio"]').forEach(r => {
+          r.addEventListener('change', (e) => {
+            els.snapshot.className = `ratio-${e.target.value}`;
+          });
+        });
+
+        els.openVaultBtn.addEventListener('click', openVaultDrawer);
+        els.closeVaultBtn.addEventListener('click', closeVaultDrawer);
+        els.drawerOverlay.addEventListener('click', (e) => {
+          if (e.target === els.drawerOverlay) closeVaultDrawer();
+        });
+        els.vaultSearchInput.addEventListener('input', renderVaultList);
+
+        els.vaultClearAllBtn.addEventListener('click', async () => {
+          if (confirm('確定一鍵清空所有歷史資產？此操作不可逆。')) {
+            await VaultDB.clearAll();
+            renderVaultList();
+            refreshVaultCount();
+          }
+        });
+
+        els.form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          if (state.isForging) return;
+          if (validate()) executeSmartForge({ action: 'generate' });
+        });
+
+        els.reforgeBtn.addEventListener('click', () => !state.isForging && executeSmartForge({ action: 'reforge' }));
+        els.expandBtn.addEventListener('click', () => !state.isForging && executeSmartForge({ action: 'expand' }));
+        els.condenseBtn.addEventListener('click', () => !state.isForging && executeSmartForge({ action: 'condense' }));
+
+        els.batchSandboxBtn.addEventListener('click', async () => {
+          if (state.isForging || !validate()) return;
+          const tones = ['authoritative', 'conversational', 'sharp'];
+          for (const t of tones) {
+            await executeSmartForge({ action: 'generate', specificTone: t, isBatch: true });
+          }
+          alert('✅ 三重語氣沙盒已全部鍛造完畢！可點擊上方分頁即時比對切換。');
+        });
+
+        els.copyBtn.addEventListener('click', async () => {
           try {
-            const prompt = `【反向塑形 - Hook 爆款重鑄】：請將以下開頭句子改寫為吸睛度 9.5 分的頂級社交貼文 Hook。要求：採用「反直覺懸念」或「直指代價」的寫法，字數在 35 字以內，只輸出單句結果，禁止引號：\n\n"${oldHook}"`;
-            const response = await fetch(`${API_BASE}/api/forge`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                topic: prompt,
-                platform: els.platformSelect.value,
-                audience: els.audienceInput.value,
-                tone: 'sharp',
-                action: 'rewrite_hook',
-                temperature: 0.8
-              })
-            });
-
-            const resData = await response.json();
-            const raw = resData?.data?.outputs?.post_content || resData?.outputs?.post_content || resData?.post_content;
-            let newHook = typeof raw === 'object' ? (raw.body || raw.content || oldHook) : (raw || oldHook);
-            newHook = newHook.replace(/^["「]+|["」]+$/g, '').trim();
-
-            lines[0] = newHook;
-            const updatedArticle = lines.join('\n\n');
-            els.inkStream.innerHTML = parseSafeMarkdown(escapeHtml(updatedArticle));
-            handleCanvasInput();
-            els.a11yAnnouncer.textContent = 'Hook 已成功重塑為高吸睛版本';
-          } catch(e) {
-            alert('Hook 重塑失敗，請稍候再試。');
-          } finally {
-            els.fixHookBtn.innerHTML = '⚡ 重塑爆款 Hook';
-            els.fixHookBtn.disabled = false;
+            await navigator.clipboard.writeText(els.inkStream.innerText);
+            const original = els.copyBtn.innerHTML;
+            els.copyBtn.innerHTML = '✅ 已複製全文';
+            setTimeout(() => { els.copyBtn.innerHTML = original; }, 1800);
+          } catch (err) {
+            alert('複製失敗，請手動選取');
           }
         });
 
-        els.fixBreakParagraphsBtn.addEventListener('click', () => {
-          const currentText = els.inkStream.innerText || '';
-          if (!currentText) return;
+        els.cardGenBtn.addEventListener('click', generateSingleCard);
+        els.carouselGenBtn.addEventListener('click', generateCarouselSlides);
 
-          const formatted = currentText
-            .split('\n')
-            .map(p => {
-              const trimmed = p.trim();
-              if (trimmed.length > 55) {
-                return trimmed.replace(/([。！？!?；])\s*/g, '$1\n\n');
-              }
-              return trimmed;
-            })
-            .join('\n\n')
-            .replace(/\n{3,}/g, '\n\n');
-
-          els.inkStream.innerHTML = parseSafeMarkdown(escapeHtml(formatted));
-          handleCanvasInput();
-          els.a11yAnnouncer.textContent = '已完成手機友善拆段留白手術';
-        });
-
-        els.fixRiskBtn.addEventListener('click', () => {
-          let text = els.inkStream.innerText || '';
-          const toxicMap = {
-            '愚蠢': '不夠明智',
-            '廢話': '多餘的冗贅',
-            '淘汰': '漸漸淡出視野',
-            '底層': '正在奮鬥的起點',
-            '無能': '尚未找到方法',
-            '韭菜': '欠缺資訊對稱的個體'
-          };
-          for (const [bad, good] of Object.entries(toxicMap)) {
-            text = text.replaceAll(bad, good);
+        document.addEventListener('keydown', (e) => {
+          if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+            e.preventDefault();
+            if (!state.isForging && validate()) executeSmartForge({ action: 'generate' });
           }
-          els.inkStream.innerHTML = parseSafeMarkdown(escapeHtml(text));
-          handleCanvasInput();
-          els.a11yAnnouncer.textContent = '爭議字眼已調和完畢';
+          if (e.key === 'Escape') {
+            if (state.isForging && state.abortController) state.abortController.abort();
+            closeVaultDrawer();
+          }
         });
       }
 
@@ -1871,168 +2053,6 @@
         }
       }
 
-      function updateAlgorithmicRoast(plainText, platform) {
-        if (!plainText || plainText.length < 20) {
-          els.roastHookPill.innerHTML = `🪝 Hook: <strong>--</strong>`;
-          els.roastCompletionPill.innerHTML = `📈 完讀率: <strong>--</strong>`;
-          els.roastRiskPill.innerHTML = `🛡️ 風險: <strong>--</strong>`;
-          els.roastCritiqueText.innerHTML = `💡 系統待命。生成後演算法將在此給出真實反饋；若評測不佳，點擊上方按鈕即可一鍵局部修復！`;
-          els.fixHookBtn.style.display = 'none';
-          els.fixBreakParagraphsBtn.style.display = 'none';
-          els.fixRiskBtn.style.display = 'none';
-          return;
-        }
-
-        const lines = plainText.split('\n').filter(l => l.trim().length > 0);
-        const hookLine = lines[0] || '';
-        const toneVal = document.querySelector('input[name="tone"]:checked')?.value || 'authoritative';
-
-        let hookScore = 6.0;
-        if (/\d+/.test(hookLine)) hookScore += 1.2;
-        if (/[？?！!]/.test(hookLine)) hookScore += 0.9;
-        if (/不|非|別再|從不|真相|底層|代價|秘密|痛點/.test(hookLine)) hookScore += 1.4;
-        hookScore = Math.min(9.8, Math.max(4.2, hookScore)).toFixed(1);
-
-        const totalChars = plainText.length;
-        const avgParagraphLength = totalChars / Math.max(1, lines.length);
-        let completionRate = 88;
-        if (avgParagraphLength > 110) completionRate -= 22;
-        if (totalChars > 1600 && platform === 'LinkedIn') completionRate -= 15;
-        if (totalChars < 120 && platform === 'LinkedIn') completionRate -= 25;
-        completionRate = Math.min(96, Math.max(42, completionRate));
-
-        let riskText = '低';
-        let riskColor = 'var(--success)';
-        let hasToxicity = /愚蠢|廢話|淘汰|底層|無能|韭菜/.test(plainText);
-        if (toneVal === 'sharp' || hasToxicity) {
-          riskText = '高 (爭議性)';
-          riskColor = 'var(--danger)';
-        } else if (toneVal === 'conversational') {
-          riskText = '中 (親和)';
-          riskColor = 'var(--warning)';
-        }
-
-        els.fixHookBtn.style.display = hookScore < 7.5 ? 'inline-block' : 'none';
-        els.fixBreakParagraphsBtn.style.display = avgParagraphLength > 95 ? 'inline-block' : 'none';
-        els.fixRiskBtn.style.display = hasToxicity ? 'inline-block' : 'none';
-
-        let critique = '';
-        if (hookScore < 7.5) {
-          critique = '🔥 殘酷評測：第一句 Hook 平鋪直敘，讀者滑過只需 0.3 秒。點擊「⚡ 重塑爆款 Hook」強制注入懸念！';
-        } else if (avgParagraphLength > 95) {
-          critique = '📱 殘酷評測：手機瀏覽時段落過於密集，完讀率暴跌。點擊「✂️ 手術刀拆段」自動留白！';
-        } else if (hasToxicity) {
-          critique = '⚡ 殘酷評測：檢測到容易造成公關災難的詞彙。點擊「🕊️ 溫和除刺」將其修飾為建設性語言。';
-        } else {
-          critique = '✨ 殘酷評測：節奏極佳、留白得當，具備頂級創作者的自傳播體質。可直接匯出！';
-        }
-
-        els.roastHookPill.innerHTML = `🪝 Hook: <strong style="color:${hookScore > 7.5 ? 'var(--success)' : 'var(--flame-gold)'};">${hookScore}</strong>`;
-        els.roastCompletionPill.innerHTML = `📈 完讀率: <strong style="color:${completionRate > 75 ? 'var(--success)' : 'var(--warning)'};">${completionRate}%</strong>`;
-        els.roastRiskPill.innerHTML = `🛡️ 風險: <strong style="color:${riskColor};">${riskText}</strong>`;
-        els.roastCritiqueText.innerHTML = critique;
-      }
-
-      function bindEvents() {
-        bindSandboxTabs();
-
-        els.platformSelect.addEventListener('change', () => {
-          updateHint();
-          saveDraftAndBrand();
-          handleCanvasInput();
-        });
-
-        els.contextBridgeSelect.addEventListener('change', saveDraftAndBrand);
-
-        els.tempSlider.addEventListener('input', (e) => {
-          els.tempValue.textContent = e.target.value;
-          saveDraftAndBrand();
-        });
-
-        els.form.addEventListener('input', saveDraftAndBrand);
-        els.inkStream.addEventListener('input', handleCanvasInput);
-
-        els.resetToneCloneBtn.addEventListener('click', () => {
-          if (confirm('確定重設已學習的專屬寫作指紋？')) {
-            state.userCloneFingerprints = { cantonese: 0, shortSentences: 0, strongHook: 0 };
-            localStorage.removeItem(TONE_CLONE_KEY);
-            renderToneCloneStatus();
-          }
-        });
-
-        els.brandHandleInput.addEventListener('input', (e) => {
-          const val = e.target.value.trim() || '@anonymous';
-          els.snapHandleText.textContent = val;
-          els.carouselHandleText.textContent = val;
-          saveDraftAndBrand();
-        });
-
-        document.querySelectorAll('input[name="aspectRatio"]').forEach(r => {
-          r.addEventListener('change', (e) => {
-            els.snapshot.className = `ratio-${e.target.value}`;
-          });
-        });
-
-        els.openVaultBtn.addEventListener('click', openVaultDrawer);
-        els.closeVaultBtn.addEventListener('click', closeVaultDrawer);
-        els.drawerOverlay.addEventListener('click', (e) => {
-          if (e.target === els.drawerOverlay) closeVaultDrawer();
-        });
-        els.vaultSearchInput.addEventListener('input', renderVaultList);
-
-        els.vaultClearAllBtn.addEventListener('click', async () => {
-          if (confirm('確定一鍵清空所有歷史資產？此操作不可逆。')) {
-            await VaultDB.clearAll();
-            renderVaultList();
-            refreshVaultCount();
-          }
-        });
-
-        els.form.addEventListener('submit', (e) => {
-          e.preventDefault();
-          if (state.isForging) return;
-          if (validate()) executeSmartForge({ action: 'generate' });
-        });
-
-        els.reforgeBtn.addEventListener('click', () => !state.isForging && executeSmartForge({ action: 'reforge' }));
-        els.expandBtn.addEventListener('click', () => !state.isForging && executeSmartForge({ action: 'expand' }));
-        els.condenseBtn.addEventListener('click', () => !state.isForging && executeSmartForge({ action: 'condense' }));
-
-        els.batchSandboxBtn.addEventListener('click', async () => {
-          if (state.isForging || !validate()) return;
-          const tones = ['authoritative', 'conversational', 'sharp'];
-          for (const t of tones) {
-            await executeSmartForge({ action: 'generate', specificTone: t, isBatch: true });
-          }
-          alert('✅ 三重語氣沙盒已全部鍛造完畢！可點擊上方分頁即時比對切換。');
-        });
-
-        els.copyBtn.addEventListener('click', async () => {
-          try {
-            await navigator.clipboard.writeText(els.inkStream.innerText);
-            const original = els.copyBtn.innerHTML;
-            els.copyBtn.innerHTML = '✅ 已複製全文';
-            setTimeout(() => { els.copyBtn.innerHTML = original; }, 1800);
-          } catch (err) {
-            alert('複製失敗，請手動選取');
-          }
-        });
-
-        els.cardGenBtn.addEventListener('click', generateSingleCard);
-        els.carouselGenBtn.addEventListener('click', generateCarouselSlides);
-
-        document.addEventListener('keydown', (e) => {
-          if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
-            e.preventDefault();
-            if (!state.isForging && validate()) executeSmartForge({ action: 'generate' });
-          }
-          if (e.key === 'Escape') {
-            if (state.isForging && state.abortController) state.abortController.abort();
-            closeVaultDrawer();
-          }
-        });
-      }
-
       function handleCanvasInput() {
         const text = els.inkStream.innerText || '';
         const charCount = text.length;
@@ -2040,7 +2060,7 @@
         const readingMinutes = Math.max(1, Math.round(charCount / 300));
 
         auditCompliance(platform, charCount, readingMinutes);
-        updateAlgorithmicRoast(text, platform);
+        updateAgenticTribunal(text, platform);
 
         const firstLine = text.split('\n').filter(l => l.trim().length > 0)[0] || text.substring(0, 80);
         state.currentQuote = firstLine.replace(/^[#*-]\s*/, '');
@@ -2049,7 +2069,6 @@
           els.canvasModeTag.innerHTML = '✏️ 自由編輯模式';
           els.canvasModeTag.style.color = 'var(--text-primary)';
           persistCurrentEdit();
-          analyzeUserEditsDiff(state.lastAiGeneratedDraft, text);
         }
       }
 
@@ -2163,7 +2182,7 @@
         const updateWaitingUI = () => {
           els.inkStream.innerHTML = `
             <div style="color: var(--flame-amber);">
-              [神經熔爐連線中] 正在融合【${activeTone}】語氣與在地時事搭橋...<br>
+              [神經熔爐連線中] 正在融合【${activeTone}】語氣、個人 IP 魂魄與 2026 時事雷達...<br>
               <span style="font-size: 0.85rem; color: #fff; font-weight: 600; display: inline-block; margin-top: 0.5rem;">
                 ⏱ 已淬鍊 ${secondsElapsed} 秒
               </span>
@@ -2179,10 +2198,10 @@
 
         const contextBridgeKey = els.contextBridgeSelect.value;
         const contextBridgeDirective = contextBridgePrompts[contextBridgeKey] || '';
-        const toneCloneDirective = buildToneClonePromptInjection();
+        const deepToneDirective = buildDeepTonePrompt();
         const platformDirective = platformDirectives[platform] || '';
         
-        let enhancedTopic = `${rawTopic}\n\n${platformDirective}\n\n${contextBridgeDirective}${toneCloneDirective}`;
+        let enhancedTopic = `${rawTopic}\n\n${platformDirective}\n\n${contextBridgeDirective}${deepToneDirective}`;
         if (options.action === 'expand') enhancedTopic += '\n\n【追加指令】：請大幅擴充觀點細節，篇幅務必拉長豐富。';
         if (options.action === 'condense') enhancedTopic += '\n\n【追加指令】：請極致精煉收斂，剔除冗贅字句。';
 
@@ -2318,7 +2337,7 @@
         }
 
         if (!body || body.trim() === '' || body === '<br>') {
-          body = '<p style="color: var(--danger); font-weight:600;">⚠️ 後端回傳了空內容（可能是工作流超時或截斷），請稍後重試一次。</p>';
+          body = '<p style="color: var(--danger); font-weight:600;">⚠️ 後端回傳了空內容，請稍後重試一次。</p>';
         }
 
         state.currentQuote = hook || title;
@@ -2339,7 +2358,9 @@
           plainText: els.inkStream.innerText
         };
 
-        state.lastAiGeneratedDraft = els.inkStream.innerText;
+        // 升級 3：自動從長文中提煉四象限思維圖
+        const textLines = els.inkStream.innerText.split('\n').filter(Boolean);
+        generateInfographicSVG(textLines);
 
         handleCanvasInput();
         finalizeUI();
@@ -2419,6 +2440,7 @@
         }
       }
 
+      // 升級 3：輪播切片生成 (Slide 3 植入動態生成的 SVG 拓撲圖)
       async function generateCarouselSlides() {
         if (typeof window.html2canvas !== 'function') {
           alert('未能載入圖卡渲染模組 (html2canvas)，請檢查網絡。');
@@ -2442,21 +2464,39 @@
         const titleLine = lines[0] || els.topicInput.value;
         const hookLine = lines[1] || '';
 
+        // Slide 1: 封面 Hook
         slides.push({
           tag: 'SLIDE 1 / 5 // COVER',
           content: `<div style="color:var(--flame-gold); font-size:1.15rem; margin-bottom:1rem; font-weight:700;">✦ ESSENTIAL INSIGHT</div><h2 style="font-size:2rem; line-height:1.3; color:#fff; margin-bottom:1.5rem;">${titleLine}</h2><p style="font-size:1.2rem; color:#ffd488; font-style:italic;">${hookLine}</p>`,
           hint: 'SWIPE ➔'
         });
 
-        const corePoints = lines.slice(2).filter(l => l.length > 20).slice(0, 3);
-        corePoints.forEach((pt, idx) => {
-          slides.push({
-            tag: `SLIDE ${idx + 2} / 5 // POINT 0${idx + 1}`,
-            content: `<div style="font-size:3rem; color:var(--flame-spark); font-weight:900; margin-bottom:1rem;">0${idx + 1}</div><div style="font-size:1.5rem; line-height:1.6; color:#fdfdfd; font-weight:600;">${pt}</div>`,
-            hint: 'KEEP SWIPING ➔'
-          });
+        // Slide 2: 核心痛點論述
+        const p1 = lines[2] || '環境往往在我們未準備好時發動衝擊。';
+        slides.push({
+          tag: 'SLIDE 2 / 5 // THE FRICTION',
+          content: `<div style="font-size:2.8rem; color:var(--danger); font-weight:900; margin-bottom:1rem;">01</div><div style="font-size:1.5rem; line-height:1.6; color:#fdfdfd; font-weight:600;">${p1}</div>`,
+          hint: 'KEEP SWIPING ➔'
         });
 
+        // Slide 3: 動態注入由代碼繪製的 SVG 2x2 思維導圖！
+        const svgContainer = document.getElementById('infographicSvgContainer');
+        const svgContent = svgContainer ? svgContainer.innerHTML : '<div style="font-size:1.4rem;">思維框架拓撲矩陣</div>';
+        slides.push({
+          tag: 'SLIDE 3 / 5 // MATRIX MODEL',
+          content: `<div style="color:var(--flame-cyan); font-size:1rem; font-weight:700; margin-bottom:0.8rem;">✦ 認知與破局 2x2 矩陣</div><div style="width:100%; display:flex; justify-content:center;">${svgContent}</div>`,
+          hint: 'DEEP DIVE ➔'
+        });
+
+        // Slide 4: 破局反直覺觀點
+        const p2 = lines[4] || lines[3] || '唯有把被動適應轉化為持續複利。';
+        slides.push({
+          tag: 'SLIDE 4 / 5 // THE SHIFT',
+          content: `<div style="font-size:2.8rem; color:var(--flame-spark); font-weight:900; margin-bottom:1rem;">02</div><div style="font-size:1.5rem; line-height:1.6; color:#fdfdfd; font-weight:600;">${p2}</div>`,
+          hint: 'CONCLUSION ➔'
+        });
+
+        // Slide 5: 結尾 CTA
         slides.push({
           tag: 'SLIDE 5 / 5 // TAKEAWAY',
           content: `<div style="font-size:1.8rem; line-height:1.5; color:#fff; font-weight:700; margin-bottom:1.5rem;">「把認知的火種，<br>鍛造為持續行動的力量。」</div><div style="font-size:1.1rem; color:var(--flame-gold);">追蹤 ${els.brandHandleInput.value.trim() || '@creator'} 獲取更多思維淬煉</div>`,
@@ -2471,16 +2511,16 @@
             els.carouselContent.innerHTML = slides[i].content;
             document.getElementById('carouselFooterHint').textContent = slides[i].hint;
 
-            await new Promise(r => setTimeout(r, 120));
+            await new Promise(r => setTimeout(r, 150));
 
             const canvas = await html2canvas(els.carouselSnapshot, { scale: 2, useCORS: true, logging: false });
             const link = document.createElement('a');
-            link.download = `FlameForge-Slide-0${i + 1}.png`;
+            link.download = `FlameForge-Carousel-0${i + 1}.png`;
             link.href = canvas.toDataURL('image/png');
             link.click();
             await new Promise(r => setTimeout(r, 250));
           }
-          alert(`✅ 成功產出 ${slides.length} 張 1:1 輪播圖卡，可直接上傳 LinkedIn/IG！`);
+          alert(`✅ 成功產出 5 張 1:1 輪播圖卡（含 Slide 3 動態資訊矩陣），可直接發布！`);
         } catch (e) {
           alert('輪播切片生成失敗：' + e.message);
         } finally {
@@ -2550,7 +2590,6 @@
               els.platformSelect.value = item.platform || 'LinkedIn';
               els.inkStream.innerHTML = item.content;
               state.currentArtifactId = item.id;
-              state.lastAiGeneratedDraft = item.plainText;
               handleCanvasInput();
               finalizeUI();
               closeVaultDrawer();
