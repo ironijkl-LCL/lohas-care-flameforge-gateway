@@ -4,15 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>FlameForge | 火之鍛造廠</title>
-  <meta name="description" content="融合普羅米修斯盜火者啟蒙力量與自主流淌自動墨水的內容鍛造系統。" />
+  <meta name="description" content="超越通用 AI 的專業創作者工作台：反向塑形、語氣 Clone、A/B 沙盒與在地搭橋。" />
 
-  <!-- 嚴格 CSP 安全防護策略 -->
   <meta http-equiv="Content-Security-Policy" content="
     default-src 'self';
     script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;
-    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-    font-src 'self' https://fonts.gstatic.com data:;
-    connect-src 'self' https://lohas-care-flameforge-gateway.onrender.com;
+    style-src 'self' 'unsafe-inline';
+    font-src 'self' data:;
+    connect-src 'self' https://lohas-care-flameforge-gateway.onrender.com https://* http://localhost:*;
     img-src 'self' data: blob:;
     object-src 'none';
     base-uri 'self';
@@ -23,32 +22,29 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" defer></script>
 
   <style>
     :root {
       --bg: #07070a;
       --card-bg: rgba(18, 18, 26, 0.72);
       --card-inner: rgba(28, 28, 40, 0.55);
-      
       --border: rgba(255, 255, 255, 0.1);
       --border-hover: rgba(255, 140, 50, 0.5);
       --border-glow: rgba(255, 94, 26, 0.35);
-      
       --flame-spark: #ff5e1a;
       --flame-amber: #ff9436;
       --flame-gold: #ffbe3b;
       --flame-cyan: #22d3ee;
-      --flame-purple: #8b5cf6;
-      
+      --flame-purple: #a855f7;
       --text-pure: #ffffff;
       --text-primary: #f5f5f9;
       --text-body: #eaeaf0;
       --text-secondary: #a1a1ae;
       --text-tertiary: #717180;
-      
       --danger: #ff453a;
       --success: #30d158;
+      --warning: #ffd60a;
       --radius-sm: 8px;
       --radius-md: 12px;
       --radius-lg: 20px;
@@ -60,7 +56,7 @@
     body {
       background-color: var(--bg);
       color: var(--text-body);
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "PingFang HK", "Helvetica Neue", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang HK", system-ui, sans-serif;
       min-height: 100vh;
       -webkit-font-smoothing: antialiased;
       background-image: 
@@ -97,22 +93,16 @@
       padding: 1.1rem 6%;
       background: rgba(7, 7, 10, 0.82);
       backdrop-filter: saturate(190%) blur(24px);
-      -webkit-backdrop-filter: saturate(190%) blur(24px);
       position: sticky;
       top: 0;
       z-index: 100;
       border-bottom: 1px solid var(--border);
     }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
+    .brand { display: flex; align-items: center; gap: 0.75rem; }
 
     .ember-dot {
-      width: 9px;
-      height: 9px;
+      width: 9px; height: 9px;
       border-radius: 50%;
       background: linear-gradient(135deg, var(--flame-gold), var(--flame-spark));
       box-shadow: 0 0 12px var(--flame-spark);
@@ -129,11 +119,7 @@
       -webkit-text-fill-color: transparent;
     }
 
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
+    .header-actions { display: flex; align-items: center; gap: 0.75rem; }
 
     .btn-header {
       background: var(--card-inner);
@@ -176,25 +162,21 @@
     }
 
     .status-indicator {
-      width: 6px;
-      height: 6px;
+      width: 6px; height: 6px;
       border-radius: 50%;
       background: #00ff88;
       box-shadow: 0 0 8px #00ff88;
     }
 
     main {
-      max-width: 1240px;
+      max-width: 1280px;
       margin: 0 auto;
-      padding: 3.5rem 1.5rem 5rem;
+      padding: 2.8rem 1.5rem 5rem;
       position: relative;
       z-index: 2;
     }
 
-    .hero {
-      text-align: center;
-      margin-bottom: 3.5rem;
-    }
+    .hero { text-align: center; margin-bottom: 2.5rem; }
 
     .badge-prometheus {
       display: inline-block;
@@ -202,21 +184,20 @@
       text-transform: uppercase;
       letter-spacing: 0.25em;
       color: var(--flame-gold);
-      margin-bottom: 1.2rem;
+      margin-bottom: 1.1rem;
       font-weight: 600;
       padding: 0.25rem 0.9rem;
       border-radius: 999px;
       background: rgba(255, 190, 59, 0.09);
       border: 1px solid rgba(255, 190, 59, 0.25);
-      box-shadow: 0 0 16px rgba(255, 190, 59, 0.1);
     }
 
     .hero-title {
-      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-size: clamp(2.2rem, 4.5vw, 3.8rem);
       font-weight: 800;
       line-height: 1.15;
       letter-spacing: -0.03em;
-      margin-bottom: 1.2rem;
+      margin-bottom: 1rem;
       background: linear-gradient(135deg, #ffffff 15%, #ffd488 55%, #ff5e1a 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -225,21 +206,20 @@
 
     .hero-desc {
       color: var(--text-secondary);
-      font-size: 1rem;
-      line-height: 1.65;
-      max-width: 720px;
+      font-size: 0.98rem;
+      line-height: 1.6;
+      max-width: 760px;
       margin: 0 auto;
-      font-weight: 400;
     }
 
     .forge-grid {
       display: grid;
-      grid-template-columns: 1fr 1.35fr;
+      grid-template-columns: 1fr 1.45fr;
       gap: 2rem;
       align-items: start;
     }
 
-    @media (max-width: 960px) {
+    @media (max-width: 980px) {
       .forge-grid { grid-template-columns: 1fr; }
     }
 
@@ -248,12 +228,9 @@
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
-      padding: 2rem;
+      padding: 1.8rem;
       backdrop-filter: saturate(190%) blur(25px);
-      -webkit-backdrop-filter: saturate(190%) blur(25px);
-      box-shadow: 
-        0 24px 50px rgba(0, 0, 0, 0.6),
-        inset 0 1px 1px rgba(255, 255, 255, 0.15);
+      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.15);
       overflow: hidden;
     }
 
@@ -271,20 +248,20 @@
       text-transform: uppercase;
       letter-spacing: 0.12em;
       color: var(--flame-gold);
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.2rem;
       display: flex;
       align-items: center;
       gap: 0.5rem;
       font-weight: 600;
     }
 
-    .field-group { margin-bottom: 1.3rem; }
+    .field-group { margin-bottom: 1.15rem; }
 
     .label-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.45rem;
     }
 
     label {
@@ -300,15 +277,54 @@
       font-weight: 600;
     }
 
+    .input-with-action {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .btn-voice {
+      background: var(--card-inner);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: all 0.2s var(--spring);
+    }
+
+    .btn-voice:hover {
+      background: rgba(255, 94, 26, 0.15);
+      border-color: var(--flame-amber);
+    }
+
+    .btn-voice.recording {
+      background: rgba(255, 69, 58, 0.25);
+      border-color: var(--danger);
+      color: var(--danger);
+      animation: pulse-danger 1.2s infinite;
+    }
+
+    @keyframes pulse-danger {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 0 rgba(255,69,58,0); }
+      50% { transform: scale(1.06); box-shadow: 0 0 14px rgba(255,69,58,0.6); }
+    }
+
     input[type="text"], select {
       width: 100%;
       background: var(--card-inner);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
       color: var(--text-pure);
-      padding: 0.85rem 1.1rem;
+      padding: 0.82rem 1.1rem;
       font-family: inherit;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       transition: all 0.2s var(--spring);
     }
 
@@ -332,25 +348,15 @@
     input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
-      width: 18px;
-      height: 18px;
+      width: 18px; height: 18px;
       border-radius: 50%;
       background: linear-gradient(135deg, var(--flame-gold), var(--flame-spark));
       cursor: pointer;
       box-shadow: 0 0 10px rgba(255, 94, 26, 0.5);
       border: 2px solid #fff;
-    }
-    input[type="range"]::-moz-range-thumb {
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--flame-gold), var(--flame-spark));
-      cursor: pointer;
-      border: 2px solid #fff;
-      box-shadow: 0 0 10px rgba(255, 94, 26, 0.5);
     }
 
-    .tone-selector, .segmented-control {
+    .segmented-control {
       display: flex;
       background: rgba(0, 0, 0, 0.45);
       padding: 3px;
@@ -359,13 +365,9 @@
       gap: 3px;
     }
 
-    .tone-selector div, .segmented-control div { flex: 1; position: relative; }
+    .segmented-control div { flex: 1; position: relative; }
 
-    .seg-radio {
-      position: absolute;
-      opacity: 0;
-      pointer-events: none;
-    }
+    .seg-radio { position: absolute; opacity: 0; pointer-events: none; }
 
     .seg-label {
       display: block;
@@ -386,6 +388,31 @@
       font-weight: 600;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
     }
+
+    .tone-clone-badge {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(168, 85, 247, 0.12);
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      padding: 0.5rem 0.8rem;
+      border-radius: var(--radius-md);
+      font-size: 0.74rem;
+      color: #e9d5ff;
+      margin-bottom: 1.15rem;
+    }
+
+    .tone-clone-badge span strong { color: #fff; }
+
+    .btn-clear-clone {
+      background: none;
+      border: none;
+      color: var(--text-tertiary);
+      cursor: pointer;
+      font-size: 0.7rem;
+      text-decoration: underline;
+    }
+    .btn-clear-clone:hover { color: var(--danger); }
 
     .error-msg {
       color: var(--danger);
@@ -408,7 +435,7 @@
     .btn-ignite {
       width: 100%;
       margin-top: 0.8rem;
-      padding: 1rem;
+      padding: 0.95rem;
       background: linear-gradient(135deg, var(--flame-spark), var(--flame-amber));
       color: #000;
       border: none;
@@ -432,18 +459,121 @@
       filter: grayscale(0.6);
     }
 
-    /* 輸出畫布 */
+    .shortcut-hint {
+      font-size: 0.75rem;
+      font-weight: 500;
+      opacity: 0.75;
+      display: inline-block;
+      margin-left: 0.4rem;
+    }
+
+    .sandbox-tabs-bar {
+      display: flex;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 3px;
+      margin-bottom: 0.8rem;
+      gap: 3px;
+    }
+
+    .sandbox-tab {
+      flex: 1;
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      padding: 0.4rem 0.5rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3rem;
+    }
+
+    .sandbox-tab.active {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      border: 1px solid rgba(255, 148, 54, 0.4);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    .roaster-hud {
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 1rem;
+      margin-bottom: 0.85rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .roaster-metrics-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .roaster-pill-group {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .roaster-pill {
+      font-size: 0.74rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 0.25rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+    }
+
+    .btn-fix-pill {
+      background: rgba(255, 148, 54, 0.18);
+      border: 1px solid rgba(255, 148, 54, 0.45);
+      color: var(--flame-gold);
+      padding: 0.25rem 0.55rem;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s var(--spring);
+      white-space: nowrap;
+    }
+
+    .btn-fix-pill:hover {
+      background: var(--flame-spark);
+      color: #000;
+    }
+
+    .roaster-critique {
+      font-size: 0.76rem;
+      color: #ffd488;
+      line-height: 1.4;
+      font-style: italic;
+      padding-top: 0.4rem;
+      border-top: 1px dashed rgba(255, 255, 255, 0.08);
+    }
+
     .output-card {
       display: flex;
       flex-direction: column;
-      min-height: 580px;
+      min-height: 620px;
     }
 
     .output-toolbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 0.8rem;
+      margin-bottom: 0.75rem;
       flex-wrap: wrap;
       gap: 0.5rem;
     }
@@ -468,17 +598,18 @@
 
     .ink-stream-box {
       flex: 1;
-      min-height: 380px;
-      max-height: 500px;
+      min-height: 360px;
+      max-height: 460px;
       overflow-y: auto;
       background: rgba(0, 0, 0, 0.35);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
-      padding: 1.6rem;
+      padding: 1.5rem;
       color: var(--text-body);
       line-height: 1.75;
-      font-size: 0.95rem;
+      font-size: 0.94rem;
       transition: border-color 0.2s, box-shadow 0.2s;
+      position: relative;
     }
 
     .ink-stream-box[contenteditable="true"]:focus {
@@ -495,8 +626,7 @@
 
     .stream-cursor {
       display: inline-block;
-      width: 3px;
-      height: 1.15em;
+      width: 3px; height: 1.15em;
       background-color: var(--flame-amber);
       margin-left: 3px;
       vertical-align: -0.15em;
@@ -508,13 +638,57 @@
       50% { opacity: 0; }
     }
 
+    .highlighter-bar {
+      position: absolute;
+      display: none;
+      z-index: 120;
+      background: rgba(24, 24, 34, 0.95);
+      border: 1px solid var(--flame-amber);
+      border-radius: var(--radius-sm);
+      padding: 4px;
+      gap: 4px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8), 0 0 12px rgba(255, 94, 26, 0.3);
+      backdrop-filter: blur(12px);
+      transform: translate(-50%, -100%);
+      margin-top: -8px;
+    }
+
+    .highlighter-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-primary);
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+
+    .highlighter-btn:hover {
+      background: rgba(255, 148, 54, 0.2);
+      border-color: rgba(255, 148, 54, 0.4);
+      color: #fff;
+    }
+
     .rendered-article h3 {
       font-size: 1.25rem;
       font-weight: 700;
-      margin-bottom: 0.9rem;
+      margin: 1.2rem 0 0.5rem;
       color: var(--text-pure);
       border-left: 3px solid var(--flame-gold);
       padding-left: 0.8rem;
+    }
+
+    .rendered-article h4 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin: 0.8rem 0 0.4rem;
+      color: var(--flame-gold);
     }
 
     .rendered-article .hook-box {
@@ -528,54 +702,51 @@
       font-style: italic;
     }
 
-    .rendered-article p { 
-      margin-bottom: 1rem; 
-      white-space: pre-wrap; 
-      color: var(--text-body);
+    .rendered-article blockquote {
+      border-left: 3px solid var(--flame-amber);
+      padding: 0.5rem 1rem;
+      margin: 0.8rem 0;
+      background: rgba(255, 148, 54, 0.08);
+      color: var(--text-primary);
+      font-style: italic;
     }
 
-    .rendered-article ul {
-      margin: 0.8rem 0 1rem 1.2rem;
-      color: var(--text-body);
+    .rendered-article code {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.85em;
     }
-    .rendered-article ul li { margin-bottom: 0.4rem; }
+
+    .rendered-article p { margin-bottom: 1rem; white-space: pre-wrap; color: var(--text-body); }
+    .rendered-article ul, .rendered-article ol { margin: 0.8rem 0 1rem 1.4rem; color: var(--text-body); }
+    .rendered-article li { margin-bottom: 0.4rem; }
     .rendered-article strong { color: var(--text-pure); font-weight: 700; }
     .rendered-article em { color: var(--flame-gold); font-style: italic; }
+    .rendered-article .hashtags { color: var(--flame-amber); font-size: 0.88rem; font-weight: 600; }
 
-    .rendered-article .hashtags { 
-      color: var(--flame-amber); 
-      font-size: 0.88rem; 
-      font-weight: 600; 
-      letter-spacing: 0.02em;
-    }
-
-    /* 動作排與品牌設置面板 */
     .action-group {
-      margin-top: 1.2rem;
+      margin-top: 1rem;
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
+      gap: 0.7rem;
     }
 
-    .action-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
+    .action-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 
     .btn-action {
       background: var(--card-inner);
       border: 1px solid var(--border);
       color: var(--text-primary);
-      padding: 0.55rem 0.9rem;
+      padding: 0.5rem 0.85rem;
       border-radius: var(--radius-sm);
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 500;
-      font-family: inherit;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
+      gap: 0.35rem;
       transition: all 0.15s var(--spring);
     }
 
@@ -591,29 +762,28 @@
       background: rgba(0, 0, 0, 0.3);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
-      padding: 0.8rem 1rem;
+      padding: 0.75rem 1rem;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 0.8rem;
+      gap: 0.75rem;
       font-size: 0.78rem;
     }
 
     .brand-kit-inputs {
       display: flex;
       align-items: center;
-      gap: 0.6rem;
+      gap: 0.5rem;
       flex-wrap: wrap;
     }
 
     .brand-kit-inputs input[type="text"] {
-      width: 150px;
-      padding: 0.4rem 0.7rem;
+      width: 140px;
+      padding: 0.35rem 0.65rem;
       font-size: 0.78rem;
     }
 
-    /* 側邊資產庫抽屜 (Vault Drawer) */
     .drawer-overlay {
       position: fixed;
       inset: 0;
@@ -625,15 +795,11 @@
       transition: opacity 0.3s var(--spring);
     }
 
-    .drawer-overlay.open {
-      opacity: 1;
-      pointer-events: auto;
-    }
+    .drawer-overlay.open { opacity: 1; pointer-events: auto; }
 
     .vault-drawer {
       position: fixed;
-      top: 0;
-      right: 0;
+      top: 0; right: 0;
       width: min(440px, 90vw);
       height: 100vh;
       background: rgba(14, 14, 20, 0.95);
@@ -648,15 +814,13 @@
       box-shadow: -10px 0 30px rgba(0, 0, 0, 0.7);
     }
 
-    .drawer-overlay.open .vault-drawer {
-      transform: translateX(0);
-    }
+    .drawer-overlay.open .vault-drawer { transform: translateX(0); }
 
     .vault-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1.2rem;
+      margin-bottom: 1rem;
       border-bottom: 1px solid var(--border);
       padding-bottom: 0.8rem;
     }
@@ -679,7 +843,9 @@
       padding: 0.2rem 0.5rem;
     }
 
-    .vault-search-box {
+    .vault-search-row {
+      display: flex;
+      gap: 0.5rem;
       margin-bottom: 1.2rem;
     }
 
@@ -689,7 +855,6 @@
       display: flex;
       flex-direction: column;
       gap: 0.8rem;
-      padding-right: 0.2rem;
     }
 
     .vault-item {
@@ -697,12 +862,6 @@
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
       padding: 1rem;
-      transition: all 0.2s;
-    }
-
-    .vault-item:hover {
-      border-color: var(--flame-amber);
-      background: rgba(35, 35, 48, 0.7);
     }
 
     .vault-item-meta {
@@ -718,7 +877,6 @@
       font-weight: 600;
       color: var(--text-pure);
       margin-bottom: 0.4rem;
-      line-height: 1.35;
     }
 
     .vault-item-preview {
@@ -730,10 +888,7 @@
       margin-bottom: 0.8rem;
     }
 
-    .vault-item-actions {
-      display: flex;
-      gap: 0.4rem;
-    }
+    .vault-item-actions { display: flex; gap: 0.4rem; }
 
     .btn-vault-action {
       background: rgba(255, 255, 255, 0.06);
@@ -743,19 +898,13 @@
       border-radius: var(--radius-sm);
       font-size: 0.72rem;
       cursor: pointer;
-      transition: all 0.15s;
     }
 
-    .btn-vault-action:hover {
-      color: #fff;
-      border-color: var(--border-hover);
-    }
+    .btn-vault-action:hover { color: #fff; border-color: var(--border-hover); }
 
-    /* 圖卡快照容器 */
     #socialCardSnapshot {
       position: absolute;
-      top: -9999px;
-      left: -9999px;
+      top: -9999px; left: -9999px;
       background: #08080c;
       background-image: 
         radial-gradient(circle at 15% 15%, rgba(255, 94, 26, 0.35) 0%, transparent 60%),
@@ -765,28 +914,32 @@
       flex-direction: column;
       justify-content: space-between;
       color: #fff;
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       box-sizing: border-box;
     }
 
-    #socialCardSnapshot.ratio-1-1 {
-      width: 600px;
-      height: 600px;
-      padding: 3.2rem;
-    }
-    #socialCardSnapshot.ratio-1-1 .snap-body {
-      font-size: 1.55rem;
-      line-height: 1.5;
-    }
+    #socialCardSnapshot.ratio-1-1 { width: 600px; height: 600px; padding: 3.2rem; }
+    #socialCardSnapshot.ratio-1-1 .snap-body { font-size: 1.55rem; line-height: 1.5; }
 
-    #socialCardSnapshot.ratio-9-16 {
-      width: 540px;
-      height: 960px;
-      padding: 4.5rem 3.5rem;
-    }
-    #socialCardSnapshot.ratio-9-16 .snap-body {
-      font-size: 1.95rem;
-      line-height: 1.55;
+    #socialCardSnapshot.ratio-9-16 { width: 540px; height: 960px; padding: 4.5rem 3.5rem; }
+    #socialCardSnapshot.ratio-9-16 .snap-body { font-size: 1.95rem; line-height: 1.55; }
+
+    #carouselSnapshot {
+      position: absolute;
+      top: -9999px; left: -9999px;
+      width: 600px; height: 600px;
+      background: #08080c;
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(255, 94, 26, 0.35) 0%, transparent 60%),
+        radial-gradient(circle at 85% 85%, rgba(139, 92, 246, 0.25) 0%, transparent 60%);
+      border: 2px solid rgba(255, 148, 54, 0.35);
+      padding: 3.2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: #fff;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      box-sizing: border-box;
     }
 
     .snap-header {
@@ -800,23 +953,12 @@
     .snap-brand-tag {
       font-size: 0.82rem;
       font-weight: 700;
-      text-transform: uppercase;
       letter-spacing: 0.15em;
       color: var(--flame-gold);
     }
 
-    .snap-handle-tag {
-      font-size: 0.8rem;
-      color: var(--text-secondary);
-      font-weight: 500;
-    }
-
-    .snap-body {
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      color: #fdfdfd;
-      font-style: italic;
-    }
+    .snap-handle-tag { font-size: 0.8rem; color: var(--text-secondary); }
+    .snap-body { font-weight: 600; color: #fdfdfd; font-style: italic; }
 
     .snap-footer {
       display: flex;
@@ -836,7 +978,14 @@
 </head>
 <body>
 
-  <div id="a11yAnnouncer" class="sr-only" aria-live="assertive"></div>
+  <div id="a11yAnnouncer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- 劃線浮動工具列 -->
+  <div id="highlighterBar" class="highlighter-bar" role="toolbar" aria-label="劃線微調工具">
+    <button type="button" class="highlighter-btn" data-mode="sharpen">⚡ 銳利金句</button>
+    <button type="button" class="highlighter-btn" data-mode="data">📊 數據強化</button>
+    <button type="button" class="highlighter-btn" data-mode="soften">🕊️ 溫和修飾</button>
+  </div>
 
   <header>
     <div class="brand">
@@ -850,21 +999,22 @@
       <button type="button" id="pwaInstallBtn" class="btn-header btn-pwa">📲 安裝 App</button>
       <div class="status-badge">
         <div class="status-indicator"></div>
-        <span>VAULT ACTIVE</span>
+        <span id="gatewayStatusText">CONNECTING</span>
       </div>
     </div>
   </header>
 
   <main>
     <section class="hero">
-      <div class="badge-prometheus">Live Stream × Asset Vault</div>
+      <div class="badge-prometheus">Autonomous Studio Engine</div>
       <h2 class="hero-title">盜火者的火種<br>自主流淌的自動墨水</h2>
       <p class="hero-desc">
-        思想在此實時顯影並永久封存。配備本地 IndexedDB 資產庫與品牌視覺套件，成就一站式創作者工作台。
+        將 AI 從被動回答對話，昇華為專業創作者的「閉環塑形工場」：反向手術刀重構、風格習慣 Clone、三重語氣沙盒與 2026 在地時事搭橋。
       </p>
     </section>
 
     <div class="forge-grid">
+      <!-- 左欄：火種注入矩陣 -->
       <section class="apple-card" aria-labelledby="forge-sparks-heading">
         <div class="card-label" id="forge-sparks-heading">✦ Ignite Sparks // 注入原石靈感</div>
         
@@ -873,8 +1023,26 @@
             <div class="label-row">
               <label for="topic">THE TOPIC (鍛造核心主旨)</label>
             </div>
-            <input type="text" id="topic" name="topic" value="2026 年，韌性人生，活出不被環境定義的生命" aria-describedby="topic-error" aria-invalid="false" required />
+            <div class="input-with-action">
+              <input type="text" id="topic" name="topic" value="2026 年，韌性人生，活出不被環境定義的生命" required />
+              <button type="button" id="voiceInputBtn" class="btn-voice" title="點擊進行語音錄入 (支援廣東話/華語)" aria-label="語音錄入">🎙️</button>
+            </div>
             <div id="topic-error" class="error-msg" role="alert">請輸入鍛造核心主旨</div>
+          </div>
+
+          <!-- 時事搭橋 (Context Bridge)：已補齊「不需要搭橋」與「CN 中國在地脈絡」 -->
+          <div class="field-group">
+            <div class="label-row">
+              <label for="contextBridgeSelect">REAL-TIME CONTEXT BRIDGE (時事搭橋)</label>
+              <span class="field-hint">2026 在地脈絡</span>
+            </div>
+            <select id="contextBridgeSelect">
+              <option value="none" selected>🚫 不需要搭橋 (純主題原創，不加入任何時事脈絡)</option>
+              <option value="hk">🇭🇰 HK 香港在地脈絡 (2026 經濟轉型、高租金生活壓力、職場韌性)</option>
+              <option value="cn">🇨🇳 CN 中國在地脈絡 (2026 新質生產力、降本增效破局、大模型落地與出海浪潮)</option>
+              <option value="tw">🇹🇼 TW 台灣在地脈絡 (2026 科技出海、遠距工作、世代焦慮突破)</option>
+              <option value="global">🌐 通用國際視野 (全球宏觀趨勢，無特定地域限制)</option>
+            </select>
           </div>
 
           <div class="field-group">
@@ -893,15 +1061,15 @@
             <div class="label-row">
               <label for="audience">TARGET AUDIENCE (共鳴受眾)</label>
             </div>
-            <input type="text" id="audience" name="audience" value="全民大眾" aria-describedby="audience-error" aria-invalid="false" required />
+            <input type="text" id="audience" name="audience" value="全民大眾" required />
             <div id="audience-error" class="error-msg" role="alert">請輸入共鳴受眾目標</div>
           </div>
 
           <div class="field-group">
             <div class="label-row">
-              <label id="tone-label">TONE DIAL (語氣調節器)</label>
+              <label id="tone-label">ACTIVE TONE DIAL (主要語氣)</label>
             </div>
-            <div class="tone-selector" role="radiogroup" aria-labelledby="tone-label">
+            <div class="segmented-control" role="radiogroup" aria-labelledby="tone-label">
               <div>
                 <input type="radio" class="seg-radio" name="tone" id="tone-auth" value="authoritative" checked>
                 <label for="tone-auth" class="seg-label">專業權威</label>
@@ -917,18 +1085,27 @@
             </div>
           </div>
 
+          <!-- 語氣 Clone 指紋徽章 -->
+          <div class="tone-clone-badge" id="toneCloneBadge">
+            <span>🧬 語氣 Clone 機：<strong id="cloneTraitText">已待命（手動修訂將自動被記憶）</strong></span>
+            <button type="button" class="btn-clear-clone" id="resetToneCloneBtn" title="清除已學習的修改習慣">重設指紋</button>
+          </div>
+
           <div class="field-group">
             <div class="label-row">
               <label for="tempSlider">CREATIVITY (創意火花)</label>
               <span id="tempValue" class="field-hint">0.7</span>
             </div>
-            <input type="range" id="tempSlider" min="0.1" max="1.0" step="0.1" value="0.7" aria-describedby="tempValue" />
+            <input type="range" id="tempSlider" min="0.1" max="1.0" step="0.1" value="0.7" />
           </div>
 
-          <button type="submit" id="submitBtn" class="btn-ignite">啟動火之鍛造 (Ignite Engine)</button>
+          <button type="submit" id="submitBtn" class="btn-ignite">
+            啟動火之鍛造 <span class="shortcut-hint">(Ctrl/Cmd + ↵)</span>
+          </button>
         </form>
       </section>
 
+      <!-- 右欄：評測 HUD、沙盒分頁與所見即所得畫布 -->
       <section class="apple-card output-card" aria-labelledby="ink-output-heading">
         <div class="output-toolbar">
           <div style="display:flex; align-items:center; gap:0.6rem;">
@@ -938,8 +1115,38 @@
           <div class="meta-metrics" id="metricsDisplay">約 0 字 ｜ 0 秒閱讀</div>
         </div>
 
-        <div class="ink-stream-box" id="inkStream" contenteditable="false" aria-live="polite">
-          <p style="color: var(--text-tertiary);">// 系統待命。填妥左側火種，點擊「啟動火之鍛造」開始提煉文字。<br>快捷鍵：Ctrl/Cmd + Enter 提交 ｜ ESC 取消</p>
+        <!-- A/B 測試沙盒切換分頁 -->
+        <div class="sandbox-tabs-bar" id="sandboxTabsBar">
+          <button type="button" class="sandbox-tab active" data-tone="authoritative">🏛️ 專業權威 (主版本)</button>
+          <button type="button" class="sandbox-tab" data-tone="conversational">☕ 直率對話</button>
+          <button type="button" class="sandbox-tab" data-tone="sharp">🗡️ 挑釁銳利</button>
+        </div>
+
+        <!-- Roaster HUD 結合「反向塑形」操作按鈕 -->
+        <div class="roaster-hud" id="roasterHud">
+          <div class="roaster-metrics-row">
+            <div class="roaster-pill-group">
+              <span class="roaster-pill" id="roastHookPill">🪝 Hook: <strong>--</strong></span>
+              <button type="button" class="btn-fix-pill" id="fixHookBtn" title="只重寫前兩句為高吸引力開頭" style="display:none;">⚡ 重塑爆款 Hook</button>
+            </div>
+
+            <div class="roaster-pill-group">
+              <span class="roaster-pill" id="roastCompletionPill">📈 完讀率: <strong>--</strong></span>
+              <button type="button" class="btn-fix-pill" id="fixBreakParagraphsBtn" title="自動將長段落碎裂並加大留白" style="display:none;">✂️ 手術刀拆段</button>
+            </div>
+
+            <div class="roaster-pill-group">
+              <span class="roaster-pill" id="roastRiskPill">🛡️ 風險: <strong>--</strong></span>
+              <button type="button" class="btn-fix-pill" id="fixRiskBtn" title="自動調和可能引發公關災難的詞彙" style="display:none;">🕊️ 溫和除刺</button>
+            </div>
+          </div>
+          <div class="roaster-critique" id="roastCritiqueText">
+            💡 系統待命。生成後演算法將在此給出真實反饋；若評測不佳，點擊上方按鈕即可一鍵局部修復！
+          </div>
+        </div>
+
+        <div class="ink-stream-box" id="inkStream" contenteditable="false" aria-live="off">
+          <p style="color: var(--text-tertiary);">// 系統待命。填妥左側火種，點擊「啟動火之鍛造」開始提煉文字。<br>快捷鍵：Ctrl/Cmd + Enter 提交 ｜ ESC 取消<br>提示：在產生的文章上<b>劃線選取文字</b>，可浮出微調工具進行局部修飾。</p>
         </div>
 
         <div class="action-group">
@@ -947,18 +1154,18 @@
             <button type="button" id="reforgeBtn" class="btn-action" disabled>🔥 再鍛造一次</button>
             <button type="button" id="expandBtn" class="btn-action" disabled>➕ 加長提煉</button>
             <button type="button" id="condenseBtn" class="btn-action" disabled>➖ 精簡收斂</button>
+            <button type="button" id="batchSandboxBtn" class="btn-action" style="border-color: var(--flame-purple);" disabled>🧪 一鍵鍛造三語氣沙盒</button>
             <button type="button" id="copyBtn" class="btn-action" disabled>📋 複製全文</button>
           </div>
 
           <div class="brand-kit-panel">
             <div class="brand-kit-inputs">
-              <span>創作者 Handle:</span>
+              <span>Handle:</span>
               <input type="text" id="brandHandleInput" placeholder="@username" value="@alex_founder" />
             </div>
 
-            <div style="display:flex; align-items:center; gap:0.6rem;">
-              <span>比例:</span>
-              <div class="segmented-control" style="width: 170px;">
+            <div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;">
+              <div class="segmented-control" style="width: 150px;">
                 <div>
                   <input type="radio" class="seg-radio" name="aspectRatio" id="ratio-1-1" value="1-1" checked>
                   <label for="ratio-1-1" class="seg-label">1:1 正方</label>
@@ -970,7 +1177,10 @@
               </div>
 
               <button type="button" id="cardGenBtn" class="btn-action" style="border-color: var(--flame-amber);" disabled>
-                🖼️ 產生品牌圖卡
+                🖼️ 單張圖卡
+              </button>
+              <button type="button" id="carouselGenBtn" class="btn-action" style="border-color: var(--flame-cyan);" disabled>
+                🎠 多頁輪播 (Carousel)
               </button>
             </div>
           </div>
@@ -983,13 +1193,14 @@
     <div class="vault-drawer" role="dialog" aria-modal="true" aria-labelledby="vaultDrawerTitle">
       <div class="vault-header">
         <div class="vault-title" id="vaultDrawerTitle">
-          <span>🏛️</span> 火種資產庫 (IndexedDB Vault)
+          <span>🏛️</span> 火種資產庫 (Max 50 筆)
         </div>
         <button type="button" class="btn-close-drawer" id="closeVaultBtn" aria-label="關閉資產庫">✕</button>
       </div>
 
-      <div class="vault-search-box">
+      <div class="vault-search-row">
         <input type="text" id="vaultSearchInput" placeholder="🔍 搜尋主題或結晶內文..." />
+        <button type="button" class="btn-vault-action" id="vaultClearAllBtn" style="color:var(--danger); white-space:nowrap;">清空資產庫</button>
       </div>
 
       <div class="vault-list" id="vaultListContainer"></div>
@@ -1010,8 +1221,19 @@
     </div>
   </div>
 
+  <div id="carouselSnapshot" aria-hidden="true">
+    <div class="snap-header">
+      <span class="snap-brand-tag" id="carouselSlideTag">SLIDE 1 / 5</span>
+      <span class="snap-handle-tag" id="carouselHandleText">@alex_founder</span>
+    </div>
+    <div class="snap-body" id="carouselContent" style="font-size: 1.6rem; line-height: 1.5;"></div>
+    <div class="snap-footer">
+      <span id="carouselFooterHint">SWIPE ➔</span>
+      <span>FLAMEFORGE CAROUSEL</span>
+    </div>
+  </div>
+
   <script>
-    // 監控體系：全域異常捕獲
     window.onerror = function (message, source, lineno, colno, error) {
       console.error('[FlameForge Telemetry]', { message, source, lineno, colno, error });
       return false;
@@ -1020,11 +1242,12 @@
       console.error('[FlameForge Promise Telemetry]', event.reason);
     };
 
-    // 模組一：IndexedDB 資產庫底層封裝 (支援版本遷移)
     const VaultDB = (() => {
       const DB_NAME = 'FlameForgeVault';
       const DB_VERSION = 2;
       const STORE_NAME = 'artifacts';
+      const MAX_ENTRIES = 50;
+      const PRUNE_COUNT = 10;
       let dbInstance = null;
 
       function openDB() {
@@ -1034,54 +1257,66 @@
 
           req.onupgradeneeded = (e) => {
             const db = e.target.result;
-            const oldVersion = e.oldVersion;
+            let store = db.objectStoreNames.contains(STORE_NAME)
+              ? req.transaction.objectStore(STORE_NAME)
+              : db.createObjectStore(STORE_NAME, { keyPath: 'id' });
 
-            let store;
-            if (oldVersion < 1) {
-              store = db.createObjectStore(STORE_NAME, { keyPath: 'id' });
-              store.createIndex('timestamp', 'timestamp', { unique: false });
-            } else {
-              store = req.transaction.objectStore(STORE_NAME);
-            }
-
-            if (oldVersion < 2) {
-              if (!store.indexNames.contains('platform')) {
-                store.createIndex('platform', 'platform', { unique: false });
-              }
-            }
+            if (!store.indexNames.contains('timestamp')) store.createIndex('timestamp', 'timestamp', { unique: false });
+            if (!store.indexNames.contains('platform')) store.createIndex('platform', 'platform', { unique: false });
           };
 
-          req.onsuccess = (e) => {
-            dbInstance = e.target.result;
-            resolve(dbInstance);
-          };
+          req.onsuccess = (e) => { dbInstance = e.target.result; resolve(dbInstance); };
           req.onerror = () => reject(req.error);
         });
       }
 
       async function saveItem(item) {
         const db = await openDB();
+        await enforceLRU(db);
         return new Promise((resolve, reject) => {
           const tx = db.transaction(STORE_NAME, 'readwrite');
-          const store = tx.objectStore(STORE_NAME);
-          store.put(item);
+          tx.objectStore(STORE_NAME).put(item);
           tx.oncomplete = () => resolve(item);
           tx.onerror = () => reject(tx.error);
         });
       }
 
-      async function getAllItems(limit = 60) {
+      async function enforceLRU(db) {
+        return new Promise((resolve) => {
+          const tx = db.transaction(STORE_NAME, 'readwrite');
+          const store = tx.objectStore(STORE_NAME);
+          const countReq = store.count();
+
+          countReq.onsuccess = () => {
+            if (countReq.result < MAX_ENTRIES) return resolve();
+            const index = store.index('timestamp');
+            let deleted = 0;
+            const curReq = index.openCursor();
+            curReq.onsuccess = (e) => {
+              const cursor = e.target.result;
+              if (cursor && deleted < PRUNE_COUNT) {
+                store.delete(cursor.primaryKey);
+                deleted++;
+                cursor.continue();
+              } else {
+                resolve();
+              }
+            };
+          };
+          countReq.onerror = () => resolve();
+        });
+      }
+
+      async function getAllItems() {
         const db = await openDB();
         return new Promise((resolve, reject) => {
           const tx = db.transaction(STORE_NAME, 'readonly');
-          const store = tx.objectStore(STORE_NAME);
-          const index = store.index('timestamp');
+          const index = tx.objectStore(STORE_NAME).index('timestamp');
           const items = [];
-
           const req = index.openCursor(null, 'prev');
           req.onsuccess = (e) => {
             const cursor = e.target.result;
-            if (cursor && items.length < limit) {
+            if (cursor && items.length < MAX_ENTRIES) {
               items.push(cursor.value);
               cursor.continue();
             } else {
@@ -1096,21 +1331,31 @@
         const db = await openDB();
         return new Promise((resolve, reject) => {
           const tx = db.transaction(STORE_NAME, 'readwrite');
-          const store = tx.objectStore(STORE_NAME);
-          store.delete(id);
+          tx.objectStore(STORE_NAME).delete(id);
           tx.oncomplete = () => resolve(id);
           tx.onerror = () => reject(tx.error);
         });
       }
 
-      return { saveItem, getAllItems, deleteItem };
+      async function clearAll() {
+        const db = await openDB();
+        return new Promise((resolve, reject) => {
+          const tx = db.transaction(STORE_NAME, 'readwrite');
+          tx.objectStore(STORE_NAME).clear();
+          tx.oncomplete = () => resolve();
+          tx.onerror = () => reject(tx.error);
+        });
+      }
+
+      return { saveItem, getAllItems, deleteItem, clearAll };
     })();
 
-    // 模組二：主控制引擎
     const FlameForge = (() => {
-      const API_BASE = 'https://lohas-care-flameforge-gateway.onrender.com';
-      const DRAFT_KEY = 'ff_draft_v4';
+      const urlParams = new URLSearchParams(window.location.search);
+      const API_BASE = urlParams.get('api') || localStorage.getItem('ff_custom_api') || 'https://lohas-care-flameforge-gateway.onrender.com';
+      const DRAFT_KEY = 'ff_draft_v7';
       const BRAND_KEY = 'ff_brand_handle';
+      const TONE_CLONE_KEY = 'ff_tone_fingerprints_v1';
 
       const state = {
         isForging: false,
@@ -1121,7 +1366,18 @@
         currentAction: 'generate',
         elapsedInterval: null,
         rawGeneratedText: '',
-        currentArtifactId: null
+        currentArtifactId: null,
+        speechRec: null,
+        isRecording: false,
+        savedRange: null,
+        lastAiGeneratedDraft: '',
+        userCloneFingerprints: JSON.parse(localStorage.getItem(TONE_CLONE_KEY) || '{"cantonese":0,"shortSentences":0,"strongHook":0}'),
+        sandboxCache: {
+          authoritative: null,
+          conversational: null,
+          sharp: null
+        },
+        currentActiveTone: 'authoritative'
       };
 
       const platformLimits = {
@@ -1136,10 +1392,21 @@
         'Substack': '【平台強制約束 - Substack】：請撰寫一篇約 1500 至 2000 字的高質量架構長文。包含前言引導、多個 Markdown 二級小標題（## ）、深度觀點論述、現實案例剖析及具體行動指引，行文嚴密充實。'
       };
 
+      // 支援「不需要搭橋」與「CN 中國內地」等在地脈絡 Prompt
+      const contextBridgePrompts = {
+        'none': '',
+        'hk': '【2026 香港在地時事搭橋】：必須將論點錨定於 2026 年香港社會與職場環境（例如：AI 智能化全面衝擊專業白領轉型、中環/科學園科技出海、高生活成本與樓宇租金壓力下，個體如何保持心理韌性與職業抗風險能力），行文具備道地港人共鳴。',
+        'cn': '【2026 中國內地時事搭橋】：必須緊扣 2026 年中國社會與職場現實（例如：新質生產力轉型升級、各行業「降本增效」深水區、破除內卷焦慮、AI 大模型在實體產業深度落地，以及個體在不確定環境下的個人破局與出海生存法則），行文深度接地氣，切中主流職場心智。',
+        'tw': '【2026 台灣在地時事搭橋】：必須緊密結合 2026 年台灣產業與世代挑戰（例如：半導體供應鏈重組、遠距出海辦公、高房價下青年「韌性成長」與自我定義心態），文字具備深刻同理心。',
+        'global': '【全球宏觀國際視野】：跳脫單一地域限制，聚焦 2026 全球 AI 變革浪潮、跨文化協作與國際通用商業/生活思維。'
+      };
+
       const els = {
         form: document.getElementById('forgeForm'),
         topicInput: document.getElementById('topic'),
         topicError: document.getElementById('topic-error'),
+        contextBridgeSelect: document.getElementById('contextBridgeSelect'),
+        voiceInputBtn: document.getElementById('voiceInputBtn'),
         audienceInput: document.getElementById('audience'),
         audienceError: document.getElementById('audience-error'),
         platformSelect: document.getElementById('platform'),
@@ -1150,30 +1417,55 @@
         inkStream: document.getElementById('inkStream'),
         canvasModeTag: document.getElementById('canvasModeTag'),
         metricsDisplay: document.getElementById('metricsDisplay'),
+        highlighterBar: document.getElementById('highlighterBar'),
+        roasterHud: document.getElementById('roasterHud'),
+        roastHookPill: document.getElementById('roastHookPill'),
+        roastCompletionPill: document.getElementById('roastCompletionPill'),
+        roastRiskPill: document.getElementById('roastRiskPill'),
+        roastCritiqueText: document.getElementById('roastCritiqueText'),
+        fixHookBtn: document.getElementById('fixHookBtn'),
+        fixBreakParagraphsBtn: document.getElementById('fixBreakParagraphsBtn'),
+        fixRiskBtn: document.getElementById('fixRiskBtn'),
+        sandboxTabsBar: document.getElementById('sandboxTabsBar'),
+        toneCloneBadge: document.getElementById('toneCloneBadge'),
+        cloneTraitText: document.getElementById('cloneTraitText'),
+        resetToneCloneBtn: document.getElementById('resetToneCloneBtn'),
         copyBtn: document.getElementById('copyBtn'),
         cardGenBtn: document.getElementById('cardGenBtn'),
+        carouselGenBtn: document.getElementById('carouselGenBtn'),
         reforgeBtn: document.getElementById('reforgeBtn'),
         expandBtn: document.getElementById('expandBtn'),
         condenseBtn: document.getElementById('condenseBtn'),
+        batchSandboxBtn: document.getElementById('batchSandboxBtn'),
         pwaInstallBtn: document.getElementById('pwaInstallBtn'),
         a11yAnnouncer: document.getElementById('a11yAnnouncer'),
         snapshot: document.getElementById('socialCardSnapshot'),
         snapshotContent: document.getElementById('snapshotContent'),
         snapshotPlatform: document.getElementById('snapshotPlatform'),
         snapHandleText: document.getElementById('snapHandleText'),
+        carouselSnapshot: document.getElementById('carouselSnapshot'),
+        carouselSlideTag: document.getElementById('carouselSlideTag'),
+        carouselHandleText: document.getElementById('carouselHandleText'),
+        carouselContent: document.getElementById('carouselContent'),
         brandHandleInput: document.getElementById('brandHandleInput'),
         openVaultBtn: document.getElementById('openVaultBtn'),
         closeVaultBtn: document.getElementById('closeVaultBtn'),
         drawerOverlay: document.getElementById('drawerOverlay'),
         vaultListContainer: document.getElementById('vaultListContainer'),
         vaultSearchInput: document.getElementById('vaultSearchInput'),
-        vaultCount: document.getElementById('vaultCount')
+        vaultClearAllBtn: document.getElementById('vaultClearAllBtn'),
+        vaultCount: document.getElementById('vaultCount'),
+        gatewayStatusText: document.getElementById('gatewayStatusText')
       };
 
       function init() {
         initPWA();
+        initSpeech();
         loadDraftAndBrand();
+        renderToneCloneStatus();
         bindEvents();
+        bindHighlighter();
+        bindReverseFixButtons();
         updateHint();
         refreshVaultCount();
         probeGatewayHealth();
@@ -1181,40 +1473,49 @@
 
       function escapeHtml(str) {
         if (!str) return '';
-        const div = document.createElement('div');
-        div.textContent = str;
-        return div.innerHTML;
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#039;');
       }
 
-      function parseMarkdown(text) {
-        if (!text) return '';
-        let html = escapeHtml(text);
-        html = html.replace(/^### (.*$)/gim, '<h4 style="color:var(--flame-gold); margin:0.8rem 0 0.4rem;">$1</h4>');
-        html = html.replace(/^## (.*$)/gim, '<h3 style="color:var(--text-pure); margin:1.2rem 0 0.5rem; border-left:3px solid var(--flame-gold); padding-left:0.6rem;">$1</h3>');
-        html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-        html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
-        
+      function parseSafeMarkdown(safeHtml) {
+        let html = safeHtml
+          .replace(/^### (.*$)/gim, '<h4>$1</h4>')
+          .replace(/^## (.*$)/gim, '<h3>$1</h3>')
+          .replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>')
+          .replace(/`([^`]+)`/g, '<code>$1</code>')
+          .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+          .replace(/\*(.+?)\*/g, '<em>$1</em>');
+
         const lines = html.split('\n');
         let inList = false;
         let result = [];
         for (const line of lines) {
           const trimmed = line.trim();
           if (trimmed.startsWith('- ') || trimmed.startsWith('• ')) {
-            if (!inList) {
-              result.push('<ul>');
-              inList = true;
-            }
+            if (!inList) { result.push('<ul>'); inList = true; }
             result.push('<li>' + trimmed.substring(2) + '</li>');
           } else {
-            if (inList) {
-              result.push('</ul>');
-              inList = false;
-            }
+            if (inList) { result.push('</ul>'); inList = false; }
             result.push(trimmed);
           }
         }
         if (inList) result.push('</ul>');
-        return result.join('\n').replace(/\n/g, '<br>');
+
+        return result
+          .map(line => {
+            const t = line.trim();
+            if (!t) return '';
+            if (t.startsWith('<h3') || t.startsWith('<h4') || t.startsWith('<ul>') || t.startsWith('<li') || t.startsWith('</ul>') || t.startsWith('<blockquote')) {
+              return t;
+            }
+            return t + '<br>';
+          })
+          .join('')
+          .replace(/(<br>)+$/g, '');
       }
 
       function updateHint() {
@@ -1227,6 +1528,7 @@
             topic: els.topicInput.value,
             audience: els.audienceInput.value,
             platform: els.platformSelect.value,
+            contextBridge: els.contextBridgeSelect.value,
             tone: document.querySelector('input[name="tone"]:checked')?.value,
             temperature: els.tempSlider.value
           };
@@ -1242,6 +1544,7 @@
             if (draft.topic) els.topicInput.value = draft.topic;
             if (draft.audience) els.audienceInput.value = draft.audience;
             if (draft.platform) els.platformSelect.value = draft.platform;
+            if (draft.contextBridge) els.contextBridgeSelect.value = draft.contextBridge;
             if (draft.tone) {
               const r = document.querySelector(`input[name="tone"][value="${draft.tone}"]`);
               if (r) r.checked = true;
@@ -1255,16 +1558,391 @@
           if (savedHandle) {
             els.brandHandleInput.value = savedHandle;
             els.snapHandleText.textContent = savedHandle;
+            els.carouselHandleText.textContent = savedHandle;
           }
         } catch(e) {}
       }
 
+      function analyzeUserEditsDiff(aiDraft, finalEdited) {
+        if (!aiDraft || !finalEdited || aiDraft.length < 50) return;
+        
+        let changed = false;
+        if (/[我哋|唔|嘅|喺|點解|睇|冇|真係]/.test(finalEdited) && !/[我哋|唔|嘅|喺|點解|睇|冇|真係]/.test(aiDraft)) {
+          state.userCloneFingerprints.cantonese = (state.userCloneFingerprints.cantonese || 0) + 1;
+          changed = true;
+        }
+
+        const aiLines = aiDraft.split('\n').filter(Boolean).length;
+        const editedLines = finalEdited.split('\n').filter(Boolean).length;
+        if (editedLines > aiLines + 3) {
+          state.userCloneFingerprints.shortSentences = (state.userCloneFingerprints.shortSentences || 0) + 1;
+          changed = true;
+        }
+
+        const aiFirst = aiDraft.trim().split('\n')[0] || '';
+        const editedFirst = finalEdited.trim().split('\n')[0] || '';
+        if (aiFirst !== editedFirst && editedFirst.length > 5) {
+          state.userCloneFingerprints.strongHook = (state.userCloneFingerprints.strongHook || 0) + 1;
+          changed = true;
+        }
+
+        if (changed) {
+          localStorage.setItem(TONE_CLONE_KEY, JSON.stringify(state.userCloneFingerprints));
+          renderToneCloneStatus();
+        }
+      }
+
+      function renderToneCloneStatus() {
+        const fp = state.userCloneFingerprints;
+        const traits = [];
+        if (fp.cantonese >= 1) traits.push('廣東口語習慣');
+        if (fp.shortSentences >= 1) traits.push('極簡短句與留白');
+        if (fp.strongHook >= 1) traits.push('偏好懸念開頭');
+
+        if (traits.length > 0) {
+          els.cloneTraitText.textContent = `已鎖定專屬筆觸：[${traits.join(' ＋ ')}]`;
+          els.toneCloneBadge.style.borderColor = 'rgba(168, 85, 247, 0.7)';
+        } else {
+          els.cloneTraitText.textContent = '學習待命中（在畫布手動改文即可啟動）';
+        }
+      }
+
+      function buildToneClonePromptInjection() {
+        const fp = state.userCloneFingerprints;
+        const traits = [];
+        if (fp.cantonese >= 1) traits.push('多使用貼地的廣東話口語用詞（如「我哋」、「點解」、「真係」），語調親切自然');
+        if (fp.shortSentences >= 1) traits.push('採用極短句型、高密度單句換行，拒絕冗長複合長句');
+        if (fp.strongHook >= 1) traits.push('第一句必須一針見血，採用反直覺結論或強烈衝擊金句破題');
+
+        if (traits.length === 0) return '';
+        return `\n\n【語氣 Clone 指紋注入（請嚴格模仿用戶過往手動修訂偏好）】：\n- ${traits.join('\n- ')}`;
+      }
+
+      function bindReverseFixButtons() {
+        els.fixHookBtn.addEventListener('click', async () => {
+          const currentText = els.inkStream.innerText || '';
+          const lines = currentText.split('\n').filter(l => l.trim().length > 0);
+          if (lines.length === 0) return;
+
+          const oldHook = lines[0];
+          els.fixHookBtn.innerHTML = '⏳ 重塑中...';
+          els.fixHookBtn.disabled = true;
+
+          try {
+            const prompt = `【反向塑形 - Hook 爆款重鑄】：請將以下開頭句子改寫為吸睛度 9.5 分的頂級社交貼文 Hook。要求：採用「反直覺懸念」或「直指代價」的寫法，字數在 35 字以內，只輸出單句結果，禁止引號：\n\n"${oldHook}"`;
+            const response = await fetch(`${API_BASE}/api/forge`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                topic: prompt,
+                platform: els.platformSelect.value,
+                audience: els.audienceInput.value,
+                tone: 'sharp',
+                action: 'rewrite_hook',
+                temperature: 0.8
+              })
+            });
+
+            const resData = await response.json();
+            const raw = resData?.data?.outputs?.post_content || resData?.outputs?.post_content || resData?.post_content;
+            let newHook = typeof raw === 'object' ? (raw.body || raw.content || oldHook) : (raw || oldHook);
+            newHook = newHook.replace(/^["「]+|["」]+$/g, '').trim();
+
+            lines[0] = newHook;
+            const updatedArticle = lines.join('\n\n');
+            els.inkStream.innerHTML = parseSafeMarkdown(escapeHtml(updatedArticle));
+            handleCanvasInput();
+            els.a11yAnnouncer.textContent = 'Hook 已成功重塑為高吸睛版本';
+          } catch(e) {
+            alert('Hook 重塑失敗，請稍候再試。');
+          } finally {
+            els.fixHookBtn.innerHTML = '⚡ 重塑爆款 Hook';
+            els.fixHookBtn.disabled = false;
+          }
+        });
+
+        els.fixBreakParagraphsBtn.addEventListener('click', () => {
+          const currentText = els.inkStream.innerText || '';
+          if (!currentText) return;
+
+          const formatted = currentText
+            .split('\n')
+            .map(p => {
+              const trimmed = p.trim();
+              if (trimmed.length > 55) {
+                return trimmed.replace(/([。！？!?；])\s*/g, '$1\n\n');
+              }
+              return trimmed;
+            })
+            .join('\n\n')
+            .replace(/\n{3,}/g, '\n\n');
+
+          els.inkStream.innerHTML = parseSafeMarkdown(escapeHtml(formatted));
+          handleCanvasInput();
+          els.a11yAnnouncer.textContent = '已完成手機友善拆段留白手術';
+        });
+
+        els.fixRiskBtn.addEventListener('click', () => {
+          let text = els.inkStream.innerText || '';
+          const toxicMap = {
+            '愚蠢': '不夠明智',
+            '廢話': '多餘的冗贅',
+            '淘汰': '漸漸淡出視野',
+            '底層': '正在奮鬥的起點',
+            '無能': '尚未找到方法',
+            '韭菜': '欠缺資訊對稱的個體'
+          };
+          for (const [bad, good] of Object.entries(toxicMap)) {
+            text = text.replaceAll(bad, good);
+          }
+          els.inkStream.innerHTML = parseSafeMarkdown(escapeHtml(text));
+          handleCanvasInput();
+          els.a11yAnnouncer.textContent = '爭議字眼已調和完畢';
+        });
+      }
+
+      function bindSandboxTabs() {
+        els.sandboxTabsBar.querySelectorAll('.sandbox-tab').forEach(tab => {
+          tab.addEventListener('click', async (e) => {
+            const targetTone = e.currentTarget.dataset.tone;
+            if (targetTone === state.currentActiveTone) return;
+
+            els.sandboxTabsBar.querySelectorAll('.sandbox-tab').forEach(t => t.classList.remove('active'));
+            e.currentTarget.classList.add('active');
+            state.currentActiveTone = targetTone;
+
+            const radio = document.querySelector(`input[name="tone"][value="${targetTone}"]`);
+            if (radio) radio.checked = true;
+
+            if (state.sandboxCache[targetTone]) {
+              const cached = state.sandboxCache[targetTone];
+              els.inkStream.innerHTML = cached.html;
+              handleCanvasInput();
+            } else {
+              els.inkStream.innerHTML = `
+                <div style="color:var(--text-tertiary); text-align:center; padding:3rem 1rem;">
+                  此語氣版本尚未淬鍊。<br>
+                  <button type="button" class="btn-action" id="triggerSingleToneBtn" style="margin-top:1rem; border-color:var(--flame-amber);">
+                    🔥 立即鍛造【${e.currentTarget.innerText}】版本
+                  </button>
+                </div>`;
+              document.getElementById('triggerSingleToneBtn')?.addEventListener('click', () => {
+                executeSmartForge({ action: 'generate', specificTone: targetTone });
+              });
+            }
+          });
+        });
+      }
+
+      function initSpeech() {
+        const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRec) {
+          els.voiceInputBtn.style.display = 'none';
+          return;
+        }
+
+        const rec = new SpeechRec();
+        rec.lang = 'zh-HK';
+        rec.continuous = false;
+        rec.interimResults = false;
+
+        rec.onstart = () => {
+          state.isRecording = true;
+          els.voiceInputBtn.classList.add('recording');
+          els.voiceInputBtn.textContent = '⏹️';
+          els.a11yAnnouncer.textContent = '正在聆聽語音...';
+        };
+
+        rec.onresult = (e) => {
+          const transcript = e.results[0][0].transcript;
+          if (transcript) {
+            els.topicInput.value = els.topicInput.value ? els.topicInput.value + '，' + transcript : transcript;
+            saveDraftAndBrand();
+            clearError(els.topicInput, els.topicError);
+          }
+        };
+
+        rec.onerror = () => stopRecording();
+        rec.onend = () => stopRecording();
+        state.speechRec = rec;
+
+        els.voiceInputBtn.addEventListener('click', () => {
+          if (state.isRecording) {
+            state.speechRec.stop();
+          } else {
+            try { state.speechRec.start(); } catch(e) { state.speechRec.stop(); }
+          }
+        });
+      }
+
+      function stopRecording() {
+        state.isRecording = false;
+        els.voiceInputBtn.classList.remove('recording');
+        els.voiceInputBtn.textContent = '🎙️';
+        els.a11yAnnouncer.textContent = '語音錄入結束';
+      }
+
+      function bindHighlighter() {
+        const updateToolbarPos = () => {
+          const sel = window.getSelection();
+          if (!sel || sel.isCollapsed || !els.inkStream.contains(sel.anchorNode)) {
+            els.highlighterBar.style.display = 'none';
+            return;
+          }
+
+          const text = sel.toString().trim();
+          if (text.length < 3) {
+            els.highlighterBar.style.display = 'none';
+            return;
+          }
+
+          state.savedRange = sel.getRangeAt(0).cloneRange();
+          const rect = state.savedRange.getBoundingClientRect();
+
+          els.highlighterBar.style.display = 'flex';
+          els.highlighterBar.style.top = `${rect.top + window.scrollY}px`;
+          els.highlighterBar.style.left = `${rect.left + window.scrollX + (rect.width / 2)}px`;
+        };
+
+        els.inkStream.addEventListener('mouseup', () => setTimeout(updateToolbarPos, 50));
+        els.inkStream.addEventListener('keyup', (e) => {
+          if (['Shift', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) {
+            setTimeout(updateToolbarPos, 50);
+          }
+        });
+
+        document.addEventListener('mousedown', (e) => {
+          if (!els.highlighterBar.contains(e.target) && !els.inkStream.contains(e.target)) {
+            els.highlighterBar.style.display = 'none';
+          }
+        });
+
+        els.highlighterBar.querySelectorAll('.highlighter-btn').forEach(btn => {
+          btn.addEventListener('click', async (e) => {
+            const mode = e.currentTarget.dataset.mode;
+            const selText = state.savedRange ? state.savedRange.toString() : '';
+            if (!selText) return;
+
+            els.highlighterBar.style.display = 'none';
+            await executeMicroRefinement(selText, mode, state.savedRange);
+          });
+        });
+      }
+
+      async function executeMicroRefinement(targetText, mode, range) {
+        let promptMode = '更加銳利乾脆的金句';
+        if (mode === 'data') promptMode = '注入具說服力的反直覺數據或現實情境';
+        if (mode === 'soften') promptMode = '語氣更具親和力與對話感，軟化銳角';
+
+        const microPrompt = `【局部句子雕刻】：請將以下文字重寫為「${promptMode}」，只輸出改寫後的結果短語，絕對不要輸出任何解釋、引號或贅字：\n\n"${targetText}"`;
+
+        els.canvasModeTag.innerHTML = '⚡ 局部雕刻中...';
+        els.canvasModeTag.style.color = 'var(--flame-amber)';
+
+        try {
+          const response = await fetch(`${API_BASE}/api/forge`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              topic: microPrompt,
+              platform: els.platformSelect.value,
+              audience: els.audienceInput.value,
+              tone: document.querySelector('input[name="tone"]:checked')?.value || 'authoritative',
+              action: 'refine_selection',
+              temperature: 0.7
+            })
+          });
+
+          if (!response.ok) throw new Error('Micro refine failed');
+          const resData = await response.json();
+          const raw = resData?.data?.outputs?.post_content || resData?.outputs?.post_content || resData?.post_content;
+          
+          let refinedText = typeof raw === 'object' ? (raw.body || raw.content || targetText) : (raw || targetText);
+          refinedText = refinedText.replace(/^["「]+|["」]+$/g, '').trim();
+
+          range.deleteContents();
+          range.insertNode(document.createTextNode(refinedText));
+          
+          handleCanvasInput();
+          els.canvasModeTag.innerHTML = '✨ 局部雕刻完成';
+        } catch (e) {
+          alert('局部微調失敗，請稍候再試。');
+          els.canvasModeTag.innerHTML = '✏️ 自由編輯模式';
+        }
+      }
+
+      function updateAlgorithmicRoast(plainText, platform) {
+        if (!plainText || plainText.length < 20) {
+          els.roastHookPill.innerHTML = `🪝 Hook: <strong>--</strong>`;
+          els.roastCompletionPill.innerHTML = `📈 完讀率: <strong>--</strong>`;
+          els.roastRiskPill.innerHTML = `🛡️ 風險: <strong>--</strong>`;
+          els.roastCritiqueText.innerHTML = `💡 系統待命。生成後演算法將在此給出真實反饋；若評測不佳，點擊上方按鈕即可一鍵局部修復！`;
+          els.fixHookBtn.style.display = 'none';
+          els.fixBreakParagraphsBtn.style.display = 'none';
+          els.fixRiskBtn.style.display = 'none';
+          return;
+        }
+
+        const lines = plainText.split('\n').filter(l => l.trim().length > 0);
+        const hookLine = lines[0] || '';
+        const toneVal = document.querySelector('input[name="tone"]:checked')?.value || 'authoritative';
+
+        let hookScore = 6.0;
+        if (/\d+/.test(hookLine)) hookScore += 1.2;
+        if (/[？?！!]/.test(hookLine)) hookScore += 0.9;
+        if (/不|非|別再|從不|真相|底層|代價|秘密|痛點/.test(hookLine)) hookScore += 1.4;
+        hookScore = Math.min(9.8, Math.max(4.2, hookScore)).toFixed(1);
+
+        const totalChars = plainText.length;
+        const avgParagraphLength = totalChars / Math.max(1, lines.length);
+        let completionRate = 88;
+        if (avgParagraphLength > 110) completionRate -= 22;
+        if (totalChars > 1600 && platform === 'LinkedIn') completionRate -= 15;
+        if (totalChars < 120 && platform === 'LinkedIn') completionRate -= 25;
+        completionRate = Math.min(96, Math.max(42, completionRate));
+
+        let riskText = '低';
+        let riskColor = 'var(--success)';
+        let hasToxicity = /愚蠢|廢話|淘汰|底層|無能|韭菜/.test(plainText);
+        if (toneVal === 'sharp' || hasToxicity) {
+          riskText = '高 (爭議性)';
+          riskColor = 'var(--danger)';
+        } else if (toneVal === 'conversational') {
+          riskText = '中 (親和)';
+          riskColor = 'var(--warning)';
+        }
+
+        els.fixHookBtn.style.display = hookScore < 7.5 ? 'inline-block' : 'none';
+        els.fixBreakParagraphsBtn.style.display = avgParagraphLength > 95 ? 'inline-block' : 'none';
+        els.fixRiskBtn.style.display = hasToxicity ? 'inline-block' : 'none';
+
+        let critique = '';
+        if (hookScore < 7.5) {
+          critique = '🔥 殘酷評測：第一句 Hook 平鋪直敘，讀者滑過只需 0.3 秒。點擊「⚡ 重塑爆款 Hook」強制注入懸念！';
+        } else if (avgParagraphLength > 95) {
+          critique = '📱 殘酷評測：手機瀏覽時段落過於密集，完讀率暴跌。點擊「✂️ 手術刀拆段」自動留白！';
+        } else if (hasToxicity) {
+          critique = '⚡ 殘酷評測：檢測到容易造成公關災難的詞彙。點擊「🕊️ 溫和除刺」將其修飾為建設性語言。';
+        } else {
+          critique = '✨ 殘酷評測：節奏極佳、留白得當，具備頂級創作者的自傳播體質。可直接匯出！';
+        }
+
+        els.roastHookPill.innerHTML = `🪝 Hook: <strong style="color:${hookScore > 7.5 ? 'var(--success)' : 'var(--flame-gold)'};">${hookScore}</strong>`;
+        els.roastCompletionPill.innerHTML = `📈 完讀率: <strong style="color:${completionRate > 75 ? 'var(--success)' : 'var(--warning)'};">${completionRate}%</strong>`;
+        els.roastRiskPill.innerHTML = `🛡️ 風險: <strong style="color:${riskColor};">${riskText}</strong>`;
+        els.roastCritiqueText.innerHTML = critique;
+      }
+
       function bindEvents() {
+        bindSandboxTabs();
+
         els.platformSelect.addEventListener('change', () => {
           updateHint();
           saveDraftAndBrand();
           handleCanvasInput();
         });
+
+        els.contextBridgeSelect.addEventListener('change', saveDraftAndBrand);
 
         els.tempSlider.addEventListener('input', (e) => {
           els.tempValue.textContent = e.target.value;
@@ -1274,16 +1952,24 @@
         els.form.addEventListener('input', saveDraftAndBrand);
         els.inkStream.addEventListener('input', handleCanvasInput);
 
+        els.resetToneCloneBtn.addEventListener('click', () => {
+          if (confirm('確定重設已學習的專屬寫作指紋？')) {
+            state.userCloneFingerprints = { cantonese: 0, shortSentences: 0, strongHook: 0 };
+            localStorage.removeItem(TONE_CLONE_KEY);
+            renderToneCloneStatus();
+          }
+        });
+
         els.brandHandleInput.addEventListener('input', (e) => {
           const val = e.target.value.trim() || '@anonymous';
           els.snapHandleText.textContent = val;
+          els.carouselHandleText.textContent = val;
           saveDraftAndBrand();
         });
 
         document.querySelectorAll('input[name="aspectRatio"]').forEach(r => {
           r.addEventListener('change', (e) => {
-            const ratio = e.target.value;
-            els.snapshot.className = `ratio-${ratio}`;
+            els.snapshot.className = `ratio-${e.target.value}`;
           });
         });
 
@@ -1294,18 +1980,32 @@
         });
         els.vaultSearchInput.addEventListener('input', renderVaultList);
 
+        els.vaultClearAllBtn.addEventListener('click', async () => {
+          if (confirm('確定一鍵清空所有歷史資產？此操作不可逆。')) {
+            await VaultDB.clearAll();
+            renderVaultList();
+            refreshVaultCount();
+          }
+        });
+
         els.form.addEventListener('submit', (e) => {
           e.preventDefault();
-          if (state.isForging) {
-            if (state.abortController) state.abortController.abort();
-            return;
-          }
+          if (state.isForging) return;
           if (validate()) executeSmartForge({ action: 'generate' });
         });
 
         els.reforgeBtn.addEventListener('click', () => !state.isForging && executeSmartForge({ action: 'reforge' }));
         els.expandBtn.addEventListener('click', () => !state.isForging && executeSmartForge({ action: 'expand' }));
         els.condenseBtn.addEventListener('click', () => !state.isForging && executeSmartForge({ action: 'condense' }));
+
+        els.batchSandboxBtn.addEventListener('click', async () => {
+          if (state.isForging || !validate()) return;
+          const tones = ['authoritative', 'conversational', 'sharp'];
+          for (const t of tones) {
+            await executeSmartForge({ action: 'generate', specificTone: t, isBatch: true });
+          }
+          alert('✅ 三重語氣沙盒已全部鍛造完畢！可點擊上方分頁即時比對切換。');
+        });
 
         els.copyBtn.addEventListener('click', async () => {
           try {
@@ -1318,7 +2018,8 @@
           }
         });
 
-        els.cardGenBtn.addEventListener('click', generateCard);
+        els.cardGenBtn.addEventListener('click', generateSingleCard);
+        els.carouselGenBtn.addEventListener('click', generateCarouselSlides);
 
         document.addEventListener('keydown', (e) => {
           if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
@@ -1339,6 +2040,7 @@
         const readingMinutes = Math.max(1, Math.round(charCount / 300));
 
         auditCompliance(platform, charCount, readingMinutes);
+        updateAlgorithmicRoast(text, platform);
 
         const firstLine = text.split('\n').filter(l => l.trim().length > 0)[0] || text.substring(0, 80);
         state.currentQuote = firstLine.replace(/^[#*-]\s*/, '');
@@ -1347,6 +2049,7 @@
           els.canvasModeTag.innerHTML = '✏️ 自由編輯模式';
           els.canvasModeTag.style.color = 'var(--text-primary)';
           persistCurrentEdit();
+          analyzeUserEditsDiff(state.lastAiGeneratedDraft, text);
         }
       }
 
@@ -1391,7 +2094,6 @@
       function validate() {
         let valid = true;
         let firstInvalid = null;
-
         if (!els.topicInput.value.trim()) {
           showError(els.topicInput, els.topicError);
           valid = false;
@@ -1424,17 +2126,15 @@
         err.style.display = 'none';
       }
 
-      // 雙模自適應鍛造引擎 (Auto-Detect JSON / SSE Streaming) + 重入鎖阻斷
       async function executeSmartForge(options = {}) {
-        if (state.isForging) {
-          console.warn('[FlameForge] 重入鎖生效，忽略重複點擊。');
-          return;
-        }
-
+        if (state.isForging) return;
         state.isForging = true;
         state.hasFinalized = false;
         state.currentAction = options.action || 'generate';
         state.rawGeneratedText = '';
+
+        const activeTone = options.specificTone || document.querySelector('input[name="tone"]:checked')?.value || 'authoritative';
+        state.currentActiveTone = activeTone;
 
         if (state.abortController) {
           try { state.abortController.abort(); } catch(e) {}
@@ -1442,22 +2142,18 @@
         state.abortController = new AbortController();
 
         els.inkStream.setAttribute('contenteditable', 'false');
-        els.canvasModeTag.innerHTML = '⚡ 鍛造連線中';
+        els.canvasModeTag.innerHTML = `⚡ 鍛造連線中 [${activeTone}]`;
         els.canvasModeTag.style.color = 'var(--flame-amber)';
 
         els.submitBtn.textContent = '⏹ 熄滅熔爐 (Cancel)';
         els.submitBtn.style.background = 'linear-gradient(135deg, #ff453a, #ff6b6b)';
         setControls(false);
 
-        els.inkStream.setAttribute('aria-live', 'off');
-        els.inkStream.setAttribute('aria-busy', 'true');
-        els.a11yAnnouncer.textContent = '鍛造開始';
+        els.a11yAnnouncer.textContent = '火之鍛造開始';
 
         const rawTopic = els.topicInput.value.trim();
         const platform = els.platformSelect.value;
         const audience = els.audienceInput.value.trim();
-        const toneRadio = document.querySelector('input[name="tone"]:checked');
-        const tone = toneRadio ? toneRadio.value : 'authoritative';
         const temperature = parseFloat(els.tempSlider.value);
         const seed = Math.floor(Math.random() * 100000);
 
@@ -1467,9 +2163,9 @@
         const updateWaitingUI = () => {
           els.inkStream.innerHTML = `
             <div style="color: var(--flame-amber);">
-              [神經熔爐連線中] 正在向 Prometheus 核心注入靈感...<br>
+              [神經熔爐連線中] 正在融合【${activeTone}】語氣與在地時事搭橋...<br>
               <span style="font-size: 0.85rem; color: #fff; font-weight: 600; display: inline-block; margin-top: 0.5rem;">
-                ⏱ 已耗時 ${secondsElapsed} 秒 ${secondsElapsed > 15 ? '（Render 冷啟動或長篇生成中，請稍候）' : ''}
+                ⏱ 已淬鍊 ${secondsElapsed} 秒
               </span>
             </div>`;
         };
@@ -1478,13 +2174,15 @@
         clearInterval(state.elapsedInterval);
         state.elapsedInterval = setInterval(() => {
           secondsElapsed++;
-          if (state.rawGeneratedText.length === 0) {
-            updateWaitingUI();
-          }
+          if (state.rawGeneratedText.length === 0) updateWaitingUI();
         }, 1000);
 
-        const directive = platformDirectives[platform] || '';
-        let enhancedTopic = `${rawTopic}\n\n${directive}`;
+        const contextBridgeKey = els.contextBridgeSelect.value;
+        const contextBridgeDirective = contextBridgePrompts[contextBridgeKey] || '';
+        const toneCloneDirective = buildToneClonePromptInjection();
+        const platformDirective = platformDirectives[platform] || '';
+        
+        let enhancedTopic = `${rawTopic}\n\n${platformDirective}\n\n${contextBridgeDirective}${toneCloneDirective}`;
         if (options.action === 'expand') enhancedTopic += '\n\n【追加指令】：請大幅擴充觀點細節，篇幅務必拉長豐富。';
         if (options.action === 'condense') enhancedTopic += '\n\n【追加指令】：請極致精煉收斂，剔除冗贅字句。';
 
@@ -1501,7 +2199,7 @@
               topic: enhancedTopic,
               platform,
               audience,
-              tone,
+              tone: activeTone,
               action: state.currentAction,
               seed,
               temperature
@@ -1518,23 +2216,20 @@
 
           const contentType = response.headers.get('content-type') || '';
 
-          // 核心相容 A：後端回傳 JSON
           if (contentType.includes('application/json')) {
             const resData = await response.json();
             const rawContent = resData?.data?.outputs?.post_content || resData?.outputs?.post_content || resData?.post_content;
-            if (!rawContent) throw new Error('EMPTY_PAYLOAD');
-            finalizeStreamResult(rawContent, platform, rawTopic);
+            finalizeStreamResult(rawContent, platform, rawTopic, activeTone);
             return;
           }
 
-          // 核心相容 B：後端回傳 SSE Streaming
           const reader = response.body.getReader();
           const decoder = new TextDecoder('utf-8');
           let buffer = '';
           let finalPayload = null;
 
           els.inkStream.innerHTML = '';
-          els.canvasModeTag.innerHTML = '⚡ 實時流式接收中';
+          els.canvasModeTag.innerHTML = `⚡ 實時流式接收中 [${activeTone}]`;
 
           while (true) {
             const { done, value } = await reader.read();
@@ -1563,7 +2258,7 @@
             }
           }
 
-          finalizeStreamResult(finalPayload || state.rawGeneratedText, platform, rawTopic);
+          finalizeStreamResult(finalPayload || state.rawGeneratedText, platform, rawTopic, activeTone);
 
         } catch (err) {
           clearTimeout(timeoutId);
@@ -1572,14 +2267,12 @@
           let color = 'var(--danger)';
 
           if (err.name === 'AbortError') {
-            msg = '[熔爐已熄滅] 鍛造連線已手動取消，或超過 120 秒服務限額。請再試一次。';
+            msg = '[熔爐已熄滅] 鍛造連線已手動取消，或超過 120 秒服務限額。';
             color = 'var(--flame-amber)';
           } else if (err.message === 'RATE_LIMIT') {
             msg = '[熔爐過熱] 請求過於頻繁，請等待 30 秒再試。';
-          } else if (err.message === 'EMPTY_PAYLOAD') {
-            msg = '[熔爐異常] 後端回傳空內容，請檢查 Dify 輸出變數設定是否為 post_content。';
           } else if (err.message.includes('Failed to fetch')) {
-            msg = '[網絡斷線] 無法連線至閘道，請確認網絡或 Render 運行狀態。';
+            msg = '[網絡斷線] 無法連線至閘道，請檢查網關端點或 CORS 設定。';
           } else {
             msg = `[熔爐警報] 異常：${err.message}`;
           }
@@ -1590,7 +2283,8 @@
       }
 
       function renderStreamingProgress(text, platform) {
-        const parsed = parseMarkdown(text);
+        const safe = escapeHtml(text);
+        const parsed = parseSafeMarkdown(safe);
         els.inkStream.innerHTML = `<div class="rendered-article">${parsed}<span class="stream-cursor"></span></div>`;
         els.inkStream.scrollTop = els.inkStream.scrollHeight;
         
@@ -1599,7 +2293,7 @@
         auditCompliance(platform, count, mins);
       }
 
-      async function finalizeStreamResult(rawContent, platform, fallbackTopic) {
+      async function finalizeStreamResult(rawContent, platform, fallbackTopic, tone) {
         let parsed = null;
         try {
           parsed = typeof rawContent === 'string' ? JSON.parse(rawContent) : rawContent;
@@ -1616,16 +2310,20 @@
           const rawTitle = parsed.title || fallbackTopic;
           title = escapeHtml(rawTitle.split('\n\n【平台強制約束')[0]);
           hook = escapeHtml(parsed.hook || '');
-          body = parseMarkdown(parsed.body || parsed.content || '');
+          body = parseSafeMarkdown(escapeHtml(parsed.body || parsed.content || ''));
           tags = escapeHtml(parsed.hashtags || '');
         } else {
-          body = parseMarkdown(String(rawContent || ''));
+          body = parseSafeMarkdown(escapeHtml(String(rawContent || '')));
           title = escapeHtml(fallbackTopic);
+        }
+
+        if (!body || body.trim() === '' || body === '<br>') {
+          body = '<p style="color: var(--danger); font-weight:600;">⚠️ 後端回傳了空內容（可能是工作流超時或截斷），請稍後重試一次。</p>';
         }
 
         state.currentQuote = hook || title;
 
-        els.inkStream.innerHTML = `
+        const htmlResult = `
           <div class="rendered-article">
             ${title ? `<h3>${title}</h3>` : ''}
             ${hook ? `<div class="hook-box">${hook}</div>` : ''}
@@ -1633,6 +2331,15 @@
             ${tags ? `<div class="hashtags">${tags}</div>` : ''}
           </div>
         `;
+
+        els.inkStream.innerHTML = htmlResult;
+
+        state.sandboxCache[tone] = {
+          html: htmlResult,
+          plainText: els.inkStream.innerText
+        };
+
+        state.lastAiGeneratedDraft = els.inkStream.innerText;
 
         handleCanvasInput();
         finalizeUI();
@@ -1648,9 +2355,7 @@
             plainText: els.inkStream.innerText
           });
           refreshVaultCount();
-        } catch (e) {
-          console.error('Vault save failed', e);
-        }
+        } catch (e) {}
       }
 
       function finalizeUI() {
@@ -1665,32 +2370,35 @@
         els.canvasModeTag.innerHTML = '✏️ 自由編輯模式';
         els.canvasModeTag.style.color = 'var(--text-primary)';
 
-        els.submitBtn.textContent = '啟動火之鍛造 (Ignite Engine)';
+        els.submitBtn.innerHTML = '啟動火之鍛造 <span class="shortcut-hint">(Ctrl/Cmd + ↵)</span>';
         els.submitBtn.style.background = '';
         els.submitBtn.disabled = false;
 
         setControls(true);
-
-        els.inkStream.setAttribute('aria-live', 'polite');
-        els.inkStream.removeAttribute('aria-busy');
         els.a11yAnnouncer.textContent = '鍛造完成，已存入資產庫';
       }
 
       function setControls(active) {
         els.copyBtn.disabled = !active;
         els.cardGenBtn.disabled = !active;
+        els.carouselGenBtn.disabled = !active;
         els.reforgeBtn.disabled = !active;
         els.expandBtn.disabled = !active;
         els.condenseBtn.disabled = !active;
+        els.batchSandboxBtn.disabled = !active;
       }
 
-      async function generateCard() {
+      async function generateSingleCard() {
+        if (typeof window.html2canvas !== 'function') {
+          alert('未能載入圖卡渲染模組 (html2canvas)，請檢查網絡。');
+          return;
+        }
+
         const originalText = els.cardGenBtn.innerHTML;
-        els.cardGenBtn.innerHTML = '⏳ 正在淬鍊品牌圖卡...';
+        els.cardGenBtn.innerHTML = '⏳ 淬鍊中...';
         els.cardGenBtn.disabled = true;
 
-        // 字型安全等待，防止圖卡跑版退化
-        await document.fonts.ready;
+        await Promise.race([document.fonts.ready, new Promise((r) => setTimeout(r, 2000))]);
 
         els.snapshotContent.textContent = `「${state.currentQuote || els.topicInput.value}」`;
         els.snapshotPlatform.textContent = `FOR ${els.platformSelect.value.toUpperCase()}`;
@@ -1704,10 +2412,80 @@
           link.href = canvas.toDataURL('image/png');
           link.click();
         } catch (e) {
-          alert('圖卡產生失敗');
+          alert('圖卡產生失敗：' + e.message);
         } finally {
           els.cardGenBtn.innerHTML = originalText;
           els.cardGenBtn.disabled = false;
+        }
+      }
+
+      async function generateCarouselSlides() {
+        if (typeof window.html2canvas !== 'function') {
+          alert('未能載入圖卡渲染模組 (html2canvas)，請檢查網絡。');
+          return;
+        }
+
+        const plainText = els.inkStream.innerText || '';
+        const lines = plainText.split('\n').filter(l => l.trim().length > 0);
+        if (lines.length < 2) {
+          alert('文章內容過短，無法切片為多頁輪播。');
+          return;
+        }
+
+        const originalText = els.carouselGenBtn.innerHTML;
+        els.carouselGenBtn.innerHTML = '⏳ 正在切片輪播...';
+        els.carouselGenBtn.disabled = true;
+
+        await Promise.race([document.fonts.ready, new Promise((r) => setTimeout(r, 2000))]);
+
+        const slides = [];
+        const titleLine = lines[0] || els.topicInput.value;
+        const hookLine = lines[1] || '';
+
+        slides.push({
+          tag: 'SLIDE 1 / 5 // COVER',
+          content: `<div style="color:var(--flame-gold); font-size:1.15rem; margin-bottom:1rem; font-weight:700;">✦ ESSENTIAL INSIGHT</div><h2 style="font-size:2rem; line-height:1.3; color:#fff; margin-bottom:1.5rem;">${titleLine}</h2><p style="font-size:1.2rem; color:#ffd488; font-style:italic;">${hookLine}</p>`,
+          hint: 'SWIPE ➔'
+        });
+
+        const corePoints = lines.slice(2).filter(l => l.length > 20).slice(0, 3);
+        corePoints.forEach((pt, idx) => {
+          slides.push({
+            tag: `SLIDE ${idx + 2} / 5 // POINT 0${idx + 1}`,
+            content: `<div style="font-size:3rem; color:var(--flame-spark); font-weight:900; margin-bottom:1rem;">0${idx + 1}</div><div style="font-size:1.5rem; line-height:1.6; color:#fdfdfd; font-weight:600;">${pt}</div>`,
+            hint: 'KEEP SWIPING ➔'
+          });
+        });
+
+        slides.push({
+          tag: 'SLIDE 5 / 5 // TAKEAWAY',
+          content: `<div style="font-size:1.8rem; line-height:1.5; color:#fff; font-weight:700; margin-bottom:1.5rem;">「把認知的火種，<br>鍛造為持續行動的力量。」</div><div style="font-size:1.1rem; color:var(--flame-gold);">追蹤 ${els.brandHandleInput.value.trim() || '@creator'} 獲取更多思維淬煉</div>`,
+          hint: 'END OF CAROUSEL'
+        });
+
+        try {
+          els.carouselHandleText.textContent = els.brandHandleInput.value.trim() || '@creator';
+
+          for (let i = 0; i < slides.length; i++) {
+            els.carouselSlideTag.textContent = slides[i].tag;
+            els.carouselContent.innerHTML = slides[i].content;
+            document.getElementById('carouselFooterHint').textContent = slides[i].hint;
+
+            await new Promise(r => setTimeout(r, 120));
+
+            const canvas = await html2canvas(els.carouselSnapshot, { scale: 2, useCORS: true, logging: false });
+            const link = document.createElement('a');
+            link.download = `FlameForge-Slide-0${i + 1}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+            await new Promise(r => setTimeout(r, 250));
+          }
+          alert(`✅ 成功產出 ${slides.length} 張 1:1 輪播圖卡，可直接上傳 LinkedIn/IG！`);
+        } catch (e) {
+          alert('輪播切片生成失敗：' + e.message);
+        } finally {
+          els.carouselGenBtn.innerHTML = originalText;
+          els.carouselGenBtn.disabled = false;
         }
       }
 
@@ -1772,6 +2550,7 @@
               els.platformSelect.value = item.platform || 'LinkedIn';
               els.inkStream.innerHTML = item.content;
               state.currentArtifactId = item.id;
+              state.lastAiGeneratedDraft = item.plainText;
               handleCanvasInput();
               finalizeUI();
               closeVaultDrawer();
@@ -1799,17 +2578,16 @@
       }
 
       async function probeGatewayHealth() {
-        const badge = document.querySelector('.status-badge span');
         const dot = document.querySelector('.status-indicator');
         try {
           const res = await fetch(`${API_BASE}/health`, { method: 'GET', cache: 'no-store' });
           if (res.ok) {
-            badge.textContent = 'ONLINE (已喚醒)';
+            els.gatewayStatusText.textContent = 'ONLINE (已連線)';
             dot.style.background = '#00ff88';
             dot.style.boxShadow = '0 0 8px #00ff88';
           }
         } catch (e) {
-          badge.textContent = '休眠中 (點擊鍛造自動喚醒)';
+          els.gatewayStatusText.textContent = '休眠中 (點擊鍛造喚醒)';
           dot.style.background = 'var(--flame-amber)';
           dot.style.boxShadow = '0 0 8px var(--flame-amber)';
         }
