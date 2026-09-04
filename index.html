@@ -1,1 +1,1841 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>FlameForge | 火之鍛造廠</title>
+  <meta name="description" content="融合普羅米修斯盜火者啟蒙力量與自主流淌自動墨水的內容鍛造系統。" />
 
+  <!-- 嚴格 CSP 安全防護策略 -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+    font-src 'self' https://fonts.gstatic.com data:;
+    connect-src 'self' https://lohas-care-flameforge-gateway.onrender.com;
+    img-src 'self' data: blob:;
+    object-src 'none';
+    base-uri 'self';
+  ">
+
+  <link rel="manifest" href="manifest.webmanifest" />
+  <meta name="theme-color" content="#070709" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+  <style>
+    :root {
+      --bg: #07070a;
+      --card-bg: rgba(18, 18, 26, 0.72);
+      --card-inner: rgba(28, 28, 40, 0.55);
+      
+      --border: rgba(255, 255, 255, 0.1);
+      --border-hover: rgba(255, 140, 50, 0.5);
+      --border-glow: rgba(255, 94, 26, 0.35);
+      
+      --flame-spark: #ff5e1a;
+      --flame-amber: #ff9436;
+      --flame-gold: #ffbe3b;
+      --flame-cyan: #22d3ee;
+      --flame-purple: #8b5cf6;
+      
+      --text-pure: #ffffff;
+      --text-primary: #f5f5f9;
+      --text-body: #eaeaf0;
+      --text-secondary: #a1a1ae;
+      --text-tertiary: #717180;
+      
+      --danger: #ff453a;
+      --success: #30d158;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 20px;
+      --spring: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-body);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "PingFang HK", "Helvetica Neue", sans-serif;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      background-image: 
+        radial-gradient(ellipse 95% 55% at 50% -12%, rgba(255, 94, 26, 0.28) 0%, transparent 68%),
+        radial-gradient(ellipse 65% 50% at 92% 92%, rgba(139, 92, 246, 0.16) 0%, transparent 62%),
+        radial-gradient(circle at 12% 48%, rgba(255, 190, 59, 0.1) 0%, transparent 52%),
+        radial-gradient(circle at 88% 22%, rgba(34, 211, 238, 0.08) 0%, transparent 48%);
+      background-attachment: fixed;
+      padding-bottom: env(safe-area-inset-bottom);
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0,0,0,0);
+      border: 0;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.1rem 6%;
+      background: rgba(7, 7, 10, 0.82);
+      backdrop-filter: saturate(190%) blur(24px);
+      -webkit-backdrop-filter: saturate(190%) blur(24px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .ember-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--flame-gold), var(--flame-spark));
+      box-shadow: 0 0 12px var(--flame-spark);
+      animation: pulse 2.6s infinite var(--spring);
+    }
+
+    .brand h1 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      background: linear-gradient(90deg, #ffffff, var(--flame-gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .btn-header {
+      background: var(--card-inner);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      padding: 0.4rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.2s var(--spring);
+    }
+
+    .btn-header:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: var(--border-hover);
+    }
+
+    .btn-pwa {
+      display: none;
+      background: rgba(255, 94, 26, 0.14);
+      border-color: rgba(255, 94, 26, 0.4);
+      color: var(--flame-gold);
+    }
+
+    .status-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      color: var(--text-secondary);
+      padding: 0.32rem 0.8rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+    }
+
+    .status-indicator {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #00ff88;
+      box-shadow: 0 0 8px #00ff88;
+    }
+
+    main {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 3.5rem 1.5rem 5rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .badge-prometheus {
+      display: inline-block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      color: var(--flame-gold);
+      margin-bottom: 1.2rem;
+      font-weight: 600;
+      padding: 0.25rem 0.9rem;
+      border-radius: 999px;
+      background: rgba(255, 190, 59, 0.09);
+      border: 1px solid rgba(255, 190, 59, 0.25);
+      box-shadow: 0 0 16px rgba(255, 190, 59, 0.1);
+    }
+
+    .hero-title {
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.2rem;
+      background: linear-gradient(135deg, #ffffff 15%, #ffd488 55%, #ff5e1a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 4px 20px rgba(255, 94, 26, 0.24));
+    }
+
+    .hero-desc {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      line-height: 1.65;
+      max-width: 720px;
+      margin: 0 auto;
+      font-weight: 400;
+    }
+
+    .forge-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.35fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    @media (max-width: 960px) {
+      .forge-grid { grid-template-columns: 1fr; }
+    }
+
+    .apple-card {
+      position: relative;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      backdrop-filter: saturate(190%) blur(25px);
+      -webkit-backdrop-filter: saturate(190%) blur(25px);
+      box-shadow: 
+        0 24px 50px rgba(0, 0, 0, 0.6),
+        inset 0 1px 1px rgba(255, 255, 255, 0.15);
+      overflow: hidden;
+    }
+
+    .apple-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 10%; right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--flame-gold), transparent);
+      opacity: 0.6;
+    }
+
+    .card-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--flame-gold);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+    }
+
+    .field-group { margin-bottom: 1.3rem; }
+
+    .label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    label {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      letter-spacing: 0.05em;
+      font-weight: 500;
+    }
+
+    .field-hint {
+      font-size: 0.75rem;
+      color: var(--flame-amber);
+      font-weight: 600;
+    }
+
+    input[type="text"], select {
+      width: 100%;
+      background: var(--card-inner);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      color: var(--text-pure);
+      padding: 0.85rem 1.1rem;
+      font-family: inherit;
+      font-size: 0.95rem;
+      transition: all 0.2s var(--spring);
+    }
+
+    input[type="text"]:focus, select:focus {
+      outline: none;
+      border-color: var(--flame-amber);
+      background: rgba(35, 35, 48, 0.85);
+      box-shadow: 0 0 16px rgba(255, 148, 54, 0.25);
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--card-inner);
+      outline: none;
+      border: 1px solid var(--border);
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--flame-gold), var(--flame-spark));
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(255, 94, 26, 0.5);
+      border: 2px solid #fff;
+    }
+    input[type="range"]::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--flame-gold), var(--flame-spark));
+      cursor: pointer;
+      border: 2px solid #fff;
+      box-shadow: 0 0 10px rgba(255, 94, 26, 0.5);
+    }
+
+    .tone-selector, .segmented-control {
+      display: flex;
+      background: rgba(0, 0, 0, 0.45);
+      padding: 3px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      gap: 3px;
+    }
+
+    .tone-selector div, .segmented-control div { flex: 1; position: relative; }
+
+    .seg-radio {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .seg-label {
+      display: block;
+      text-align: center;
+      padding: 0.55rem 0.4rem;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s var(--spring);
+    }
+
+    .seg-radio:checked + .seg-label {
+      background: linear-gradient(135deg, rgba(255, 94, 26, 0.25), rgba(255, 190, 59, 0.3));
+      border: 1px solid rgba(255, 190, 59, 0.45);
+      color: #fff;
+      font-weight: 600;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    }
+
+    .error-msg {
+      color: var(--danger);
+      font-size: 0.75rem;
+      margin-top: 0.4rem;
+      display: none;
+    }
+
+    .has-error {
+      border-color: var(--danger) !important;
+      animation: shake 0.3s ease-in-out;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-4px); }
+      75% { transform: translateX(4px); }
+    }
+
+    .btn-ignite {
+      width: 100%;
+      margin-top: 0.8rem;
+      padding: 1rem;
+      background: linear-gradient(135deg, var(--flame-spark), var(--flame-amber));
+      color: #000;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(255, 94, 26, 0.35);
+      transition: all 0.2s var(--spring);
+    }
+
+    .btn-ignite:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(255, 94, 26, 0.5);
+    }
+
+    .btn-ignite:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      filter: grayscale(0.6);
+    }
+
+    /* 輸出畫布 */
+    .output-card {
+      display: flex;
+      flex-direction: column;
+      min-height: 580px;
+    }
+
+    .output-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.8rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .canvas-status-tag {
+      font-size: 0.72rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .meta-metrics {
+      font-size: 0.75rem;
+      color: var(--flame-gold);
+      font-weight: 600;
+    }
+
+    .ink-stream-box {
+      flex: 1;
+      min-height: 380px;
+      max-height: 500px;
+      overflow-y: auto;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.6rem;
+      color: var(--text-body);
+      line-height: 1.75;
+      font-size: 0.95rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .ink-stream-box[contenteditable="true"]:focus {
+      outline: none;
+      border-color: rgba(255, 148, 54, 0.6);
+      box-shadow: inset 0 0 15px rgba(255, 94, 26, 0.15);
+    }
+
+    .ink-stream-box::-webkit-scrollbar { width: 5px; }
+    .ink-stream-box::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 999px;
+    }
+
+    .stream-cursor {
+      display: inline-block;
+      width: 3px;
+      height: 1.15em;
+      background-color: var(--flame-amber);
+      margin-left: 3px;
+      vertical-align: -0.15em;
+      animation: blink 0.9s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    .rendered-article h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.9rem;
+      color: var(--text-pure);
+      border-left: 3px solid var(--flame-gold);
+      padding-left: 0.8rem;
+    }
+
+    .rendered-article .hook-box {
+      background: rgba(255, 94, 26, 0.09);
+      border-left: 3px solid var(--flame-spark);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      padding: 0.9rem 1.1rem;
+      margin-bottom: 1.1rem;
+      color: #fff4e8;
+      font-size: 0.98rem;
+      font-style: italic;
+    }
+
+    .rendered-article p { 
+      margin-bottom: 1rem; 
+      white-space: pre-wrap; 
+      color: var(--text-body);
+    }
+
+    .rendered-article ul {
+      margin: 0.8rem 0 1rem 1.2rem;
+      color: var(--text-body);
+    }
+    .rendered-article ul li { margin-bottom: 0.4rem; }
+    .rendered-article strong { color: var(--text-pure); font-weight: 700; }
+    .rendered-article em { color: var(--flame-gold); font-style: italic; }
+
+    .rendered-article .hashtags { 
+      color: var(--flame-amber); 
+      font-size: 0.88rem; 
+      font-weight: 600; 
+      letter-spacing: 0.02em;
+    }
+
+    /* 動作排與品牌設置面板 */
+    .action-group {
+      margin-top: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .btn-action {
+      background: var(--card-inner);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      padding: 0.55rem 0.9rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      font-weight: 500;
+      font-family: inherit;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.15s var(--spring);
+    }
+
+    .btn-action:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: var(--border-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-action:disabled { opacity: 0.3; cursor: not-allowed; }
+
+    .brand-kit-panel {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 0.8rem 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+      font-size: 0.78rem;
+    }
+
+    .brand-kit-inputs {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .brand-kit-inputs input[type="text"] {
+      width: 150px;
+      padding: 0.4rem 0.7rem;
+      font-size: 0.78rem;
+    }
+
+    /* 側邊資產庫抽屜 (Vault Drawer) */
+    .drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(8px);
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s var(--spring);
+    }
+
+    .drawer-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .vault-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: min(440px, 90vw);
+      height: 100vh;
+      background: rgba(14, 14, 20, 0.95);
+      border-left: 1px solid var(--border);
+      backdrop-filter: blur(30px);
+      z-index: 201;
+      transform: translateX(100%);
+      transition: transform 0.35s var(--spring);
+      display: flex;
+      flex-direction: column;
+      padding: 1.8rem;
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.7);
+    }
+
+    .drawer-overlay.open .vault-drawer {
+      transform: translateX(0);
+    }
+
+    .vault-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.2rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.8rem;
+    }
+
+    .vault-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--flame-gold);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-close-drawer {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 0.2rem 0.5rem;
+    }
+
+    .vault-search-box {
+      margin-bottom: 1.2rem;
+    }
+
+    .vault-list {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      padding-right: 0.2rem;
+    }
+
+    .vault-item {
+      background: var(--card-inner);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      transition: all 0.2s;
+    }
+
+    .vault-item:hover {
+      border-color: var(--flame-amber);
+      background: rgba(35, 35, 48, 0.7);
+    }
+
+    .vault-item-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      color: var(--text-tertiary);
+      margin-bottom: 0.4rem;
+    }
+
+    .vault-item-topic {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-pure);
+      margin-bottom: 0.4rem;
+      line-height: 1.35;
+    }
+
+    .vault-item-preview {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      line-height: 1.45;
+      max-height: 2.9em;
+      overflow: hidden;
+      margin-bottom: 0.8rem;
+    }
+
+    .vault-item-actions {
+      display: flex;
+      gap: 0.4rem;
+    }
+
+    .btn-vault-action {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      padding: 0.25rem 0.6rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.72rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .btn-vault-action:hover {
+      color: #fff;
+      border-color: var(--border-hover);
+    }
+
+    /* 圖卡快照容器 */
+    #socialCardSnapshot {
+      position: absolute;
+      top: -9999px;
+      left: -9999px;
+      background: #08080c;
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(255, 94, 26, 0.35) 0%, transparent 60%),
+        radial-gradient(circle at 85% 85%, rgba(139, 92, 246, 0.25) 0%, transparent 60%);
+      border: 2px solid rgba(255, 148, 54, 0.35);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      box-sizing: border-box;
+    }
+
+    #socialCardSnapshot.ratio-1-1 {
+      width: 600px;
+      height: 600px;
+      padding: 3.2rem;
+    }
+    #socialCardSnapshot.ratio-1-1 .snap-body {
+      font-size: 1.55rem;
+      line-height: 1.5;
+    }
+
+    #socialCardSnapshot.ratio-9-16 {
+      width: 540px;
+      height: 960px;
+      padding: 4.5rem 3.5rem;
+    }
+    #socialCardSnapshot.ratio-9-16 .snap-body {
+      font-size: 1.95rem;
+      line-height: 1.55;
+    }
+
+    .snap-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      padding-bottom: 1.2rem;
+    }
+
+    .snap-brand-tag {
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--flame-gold);
+    }
+
+    .snap-handle-tag {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .snap-body {
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: #fdfdfd;
+      font-style: italic;
+    }
+
+    .snap-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      padding-top: 1.2rem;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.85; }
+      50% { transform: scale(1.18); opacity: 1; filter: drop-shadow(0 0 8px var(--flame-spark)); }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="a11yAnnouncer" class="sr-only" aria-live="assertive"></div>
+
+  <header>
+    <div class="brand">
+      <div class="ember-dot"></div>
+      <h1>FlameForge</h1>
+    </div>
+    <div class="header-actions">
+      <button type="button" id="openVaultBtn" class="btn-header">
+        <span>🏛️</span> 火種資產庫 (<span id="vaultCount">0</span>)
+      </button>
+      <button type="button" id="pwaInstallBtn" class="btn-header btn-pwa">📲 安裝 App</button>
+      <div class="status-badge">
+        <div class="status-indicator"></div>
+        <span>VAULT ACTIVE</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="badge-prometheus">Live Stream × Asset Vault</div>
+      <h2 class="hero-title">盜火者的火種<br>自主流淌的自動墨水</h2>
+      <p class="hero-desc">
+        思想在此實時顯影並永久封存。配備本地 IndexedDB 資產庫與品牌視覺套件，成就一站式創作者工作台。
+      </p>
+    </section>
+
+    <div class="forge-grid">
+      <section class="apple-card" aria-labelledby="forge-sparks-heading">
+        <div class="card-label" id="forge-sparks-heading">✦ Ignite Sparks // 注入原石靈感</div>
+        
+        <form id="forgeForm" novalidate>
+          <div class="field-group">
+            <div class="label-row">
+              <label for="topic">THE TOPIC (鍛造核心主旨)</label>
+            </div>
+            <input type="text" id="topic" name="topic" value="2026 年，韌性人生，活出不被環境定義的生命" aria-describedby="topic-error" aria-invalid="false" required />
+            <div id="topic-error" class="error-msg" role="alert">請輸入鍛造核心主旨</div>
+          </div>
+
+          <div class="field-group">
+            <div class="label-row">
+              <label for="platform">PLATFORM (傳播陣地)</label>
+              <span id="platformHint" class="field-hint">建議 1500-2000 字</span>
+            </div>
+            <select id="platform" name="platform">
+              <option value="LinkedIn">LinkedIn (深度觀點與洞察)</option>
+              <option value="X">X / Twitter (280字高密度金句)</option>
+              <option value="Substack" selected>Substack (架構式長文熔爐)</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <div class="label-row">
+              <label for="audience">TARGET AUDIENCE (共鳴受眾)</label>
+            </div>
+            <input type="text" id="audience" name="audience" value="全民大眾" aria-describedby="audience-error" aria-invalid="false" required />
+            <div id="audience-error" class="error-msg" role="alert">請輸入共鳴受眾目標</div>
+          </div>
+
+          <div class="field-group">
+            <div class="label-row">
+              <label id="tone-label">TONE DIAL (語氣調節器)</label>
+            </div>
+            <div class="tone-selector" role="radiogroup" aria-labelledby="tone-label">
+              <div>
+                <input type="radio" class="seg-radio" name="tone" id="tone-auth" value="authoritative" checked>
+                <label for="tone-auth" class="seg-label">專業權威</label>
+              </div>
+              <div>
+                <input type="radio" class="seg-radio" name="tone" id="tone-conv" value="conversational">
+                <label for="tone-conv" class="seg-label">直率對話</label>
+              </div>
+              <div>
+                <input type="radio" class="seg-radio" name="tone" id="tone-sharp" value="sharp">
+                <label for="tone-sharp" class="seg-label">挑釁銳利</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <div class="label-row">
+              <label for="tempSlider">CREATIVITY (創意火花)</label>
+              <span id="tempValue" class="field-hint">0.7</span>
+            </div>
+            <input type="range" id="tempSlider" min="0.1" max="1.0" step="0.1" value="0.7" aria-describedby="tempValue" />
+          </div>
+
+          <button type="submit" id="submitBtn" class="btn-ignite">啟動火之鍛造 (Ignite Engine)</button>
+        </form>
+      </section>
+
+      <section class="apple-card output-card" aria-labelledby="ink-output-heading">
+        <div class="output-toolbar">
+          <div style="display:flex; align-items:center; gap:0.6rem;">
+            <div class="card-label" id="ink-output-heading" style="margin-bottom:0;">✦ Live Canvas // 淬鍊畫布</div>
+            <span id="canvasModeTag" class="canvas-status-tag">待命中</span>
+          </div>
+          <div class="meta-metrics" id="metricsDisplay">約 0 字 ｜ 0 秒閱讀</div>
+        </div>
+
+        <div class="ink-stream-box" id="inkStream" contenteditable="false" aria-live="polite">
+          <p style="color: var(--text-tertiary);">// 系統待命。填妥左側火種，點擊「啟動火之鍛造」開始提煉文字。<br>快捷鍵：Ctrl/Cmd + Enter 提交 ｜ ESC 取消</p>
+        </div>
+
+        <div class="action-group">
+          <div class="action-row">
+            <button type="button" id="reforgeBtn" class="btn-action" disabled>🔥 再鍛造一次</button>
+            <button type="button" id="expandBtn" class="btn-action" disabled>➕ 加長提煉</button>
+            <button type="button" id="condenseBtn" class="btn-action" disabled>➖ 精簡收斂</button>
+            <button type="button" id="copyBtn" class="btn-action" disabled>📋 複製全文</button>
+          </div>
+
+          <div class="brand-kit-panel">
+            <div class="brand-kit-inputs">
+              <span>創作者 Handle:</span>
+              <input type="text" id="brandHandleInput" placeholder="@username" value="@alex_founder" />
+            </div>
+
+            <div style="display:flex; align-items:center; gap:0.6rem;">
+              <span>比例:</span>
+              <div class="segmented-control" style="width: 170px;">
+                <div>
+                  <input type="radio" class="seg-radio" name="aspectRatio" id="ratio-1-1" value="1-1" checked>
+                  <label for="ratio-1-1" class="seg-label">1:1 正方</label>
+                </div>
+                <div>
+                  <input type="radio" class="seg-radio" name="aspectRatio" id="ratio-9-16" value="9-16">
+                  <label for="ratio-9-16" class="seg-label">9:16 限動</label>
+                </div>
+              </div>
+
+              <button type="button" id="cardGenBtn" class="btn-action" style="border-color: var(--flame-amber);" disabled>
+                🖼️ 產生品牌圖卡
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div class="drawer-overlay" id="drawerOverlay" aria-hidden="true">
+    <div class="vault-drawer" role="dialog" aria-modal="true" aria-labelledby="vaultDrawerTitle">
+      <div class="vault-header">
+        <div class="vault-title" id="vaultDrawerTitle">
+          <span>🏛️</span> 火種資產庫 (IndexedDB Vault)
+        </div>
+        <button type="button" class="btn-close-drawer" id="closeVaultBtn" aria-label="關閉資產庫">✕</button>
+      </div>
+
+      <div class="vault-search-box">
+        <input type="text" id="vaultSearchInput" placeholder="🔍 搜尋主題或結晶內文..." />
+      </div>
+
+      <div class="vault-list" id="vaultListContainer"></div>
+    </div>
+  </div>
+
+  <div id="socialCardSnapshot" class="ratio-1-1" aria-hidden="true">
+    <div class="snap-header">
+      <span class="snap-brand-tag">FLAMEFORGE // SPARK</span>
+      <span class="snap-handle-tag" id="snapHandleText">@alex_founder</span>
+    </div>
+    <div class="snap-body" id="snapshotContent">
+      「逆境不會先問我們準備好了沒，但韌性可以被刻意培養。」
+    </div>
+    <div class="snap-footer">
+      <span id="snapshotPlatform">FOR SUBSTACK</span>
+      <span>FORGED BY PROMETHEUS</span>
+    </div>
+  </div>
+
+  <script>
+    // 監控體系：全域異常捕獲
+    window.onerror = function (message, source, lineno, colno, error) {
+      console.error('[FlameForge Telemetry]', { message, source, lineno, colno, error });
+      return false;
+    };
+    window.onunhandledrejection = function (event) {
+      console.error('[FlameForge Promise Telemetry]', event.reason);
+    };
+
+    // 模組一：IndexedDB 資產庫底層封裝 (支援版本遷移)
+    const VaultDB = (() => {
+      const DB_NAME = 'FlameForgeVault';
+      const DB_VERSION = 2;
+      const STORE_NAME = 'artifacts';
+      let dbInstance = null;
+
+      function openDB() {
+        return new Promise((resolve, reject) => {
+          if (dbInstance) return resolve(dbInstance);
+          const req = indexedDB.open(DB_NAME, DB_VERSION);
+
+          req.onupgradeneeded = (e) => {
+            const db = e.target.result;
+            const oldVersion = e.oldVersion;
+
+            let store;
+            if (oldVersion < 1) {
+              store = db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+              store.createIndex('timestamp', 'timestamp', { unique: false });
+            } else {
+              store = req.transaction.objectStore(STORE_NAME);
+            }
+
+            if (oldVersion < 2) {
+              if (!store.indexNames.contains('platform')) {
+                store.createIndex('platform', 'platform', { unique: false });
+              }
+            }
+          };
+
+          req.onsuccess = (e) => {
+            dbInstance = e.target.result;
+            resolve(dbInstance);
+          };
+          req.onerror = () => reject(req.error);
+        });
+      }
+
+      async function saveItem(item) {
+        const db = await openDB();
+        return new Promise((resolve, reject) => {
+          const tx = db.transaction(STORE_NAME, 'readwrite');
+          const store = tx.objectStore(STORE_NAME);
+          store.put(item);
+          tx.oncomplete = () => resolve(item);
+          tx.onerror = () => reject(tx.error);
+        });
+      }
+
+      async function getAllItems(limit = 60) {
+        const db = await openDB();
+        return new Promise((resolve, reject) => {
+          const tx = db.transaction(STORE_NAME, 'readonly');
+          const store = tx.objectStore(STORE_NAME);
+          const index = store.index('timestamp');
+          const items = [];
+
+          const req = index.openCursor(null, 'prev');
+          req.onsuccess = (e) => {
+            const cursor = e.target.result;
+            if (cursor && items.length < limit) {
+              items.push(cursor.value);
+              cursor.continue();
+            } else {
+              resolve(items);
+            }
+          };
+          req.onerror = () => reject(req.error);
+        });
+      }
+
+      async function deleteItem(id) {
+        const db = await openDB();
+        return new Promise((resolve, reject) => {
+          const tx = db.transaction(STORE_NAME, 'readwrite');
+          const store = tx.objectStore(STORE_NAME);
+          store.delete(id);
+          tx.oncomplete = () => resolve(id);
+          tx.onerror = () => reject(tx.error);
+        });
+      }
+
+      return { saveItem, getAllItems, deleteItem };
+    })();
+
+    // 模組二：主控制引擎
+    const FlameForge = (() => {
+      const API_BASE = 'https://lohas-care-flameforge-gateway.onrender.com';
+      const DRAFT_KEY = 'ff_draft_v4';
+      const BRAND_KEY = 'ff_brand_handle';
+
+      const state = {
+        isForging: false,
+        hasFinalized: false,
+        currentQuote: '',
+        deferredPrompt: null,
+        abortController: null,
+        currentAction: 'generate',
+        elapsedInterval: null,
+        rawGeneratedText: '',
+        currentArtifactId: null
+      };
+
+      const platformLimits = {
+        'LinkedIn': '建議 1300 字內',
+        'X': '建議 280 字內',
+        'Substack': '建議 1500-2000 字'
+      };
+
+      const platformDirectives = {
+        'X': '【平台強制約束 - X / Twitter】：全文（含標題、正文及標籤）絕對不可超過 280 個字元！以極高密度金句一針見血破題，禁止多餘長篇廢話。',
+        'LinkedIn': '【平台強制約束 - LinkedIn】：篇幅嚴格控制在 800 至 1300 字以內。前兩句為高吸引力 Hook，多用單句留白排版，核心論點以 1. 2. 3. 條列，結尾必須有促進討論的互動問答（CTA）與 3-5 個專業 Hashtag。',
+        'Substack': '【平台強制約束 - Substack】：請撰寫一篇約 1500 至 2000 字的高質量架構長文。包含前言引導、多個 Markdown 二級小標題（## ）、深度觀點論述、現實案例剖析及具體行動指引，行文嚴密充實。'
+      };
+
+      const els = {
+        form: document.getElementById('forgeForm'),
+        topicInput: document.getElementById('topic'),
+        topicError: document.getElementById('topic-error'),
+        audienceInput: document.getElementById('audience'),
+        audienceError: document.getElementById('audience-error'),
+        platformSelect: document.getElementById('platform'),
+        platformHint: document.getElementById('platformHint'),
+        tempSlider: document.getElementById('tempSlider'),
+        tempValue: document.getElementById('tempValue'),
+        submitBtn: document.getElementById('submitBtn'),
+        inkStream: document.getElementById('inkStream'),
+        canvasModeTag: document.getElementById('canvasModeTag'),
+        metricsDisplay: document.getElementById('metricsDisplay'),
+        copyBtn: document.getElementById('copyBtn'),
+        cardGenBtn: document.getElementById('cardGenBtn'),
+        reforgeBtn: document.getElementById('reforgeBtn'),
+        expandBtn: document.getElementById('expandBtn'),
+        condenseBtn: document.getElementById('condenseBtn'),
+        pwaInstallBtn: document.getElementById('pwaInstallBtn'),
+        a11yAnnouncer: document.getElementById('a11yAnnouncer'),
+        snapshot: document.getElementById('socialCardSnapshot'),
+        snapshotContent: document.getElementById('snapshotContent'),
+        snapshotPlatform: document.getElementById('snapshotPlatform'),
+        snapHandleText: document.getElementById('snapHandleText'),
+        brandHandleInput: document.getElementById('brandHandleInput'),
+        openVaultBtn: document.getElementById('openVaultBtn'),
+        closeVaultBtn: document.getElementById('closeVaultBtn'),
+        drawerOverlay: document.getElementById('drawerOverlay'),
+        vaultListContainer: document.getElementById('vaultListContainer'),
+        vaultSearchInput: document.getElementById('vaultSearchInput'),
+        vaultCount: document.getElementById('vaultCount')
+      };
+
+      function init() {
+        initPWA();
+        loadDraftAndBrand();
+        bindEvents();
+        updateHint();
+        refreshVaultCount();
+        probeGatewayHealth();
+      }
+
+      function escapeHtml(str) {
+        if (!str) return '';
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+      }
+
+      function parseMarkdown(text) {
+        if (!text) return '';
+        let html = escapeHtml(text);
+        html = html.replace(/^### (.*$)/gim, '<h4 style="color:var(--flame-gold); margin:0.8rem 0 0.4rem;">$1</h4>');
+        html = html.replace(/^## (.*$)/gim, '<h3 style="color:var(--text-pure); margin:1.2rem 0 0.5rem; border-left:3px solid var(--flame-gold); padding-left:0.6rem;">$1</h3>');
+        html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+        html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
+        
+        const lines = html.split('\n');
+        let inList = false;
+        let result = [];
+        for (const line of lines) {
+          const trimmed = line.trim();
+          if (trimmed.startsWith('- ') || trimmed.startsWith('• ')) {
+            if (!inList) {
+              result.push('<ul>');
+              inList = true;
+            }
+            result.push('<li>' + trimmed.substring(2) + '</li>');
+          } else {
+            if (inList) {
+              result.push('</ul>');
+              inList = false;
+            }
+            result.push(trimmed);
+          }
+        }
+        if (inList) result.push('</ul>');
+        return result.join('\n').replace(/\n/g, '<br>');
+      }
+
+      function updateHint() {
+        els.platformHint.textContent = platformLimits[els.platformSelect.value] || '';
+      }
+
+      function saveDraftAndBrand() {
+        try {
+          const draft = {
+            topic: els.topicInput.value,
+            audience: els.audienceInput.value,
+            platform: els.platformSelect.value,
+            tone: document.querySelector('input[name="tone"]:checked')?.value,
+            temperature: els.tempSlider.value
+          };
+          localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+          localStorage.setItem(BRAND_KEY, els.brandHandleInput.value.trim());
+        } catch(e) {}
+      }
+
+      function loadDraftAndBrand() {
+        try {
+          const draft = JSON.parse(localStorage.getItem(DRAFT_KEY));
+          if (draft) {
+            if (draft.topic) els.topicInput.value = draft.topic;
+            if (draft.audience) els.audienceInput.value = draft.audience;
+            if (draft.platform) els.platformSelect.value = draft.platform;
+            if (draft.tone) {
+              const r = document.querySelector(`input[name="tone"][value="${draft.tone}"]`);
+              if (r) r.checked = true;
+            }
+            if (draft.temperature) {
+              els.tempSlider.value = draft.temperature;
+              els.tempValue.textContent = draft.temperature;
+            }
+          }
+          const savedHandle = localStorage.getItem(BRAND_KEY);
+          if (savedHandle) {
+            els.brandHandleInput.value = savedHandle;
+            els.snapHandleText.textContent = savedHandle;
+          }
+        } catch(e) {}
+      }
+
+      function bindEvents() {
+        els.platformSelect.addEventListener('change', () => {
+          updateHint();
+          saveDraftAndBrand();
+          handleCanvasInput();
+        });
+
+        els.tempSlider.addEventListener('input', (e) => {
+          els.tempValue.textContent = e.target.value;
+          saveDraftAndBrand();
+        });
+
+        els.form.addEventListener('input', saveDraftAndBrand);
+        els.inkStream.addEventListener('input', handleCanvasInput);
+
+        els.brandHandleInput.addEventListener('input', (e) => {
+          const val = e.target.value.trim() || '@anonymous';
+          els.snapHandleText.textContent = val;
+          saveDraftAndBrand();
+        });
+
+        document.querySelectorAll('input[name="aspectRatio"]').forEach(r => {
+          r.addEventListener('change', (e) => {
+            const ratio = e.target.value;
+            els.snapshot.className = `ratio-${ratio}`;
+          });
+        });
+
+        els.openVaultBtn.addEventListener('click', openVaultDrawer);
+        els.closeVaultBtn.addEventListener('click', closeVaultDrawer);
+        els.drawerOverlay.addEventListener('click', (e) => {
+          if (e.target === els.drawerOverlay) closeVaultDrawer();
+        });
+        els.vaultSearchInput.addEventListener('input', renderVaultList);
+
+        els.form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          if (state.isForging) {
+            if (state.abortController) state.abortController.abort();
+            return;
+          }
+          if (validate()) executeSmartForge({ action: 'generate' });
+        });
+
+        els.reforgeBtn.addEventListener('click', () => !state.isForging && executeSmartForge({ action: 'reforge' }));
+        els.expandBtn.addEventListener('click', () => !state.isForging && executeSmartForge({ action: 'expand' }));
+        els.condenseBtn.addEventListener('click', () => !state.isForging && executeSmartForge({ action: 'condense' }));
+
+        els.copyBtn.addEventListener('click', async () => {
+          try {
+            await navigator.clipboard.writeText(els.inkStream.innerText);
+            const original = els.copyBtn.innerHTML;
+            els.copyBtn.innerHTML = '✅ 已複製全文';
+            setTimeout(() => { els.copyBtn.innerHTML = original; }, 1800);
+          } catch (err) {
+            alert('複製失敗，請手動選取');
+          }
+        });
+
+        els.cardGenBtn.addEventListener('click', generateCard);
+
+        document.addEventListener('keydown', (e) => {
+          if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+            e.preventDefault();
+            if (!state.isForging && validate()) executeSmartForge({ action: 'generate' });
+          }
+          if (e.key === 'Escape') {
+            if (state.isForging && state.abortController) state.abortController.abort();
+            closeVaultDrawer();
+          }
+        });
+      }
+
+      function handleCanvasInput() {
+        const text = els.inkStream.innerText || '';
+        const charCount = text.length;
+        const platform = els.platformSelect.value;
+        const readingMinutes = Math.max(1, Math.round(charCount / 300));
+
+        auditCompliance(platform, charCount, readingMinutes);
+
+        const firstLine = text.split('\n').filter(l => l.trim().length > 0)[0] || text.substring(0, 80);
+        state.currentQuote = firstLine.replace(/^[#*-]\s*/, '');
+
+        if (!state.isForging) {
+          els.canvasModeTag.innerHTML = '✏️ 自由編輯模式';
+          els.canvasModeTag.style.color = 'var(--text-primary)';
+          persistCurrentEdit();
+        }
+      }
+
+      let editDebounce = null;
+      function persistCurrentEdit() {
+        if (!state.currentArtifactId) return;
+        clearTimeout(editDebounce);
+        editDebounce = setTimeout(async () => {
+          try {
+            await VaultDB.saveItem({
+              id: state.currentArtifactId,
+              timestamp: Date.now(),
+              topic: els.topicInput.value.trim(),
+              platform: els.platformSelect.value,
+              content: els.inkStream.innerHTML,
+              plainText: els.inkStream.innerText
+            });
+            refreshVaultCount();
+          } catch(e) {}
+        }, 800);
+      }
+
+      function auditCompliance(platform, charCount, readingMinutes) {
+        const p = (platform || '').toLowerCase();
+        let badge = '';
+        if (p.includes('x') || p.includes('twitter')) {
+          badge = charCount <= 280 
+            ? `<span style="color: var(--success);">✅ 跟足指示 (${charCount}/280字)</span>`
+            : `<span style="color: var(--danger);">⚠️ 超出指示 (${charCount}/280字)</span>`;
+        } else if (p.includes('linkedin')) {
+          badge = charCount <= 1300 
+            ? `<span style="color: var(--success);">✅ 跟足指示 (${charCount}/1300字內)</span>`
+            : `<span style="color: var(--danger);">⚠️ 篇幅偏長 (${charCount}字，建議 1300 內)</span>`;
+        } else if (p.includes('substack')) {
+          badge = charCount >= 1000 
+            ? `<span style="color: var(--success);">✅ 跟足指示 (長篇架構 ${charCount}字)</span>`
+            : `<span style="color: var(--flame-gold);">⚠️ 篇幅尚短 (${charCount}字，建議 1500-2000 字)</span>`;
+        }
+        els.metricsDisplay.innerHTML = `${badge} ｜ 約 ${readingMinutes} 分鐘閱讀`;
+      }
+
+      function validate() {
+        let valid = true;
+        let firstInvalid = null;
+
+        if (!els.topicInput.value.trim()) {
+          showError(els.topicInput, els.topicError);
+          valid = false;
+          if (!firstInvalid) firstInvalid = els.topicInput;
+        } else {
+          clearError(els.topicInput, els.topicError);
+        }
+
+        if (!els.audienceInput.value.trim()) {
+          showError(els.audienceInput, els.audienceError);
+          valid = false;
+          if (!firstInvalid) firstInvalid = els.audienceInput;
+        } else {
+          clearError(els.audienceInput, els.audienceError);
+        }
+
+        if (firstInvalid) firstInvalid.focus();
+        return valid;
+      }
+
+      function showError(input, err) {
+        input.classList.add('has-error');
+        input.setAttribute('aria-invalid', 'true');
+        err.style.display = 'block';
+      }
+
+      function clearError(input, err) {
+        input.classList.remove('has-error');
+        input.setAttribute('aria-invalid', 'false');
+        err.style.display = 'none';
+      }
+
+      // 雙模自適應鍛造引擎 (Auto-Detect JSON / SSE Streaming) + 重入鎖阻斷
+      async function executeSmartForge(options = {}) {
+        if (state.isForging) {
+          console.warn('[FlameForge] 重入鎖生效，忽略重複點擊。');
+          return;
+        }
+
+        state.isForging = true;
+        state.hasFinalized = false;
+        state.currentAction = options.action || 'generate';
+        state.rawGeneratedText = '';
+
+        if (state.abortController) {
+          try { state.abortController.abort(); } catch(e) {}
+        }
+        state.abortController = new AbortController();
+
+        els.inkStream.setAttribute('contenteditable', 'false');
+        els.canvasModeTag.innerHTML = '⚡ 鍛造連線中';
+        els.canvasModeTag.style.color = 'var(--flame-amber)';
+
+        els.submitBtn.textContent = '⏹ 熄滅熔爐 (Cancel)';
+        els.submitBtn.style.background = 'linear-gradient(135deg, #ff453a, #ff6b6b)';
+        setControls(false);
+
+        els.inkStream.setAttribute('aria-live', 'off');
+        els.inkStream.setAttribute('aria-busy', 'true');
+        els.a11yAnnouncer.textContent = '鍛造開始';
+
+        const rawTopic = els.topicInput.value.trim();
+        const platform = els.platformSelect.value;
+        const audience = els.audienceInput.value.trim();
+        const toneRadio = document.querySelector('input[name="tone"]:checked');
+        const tone = toneRadio ? toneRadio.value : 'authoritative';
+        const temperature = parseFloat(els.tempSlider.value);
+        const seed = Math.floor(Math.random() * 100000);
+
+        saveDraftAndBrand();
+
+        let secondsElapsed = 0;
+        const updateWaitingUI = () => {
+          els.inkStream.innerHTML = `
+            <div style="color: var(--flame-amber);">
+              [神經熔爐連線中] 正在向 Prometheus 核心注入靈感...<br>
+              <span style="font-size: 0.85rem; color: #fff; font-weight: 600; display: inline-block; margin-top: 0.5rem;">
+                ⏱ 已耗時 ${secondsElapsed} 秒 ${secondsElapsed > 15 ? '（Render 冷啟動或長篇生成中，請稍候）' : ''}
+              </span>
+            </div>`;
+        };
+        updateWaitingUI();
+
+        clearInterval(state.elapsedInterval);
+        state.elapsedInterval = setInterval(() => {
+          secondsElapsed++;
+          if (state.rawGeneratedText.length === 0) {
+            updateWaitingUI();
+          }
+        }, 1000);
+
+        const directive = platformDirectives[platform] || '';
+        let enhancedTopic = `${rawTopic}\n\n${directive}`;
+        if (options.action === 'expand') enhancedTopic += '\n\n【追加指令】：請大幅擴充觀點細節，篇幅務必拉長豐富。';
+        if (options.action === 'condense') enhancedTopic += '\n\n【追加指令】：請極致精煉收斂，剔除冗贅字句。';
+
+        const timeoutId = setTimeout(() => {
+          if (state.abortController) state.abortController.abort();
+        }, 120000);
+
+        try {
+          const response = await fetch(`${API_BASE}/api/forge`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            signal: state.abortController.signal,
+            body: JSON.stringify({
+              topic: enhancedTopic,
+              platform,
+              audience,
+              tone,
+              action: state.currentAction,
+              seed,
+              temperature
+            })
+          });
+
+          clearTimeout(timeoutId);
+          clearInterval(state.elapsedInterval);
+
+          if (!response.ok) {
+            if (response.status === 429) throw new Error('RATE_LIMIT');
+            throw new Error(`HTTP ${response.status}`);
+          }
+
+          const contentType = response.headers.get('content-type') || '';
+
+          // 核心相容 A：後端回傳 JSON
+          if (contentType.includes('application/json')) {
+            const resData = await response.json();
+            const rawContent = resData?.data?.outputs?.post_content || resData?.outputs?.post_content || resData?.post_content;
+            if (!rawContent) throw new Error('EMPTY_PAYLOAD');
+            finalizeStreamResult(rawContent, platform, rawTopic);
+            return;
+          }
+
+          // 核心相容 B：後端回傳 SSE Streaming
+          const reader = response.body.getReader();
+          const decoder = new TextDecoder('utf-8');
+          let buffer = '';
+          let finalPayload = null;
+
+          els.inkStream.innerHTML = '';
+          els.canvasModeTag.innerHTML = '⚡ 實時流式接收中';
+
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            buffer += decoder.decode(value, { stream: true });
+            const lines = buffer.split('\n');
+            buffer = lines.pop();
+
+            for (const line of lines) {
+              const trimmed = line.trim();
+              if (!trimmed.startsWith('data:')) continue;
+              const dataStr = trimmed.replace(/^data:\s*/, '');
+              if (!dataStr || dataStr === '[DONE]') continue;
+
+              try {
+                const eventObj = JSON.parse(dataStr);
+                if (eventObj.event === 'text_chunk') {
+                  const chunk = eventObj.data?.text || '';
+                  state.rawGeneratedText += chunk;
+                  renderStreamingProgress(state.rawGeneratedText, platform);
+                } else if (eventObj.event === 'workflow_finished') {
+                  finalPayload = eventObj.data?.outputs?.post_content;
+                }
+              } catch (e) {}
+            }
+          }
+
+          finalizeStreamResult(finalPayload || state.rawGeneratedText, platform, rawTopic);
+
+        } catch (err) {
+          clearTimeout(timeoutId);
+          clearInterval(state.elapsedInterval);
+          let msg = '';
+          let color = 'var(--danger)';
+
+          if (err.name === 'AbortError') {
+            msg = '[熔爐已熄滅] 鍛造連線已手動取消，或超過 120 秒服務限額。請再試一次。';
+            color = 'var(--flame-amber)';
+          } else if (err.message === 'RATE_LIMIT') {
+            msg = '[熔爐過熱] 請求過於頻繁，請等待 30 秒再試。';
+          } else if (err.message === 'EMPTY_PAYLOAD') {
+            msg = '[熔爐異常] 後端回傳空內容，請檢查 Dify 輸出變數設定是否為 post_content。';
+          } else if (err.message.includes('Failed to fetch')) {
+            msg = '[網絡斷線] 無法連線至閘道，請確認網絡或 Render 運行狀態。';
+          } else {
+            msg = `[熔爐警報] 異常：${err.message}`;
+          }
+
+          els.inkStream.innerHTML = `<div style="color: ${color};">${msg}</div>`;
+          finalizeUI();
+        }
+      }
+
+      function renderStreamingProgress(text, platform) {
+        const parsed = parseMarkdown(text);
+        els.inkStream.innerHTML = `<div class="rendered-article">${parsed}<span class="stream-cursor"></span></div>`;
+        els.inkStream.scrollTop = els.inkStream.scrollHeight;
+        
+        const count = text.length;
+        const mins = Math.max(1, Math.round(count / 300));
+        auditCompliance(platform, count, mins);
+      }
+
+      async function finalizeStreamResult(rawContent, platform, fallbackTopic) {
+        let parsed = null;
+        try {
+          parsed = typeof rawContent === 'string' ? JSON.parse(rawContent) : rawContent;
+        } catch (e) {
+          parsed = { body: rawContent };
+        }
+
+        let title = '';
+        let hook = '';
+        let body = '';
+        let tags = '';
+
+        if (parsed && typeof parsed === 'object' && (parsed.body || parsed.title || parsed.content)) {
+          const rawTitle = parsed.title || fallbackTopic;
+          title = escapeHtml(rawTitle.split('\n\n【平台強制約束')[0]);
+          hook = escapeHtml(parsed.hook || '');
+          body = parseMarkdown(parsed.body || parsed.content || '');
+          tags = escapeHtml(parsed.hashtags || '');
+        } else {
+          body = parseMarkdown(String(rawContent || ''));
+          title = escapeHtml(fallbackTopic);
+        }
+
+        state.currentQuote = hook || title;
+
+        els.inkStream.innerHTML = `
+          <div class="rendered-article">
+            ${title ? `<h3>${title}</h3>` : ''}
+            ${hook ? `<div class="hook-box">${hook}</div>` : ''}
+            <div>${body}</div>
+            ${tags ? `<div class="hashtags">${tags}</div>` : ''}
+          </div>
+        `;
+
+        handleCanvasInput();
+        finalizeUI();
+
+        state.currentArtifactId = `art_${Date.now()}`;
+        try {
+          await VaultDB.saveItem({
+            id: state.currentArtifactId,
+            timestamp: Date.now(),
+            topic: fallbackTopic,
+            platform: platform,
+            content: els.inkStream.innerHTML,
+            plainText: els.inkStream.innerText
+          });
+          refreshVaultCount();
+        } catch (e) {
+          console.error('Vault save failed', e);
+        }
+      }
+
+      function finalizeUI() {
+        if (state.hasFinalized) return;
+        state.hasFinalized = true;
+
+        clearInterval(state.elapsedInterval);
+        state.isForging = false;
+        state.abortController = null;
+
+        els.inkStream.setAttribute('contenteditable', 'true');
+        els.canvasModeTag.innerHTML = '✏️ 自由編輯模式';
+        els.canvasModeTag.style.color = 'var(--text-primary)';
+
+        els.submitBtn.textContent = '啟動火之鍛造 (Ignite Engine)';
+        els.submitBtn.style.background = '';
+        els.submitBtn.disabled = false;
+
+        setControls(true);
+
+        els.inkStream.setAttribute('aria-live', 'polite');
+        els.inkStream.removeAttribute('aria-busy');
+        els.a11yAnnouncer.textContent = '鍛造完成，已存入資產庫';
+      }
+
+      function setControls(active) {
+        els.copyBtn.disabled = !active;
+        els.cardGenBtn.disabled = !active;
+        els.reforgeBtn.disabled = !active;
+        els.expandBtn.disabled = !active;
+        els.condenseBtn.disabled = !active;
+      }
+
+      async function generateCard() {
+        const originalText = els.cardGenBtn.innerHTML;
+        els.cardGenBtn.innerHTML = '⏳ 正在淬鍊品牌圖卡...';
+        els.cardGenBtn.disabled = true;
+
+        // 字型安全等待，防止圖卡跑版退化
+        await document.fonts.ready;
+
+        els.snapshotContent.textContent = `「${state.currentQuote || els.topicInput.value}」`;
+        els.snapshotPlatform.textContent = `FOR ${els.platformSelect.value.toUpperCase()}`;
+        els.snapHandleText.textContent = els.brandHandleInput.value.trim() || '@creator';
+
+        try {
+          const canvas = await html2canvas(els.snapshot, { scale: 2, useCORS: true, logging: false });
+          const link = document.createElement('a');
+          const isSquare = els.snapshot.classList.contains('ratio-1-1');
+          link.download = `FlameForge-${isSquare ? '1x1' : '9x16'}-${Date.now()}.png`;
+          link.href = canvas.toDataURL('image/png');
+          link.click();
+        } catch (e) {
+          alert('圖卡產生失敗');
+        } finally {
+          els.cardGenBtn.innerHTML = originalText;
+          els.cardGenBtn.disabled = false;
+        }
+      }
+
+      function openVaultDrawer() {
+        els.drawerOverlay.classList.add('open');
+        els.drawerOverlay.setAttribute('aria-hidden', 'false');
+        renderVaultList();
+      }
+
+      function closeVaultDrawer() {
+        els.drawerOverlay.classList.remove('open');
+        els.drawerOverlay.setAttribute('aria-hidden', 'true');
+      }
+
+      async function refreshVaultCount() {
+        try {
+          const list = await VaultDB.getAllItems();
+          els.vaultCount.textContent = list.length;
+        } catch(e) {}
+      }
+
+      async function renderVaultList() {
+        const query = els.vaultSearchInput.value.toLowerCase().trim();
+        try {
+          const items = await VaultDB.getAllItems();
+          const filtered = items.filter(it => 
+            (it.topic || '').toLowerCase().includes(query) || 
+            (it.plainText || '').toLowerCase().includes(query)
+          );
+
+          els.vaultListContainer.innerHTML = '';
+          if (filtered.length === 0) {
+            els.vaultListContainer.innerHTML = `
+              <div style="text-align:center; color:var(--text-tertiary); font-size:0.85rem; padding:2rem 0;">
+                尚無匹配的火種資產
+              </div>`;
+            return;
+          }
+
+          filtered.forEach(item => {
+            const dateStr = new Date(item.timestamp).toLocaleString('zh-HK', {
+              month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+            });
+
+            const card = document.createElement('div');
+            card.className = 'vault-item';
+            card.innerHTML = `
+              <div class="vault-item-meta">
+                <span>${item.platform || 'General'} ｜ ${dateStr}</span>
+              </div>
+              <div class="vault-item-topic">${escapeHtml(item.topic)}</div>
+              <div class="vault-item-preview">${escapeHtml(item.plainText || '')}</div>
+              <div class="vault-item-actions">
+                <button type="button" class="btn-vault-action btn-load">載入畫布</button>
+                <button type="button" class="btn-vault-action btn-export">匯出 .md</button>
+                <button type="button" class="btn-vault-action btn-del" style="color:var(--danger);">刪除</button>
+              </div>
+            `;
+
+            card.querySelector('.btn-load').addEventListener('click', () => {
+              els.topicInput.value = item.topic;
+              els.platformSelect.value = item.platform || 'LinkedIn';
+              els.inkStream.innerHTML = item.content;
+              state.currentArtifactId = item.id;
+              handleCanvasInput();
+              finalizeUI();
+              closeVaultDrawer();
+            });
+
+            card.querySelector('.btn-export').addEventListener('click', () => {
+              const mdBlob = new Blob([`# ${item.topic}\n\n${item.plainText}`], { type: 'text/markdown;charset=utf-8' });
+              const a = document.createElement('a');
+              a.href = URL.createObjectURL(mdBlob);
+              a.download = `${item.topic.substring(0, 20)}_${item.id}.md`;
+              a.click();
+            });
+
+            card.querySelector('.btn-del').addEventListener('click', async () => {
+              if (confirm('確定刪除此篇火種結晶？')) {
+                await VaultDB.deleteItem(item.id);
+                renderVaultList();
+                refreshVaultCount();
+              }
+            });
+
+            els.vaultListContainer.appendChild(card);
+          });
+        } catch(e) {}
+      }
+
+      async function probeGatewayHealth() {
+        const badge = document.querySelector('.status-badge span');
+        const dot = document.querySelector('.status-indicator');
+        try {
+          const res = await fetch(`${API_BASE}/health`, { method: 'GET', cache: 'no-store' });
+          if (res.ok) {
+            badge.textContent = 'ONLINE (已喚醒)';
+            dot.style.background = '#00ff88';
+            dot.style.boxShadow = '0 0 8px #00ff88';
+          }
+        } catch (e) {
+          badge.textContent = '休眠中 (點擊鍛造自動喚醒)';
+          dot.style.background = 'var(--flame-amber)';
+          dot.style.boxShadow = '0 0 8px var(--flame-amber)';
+        }
+      }
+
+      function initPWA() {
+        if ('serviceWorker' in navigator) {
+          window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
+        }
+        window.addEventListener('beforeinstallprompt', (e) => {
+          e.preventDefault();
+          state.deferredPrompt = e;
+          els.pwaInstallBtn.style.display = 'inline-flex';
+        });
+        els.pwaInstallBtn.addEventListener('click', async () => {
+          if (!state.deferredPrompt) return;
+          state.deferredPrompt.prompt();
+          state.deferredPrompt = null;
+          els.pwaInstallBtn.style.display = 'none';
+        });
+      }
+
+      return { init };
+    })();
+
+    document.addEventListener('DOMContentLoaded', FlameForge.init);
+  </script>
+</body>
+</html>
