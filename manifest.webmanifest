@@ -1,1 +1,17 @@
-
+{
+  "name": "FlameForge 火之鍛造廠",
+  "short_name": "FlameForge",
+  "description": "智能內容淬鍊系統",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#07070a",
+  "theme_color": "#07070a",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%2307070a'/><path d='M50 15 L80 50 L50 85 L20 50 Z' fill='%23ff5e1a'/></svg>",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
