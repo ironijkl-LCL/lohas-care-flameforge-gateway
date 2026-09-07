@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>FlameForge | 自主決策與全通路發行工廠</title>
-  <meta name="description" content="超越通用 AI：智能觀點配對、社群對抗推演、手機滾動滑走熱力圖、無頭排程發行與成效數據閉環。" />
+  <title>FlameForge | 淬鍊思想火種，鍛造不被環境收割的筆鋒</title>
+  <meta name="description" content="超越通用 AI：立場光譜校準、在地潮語引擎、論證強度熱力渲染、競品逆向工程與市民風向標。" />
 
   <meta http-equiv="Content-Security-Policy" content="
-    default-src 'self';
+    default-src 'self' file: data: blob:;
     script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;
     style-src 'self' 'unsafe-inline';
     font-src 'self' data:;
@@ -22,15 +22,14 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-  <!-- 渲染與壓縮工具庫 -->
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js" defer></script>
 
   <style>
     :root {
       --bg: #07070a;
-      --card-bg: rgba(18, 18, 26, 0.75);
-      --card-inner: rgba(28, 28, 40, 0.58);
+      --card-bg: rgba(18, 18, 26, 0.76);
+      --card-inner: rgba(28, 28, 40, 0.6);
       --border: rgba(255, 255, 255, 0.1);
       --border-hover: rgba(255, 140, 50, 0.5);
       --border-glow: rgba(255, 94, 26, 0.35);
@@ -53,12 +52,12 @@
       --spring: cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
     body {
       background-color: var(--bg);
       color: var(--text-body);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang HK", system-ui, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang HK", system-ui, sans-serif;
       min-height: 100vh;
       -webkit-font-smoothing: antialiased;
       background-image: 
@@ -67,7 +66,8 @@
         radial-gradient(circle at 12% 48%, rgba(255, 190, 59, 0.1) 0%, transparent 52%),
         radial-gradient(circle at 88% 22%, rgba(34, 211, 238, 0.08) 0%, transparent 48%);
       background-attachment: fixed;
-      padding-bottom: env(safe-area-inset-bottom);
+      padding-top: max(0.5rem, env(safe-area-inset-top));
+      padding-bottom: max(2rem, env(safe-area-inset-bottom));
       position: relative;
     }
 
@@ -92,8 +92,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1.1rem 6%;
-      background: rgba(7, 7, 10, 0.85);
+      padding: 1rem 6%;
+      background: rgba(7, 7, 10, 0.88);
       backdrop-filter: saturate(190%) blur(24px);
       position: sticky;
       top: 0;
@@ -121,6 +121,8 @@
       -webkit-text-fill-color: transparent;
     }
 
+    .header-actions { display: flex; align-items: center; gap: 0.6rem; }
+
     .status-badge {
       display: flex;
       align-items: center;
@@ -142,20 +144,20 @@
     }
 
     main {
-      max-width: 1440px;
+      max-width: 1460px;
       margin: 0 auto;
-      padding: 2.2rem 1.5rem 5rem;
+      padding: 1.8rem 1.5rem 4rem;
       position: relative;
       z-index: 2;
     }
 
-    .hero { text-align: center; margin-bottom: 2rem; }
+    .hero { text-align: center; margin-bottom: 1.8rem; }
 
     .badge-prometheus {
       display: inline-block;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       text-transform: uppercase;
-      letter-spacing: 0.25em;
+      letter-spacing: 0.22em;
       color: var(--flame-gold);
       margin-bottom: 0.8rem;
       font-weight: 600;
@@ -166,9 +168,9 @@
     }
 
     .hero-title {
-      font-size: clamp(2.1rem, 4.2vw, 3.6rem);
+      font-size: clamp(2rem, 3.8vw, 3.4rem);
       font-weight: 800;
-      line-height: 1.18;
+      line-height: 1.2;
       letter-spacing: -0.03em;
       margin-bottom: 0.8rem;
       background: linear-gradient(135deg, #ffffff 15%, #ffd488 55%, #ff5e1a 100%);
@@ -179,7 +181,7 @@
 
     .hero-desc {
       color: var(--text-secondary);
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       line-height: 1.6;
       max-width: 860px;
       margin: 0 auto;
@@ -187,7 +189,7 @@
 
     .forge-grid {
       display: grid;
-      grid-template-columns: 1fr 1.55fr;
+      grid-template-columns: 1.05fr 1.55fr;
       gap: 1.8rem;
       align-items: start;
     }
@@ -232,6 +234,12 @@
       color: var(--text-secondary);
       letter-spacing: 0.05em;
       font-weight: 500;
+    }
+
+    .field-hint {
+      font-size: 0.75rem;
+      color: var(--flame-amber);
+      font-weight: 600;
     }
 
     .input-with-action {
@@ -280,85 +288,45 @@
       box-shadow: 0 0 16px rgba(255, 148, 54, 0.25);
     }
 
-    .segmented-control {
-      display: flex;
-      background: rgba(0, 0, 0, 0.45);
-      padding: 3px;
-      border-radius: var(--radius-md);
+    .spectrum-container {
+      background: rgba(0, 0, 0, 0.35);
       border: 1px solid var(--border);
-      gap: 3px;
-    }
-
-    .segmented-control div { flex: 1; position: relative; }
-    .seg-radio { position: absolute; opacity: 0; pointer-events: none; }
-
-    .seg-label {
-      display: block;
-      text-align: center;
-      padding: 0.55rem 0.4rem;
-      font-size: 0.78rem;
-      font-weight: 500;
-      color: var(--text-secondary);
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      transition: all 0.2s var(--spring);
-    }
-
-    .seg-radio:checked + .seg-label {
-      background: linear-gradient(135deg, rgba(255, 94, 26, 0.25), rgba(255, 190, 59, 0.3));
-      border: 1px solid rgba(255, 190, 59, 0.45);
-      color: #fff;
-      font-weight: 600;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
-    }
-
-    .thesis-match-card {
-      background: rgba(34, 211, 238, 0.06);
-      border: 1px solid rgba(34, 211, 238, 0.3);
       border-radius: var(--radius-md);
-      padding: 0.75rem 0.9rem;
-      margin-top: 0.6rem;
-      font-size: 0.76rem;
-      display: none;
+      padding: 0.85rem 1rem;
+      margin-top: 0.4rem;
     }
 
-    .thesis-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      padding: 0.2rem 0.6rem;
-      border-radius: 999px;
+    .spectrum-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      margin-top: 0.4rem;
+      color: var(--text-tertiary);
+    }
+
+    .spectrum-labels span.active-stance {
+      color: var(--flame-gold);
       font-weight: 700;
-      background: rgba(34, 211, 238, 0.2);
-      color: var(--flame-cyan);
-      margin-bottom: 0.3rem;
     }
 
-    .moat-learning-bar {
-      background: rgba(168, 85, 247, 0.1);
-      border: 1px solid rgba(168, 85, 247, 0.35);
+    .tone-extractor-box {
+      background: rgba(168, 85, 247, 0.08);
+      border: 1px solid rgba(168, 85, 247, 0.25);
       border-radius: var(--radius-md);
-      padding: 0.7rem 0.9rem;
+      padding: 0.8rem;
       margin-bottom: 1.15rem;
+    }
+
+    .tone-extractor-box summary {
+      cursor: pointer;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #e9d5ff;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 0.74rem;
-    }
-
-    .moat-tag-cloud {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.35rem;
-      margin-top: 0.3rem;
-    }
-
-    .moat-tag {
-      background: rgba(168, 85, 247, 0.25);
-      color: #e9d5ff;
-      padding: 0.15rem 0.45rem;
-      border-radius: 4px;
-      font-size: 0.7rem;
+      outline: none;
+      user-select: none;
     }
 
     .btn-ignite {
@@ -388,7 +356,6 @@
       filter: grayscale(0.6);
     }
 
-    /* 創新點 4：市民共鳴儀表板 */
     .civic-gauge-panel {
       background: rgba(0, 0, 0, 0.45);
       border: 1px solid var(--border);
@@ -444,15 +411,19 @@
     .fill-cyan { background: linear-gradient(90deg, #00ff88, var(--flame-cyan)); }
     .fill-amber { background: linear-gradient(90deg, #ff9436, #ff2442); }
 
-    .gauge-action-hint {
+    .sentiment-risk-strip {
+      background: rgba(255, 69, 58, 0.08);
+      border: 1px dashed rgba(255, 69, 58, 0.35);
+      border-radius: var(--radius-sm);
+      padding: 0.65rem 0.85rem;
+      margin-top: 0.6rem;
       font-size: 0.72rem;
-      color: var(--text-tertiary);
-      border-left: 2px solid var(--flame-gold);
-      padding-left: 0.5rem;
-      margin-top: 0.4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.6rem;
     }
 
-    /* 創新點 1：虛擬社群留言對抗推演 (Adversarial Agent Red-Teaming) */
     .red-team-box {
       background: rgba(255, 69, 58, 0.06);
       border: 1px solid rgba(255, 69, 58, 0.25);
@@ -499,27 +470,18 @@
     .tag-threads { background: rgba(168, 85, 247, 0.2); color: #c084fc; }
     .tag-linkedin { background: rgba(34, 211, 238, 0.2); color: var(--flame-cyan); }
 
-    /* 創新點 2：手機滑走熱力圖模式樣式 (Drop-off Heatmap) */
-    .heatmap-alert-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      font-size: 0.72rem;
-      font-weight: 700;
-      padding: 0.2rem 0.5rem;
-      border-radius: 4px;
-      margin-bottom: 0.4rem;
+    .heat-arg-weak {
+      border-left: 3px solid #ff453a;
+      background: rgba(255, 69, 58, 0.1);
+      padding: 0.7rem 0.9rem;
+      margin: 0.6rem 0;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
     }
 
-    .heat-high { background: rgba(255, 69, 58, 0.2); color: var(--danger); border: 1px solid var(--danger); }
-    .heat-medium { background: rgba(255, 214, 10, 0.2); color: var(--warning); border: 1px solid var(--warning); }
-    .heat-safe { background: rgba(48, 209, 88, 0.2); color: var(--success); border: 1px solid var(--success); }
-
-    .rendered-article .heat-flagged-block {
-      position: relative;
-      border-left: 3px solid var(--danger);
-      background: rgba(255, 69, 58, 0.08);
-      padding: 0.6rem 0.8rem;
+    .heat-arg-strong {
+      border-left: 3px solid #30d158;
+      background: rgba(48, 209, 88, 0.08);
+      padding: 0.7rem 0.9rem;
       margin: 0.6rem 0;
       border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
     }
@@ -527,7 +489,7 @@
     .output-card {
       display: flex;
       flex-direction: column;
-      min-height: 680px;
+      min-height: 700px;
     }
 
     .output-toolbar {
@@ -553,7 +515,7 @@
 
     .ink-stream-box {
       flex: 1;
-      min-height: 350px;
+      min-height: 360px;
       max-height: 480px;
       overflow-y: auto;
       background: rgba(0, 0, 0, 0.35);
@@ -589,7 +551,7 @@
     .rendered-article h3 {
       font-size: 1.25rem;
       font-weight: 700;
-      margin: 1.2rem 0 0.5rem;
+      margin: 0.6rem 0 0.8rem;
       color: var(--text-pure);
       border-left: 3px solid var(--flame-gold);
       padding-left: 0.8rem;
@@ -650,34 +612,7 @@
 
     .btn-action:disabled { opacity: 0.3; cursor: not-allowed; }
 
-    /* 創新點 4：成效回填閉環面板 (Post-Mortem Closed Loop) */
-    .post-mortem-box {
-      background: rgba(0, 0, 0, 0.35);
-      border: 1px dashed var(--border);
-      border-radius: var(--radius-md);
-      padding: 0.75rem 1rem;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.6rem;
-      font-size: 0.76rem;
-    }
-
-    .post-mortem-inputs {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      flex-wrap: wrap;
-    }
-
-    .post-mortem-inputs input {
-      width: 90px;
-      padding: 0.35rem 0.5rem;
-      font-size: 0.76rem;
-    }
-
-    /* 創新點 3：無頭自動發行中樞彈窗 */
+    /* 全通路與私隱條款彈窗 */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -775,6 +710,8 @@
       position: absolute;
       top: -9999px; left: -9999px;
       background: #08080c;
+      background-size: cover;
+      background-position: center;
       background-image: 
         radial-gradient(circle at 15% 15%, rgba(255, 94, 26, 0.35) 0%, transparent 60%),
         radial-gradient(circle at 85% 85%, rgba(139, 92, 246, 0.25) 0%, transparent 60%);
@@ -821,22 +758,28 @@
   <header>
     <div class="brand">
       <div class="ember-dot"></div>
-      <h1>FlameForge</h1>
+      <h1>FlameForge Pro</h1>
     </div>
     <div class="header-actions">
+      <button type="button" id="nativePhotoBtn" class="btn-action" style="border-color:var(--flame-cyan); font-size:0.72rem; padding:0.3rem 0.6rem;">
+        🖼️ 換圖卡底圖
+      </button>
+      <button type="button" id="openPrivacyBtn" class="btn-action" style="font-size:0.72rem; padding:0.3rem 0.6rem;">
+        📜 私隱條款
+      </button>
       <div class="status-badge">
         <div class="status-indicator"></div>
-        <span id="gatewayStatusText">GATEWAY ONLINE</span>
+        <span id="gatewayStatusText">ONLINE</span>
       </div>
     </div>
   </header>
 
   <main>
     <section class="hero">
-      <div class="badge-prometheus">Autonomous Decision & Omnichannel Publisher</div>
-      <h2 class="hero-title">智能決策引擎<br>全通路自動發行中樞</h2>
+      <div class="badge-prometheus">Sovereign IP Forge // Anti-Fragile Studio</div>
+      <h2 class="hero-title">淬鍊思想火種<br>鍛造不被環境收割的筆鋒</h2>
       <p class="hero-desc">
-        超越通用 LLM：觀點對沖配對、虛擬社群對抗推演、手機滾動滑走熱力圖、無頭自動排程發行與成效數據閉環。
+        拒絕演算法同質化，向廉價雞湯宣戰。整合動態立場光譜、在地市民情緒雷達與全通路無頭發行，將每一次思考鑄成不可複製的個人護城河。
       </p>
     </section>
 
@@ -856,7 +799,39 @@
             </div>
           </div>
 
-          <!-- 創新點 1：智能觀點配對 -->
+          <!-- 立場光譜校準器 -->
+          <div class="field-group">
+            <div class="label-row">
+              <label for="stanceSpectrumSlider">🚀 立場光譜校準 (STANCE SPECTRUM)</label>
+              <span id="stanceLabelText" class="field-hint">⚖️ 務實穩健 (中立)</span>
+            </div>
+            <div class="spectrum-container">
+              <input type="range" id="stanceSpectrumSlider" min="-2" max="2" step="1" value="0" />
+              <div class="spectrum-labels">
+                <span>💥 顛覆出局</span>
+                <span>⚔️ 銳意進取</span>
+                <span class="active-stance">⚖️ 務實穩健</span>
+                <span>🤝 抱團取暖</span>
+                <span>🛡️ 保本和諧</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 在地潮語動態詞庫 -->
+          <div class="field-group">
+            <div class="label-row">
+              <label for="slangLevelSelect">🇭🇰 在地潮語/高頻民間術語引擎</label>
+              <span class="field-hint">LIHKG / Threads 詞庫</span>
+            </div>
+            <select id="slangLevelSelect">
+              <option value="none">🚫 純淨專業書面語 (不注入俗語)</option>
+              <option value="mild" selected>☕ 15% 職場真實切膚感 (頂硬上 / 食力 / 大重組)</option>
+              <option value="deep">🔥 30% 連登與社群原味 (咪吹水 / 齊上齊落 / 自肥 / 畢業)</option>
+              <option value="hardcore">⚡ 50% 骨灰級地底泥 (高濃度港式俚語對抗假大空)</option>
+            </select>
+          </div>
+
+          <!-- 時事情報串流 -->
           <div class="field-group">
             <div class="label-row">
               <label for="contextBridgeSelect">2026 CONTEXT RADAR (時事與情報串流)</label>
@@ -874,25 +849,29 @@
               <input type="text" id="rssFeedUrl" placeholder="貼入 RSS 網址..." value="https://techcrunch.com/feed/" />
             </div>
 
-            <div id="thesisMatchCard" class="thesis-match-card">
+            <div id="thesisMatchCard" class="thesis-match-card" style="display:none;">
               <div class="thesis-badge" id="thesisBadge">⚡ 觀點配對：運算中</div>
               <div id="thesisDescription" style="color: var(--text-secondary); line-height: 1.4;"></div>
             </div>
           </div>
 
-          <!-- 語氣 Clone 護城河 -->
-          <div class="moat-learning-bar">
-            <div>
-              <div style="font-weight: 700; color: var(--flame-purple); display:flex; align-items:center; gap:0.4rem;">
-                <span>🧬 語氣 Clone 護城河</span>
-                <span id="diffCounterBadge" style="font-size:0.68rem; color:var(--flame-gold);">已捕獲 0 條習慣</span>
+          <!-- 競品逆向工程抽屜 -->
+          <details class="tone-extractor-box" id="reverseEngAccordion">
+            <summary>
+              <span>🧬 競品「爆款 DNA」逆向工程萃取器</span>
+              <span id="reverseStatusTag" style="font-size:0.7rem; color:var(--flame-gold);">未擷取</span>
+            </summary>
+            <div style="margin-top:0.6rem;">
+              <textarea id="competitorPostInput" placeholder="在此貼上 1-3 篇同領域的高讚/高轉發貼文，系統將自動逆向工程其「開局 Hook 句型」、「段落留白規律」與「CTA 節奏」..."></textarea>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:0.4rem;">
+                <button type="button" class="btn-action" id="extractCompetitorDnaBtn" style="font-size:0.72rem; padding:0.3rem 0.6rem; border-color:var(--flame-purple);">
+                  ⚡ 逆向工程並綁定骨架 DNA
+                </button>
+                <button type="button" class="btn-action" id="clearDnaBtn" style="font-size:0.7rem;">清除 DNA</button>
               </div>
-              <div class="moat-tag-cloud" id="moatTagCloud">
-                <span class="moat-tag">監聽畫布編輯中...</span>
-              </div>
+              <div id="extractedDnaMetrics" style="font-size:0.72rem; color:var(--flame-cyan); margin-top:0.4rem;"></div>
             </div>
-            <button type="button" id="resetMoatBtn" class="btn-action" style="font-size:0.68rem; padding:0.2rem 0.5rem;">重設</button>
-          </div>
+          </details>
 
           <div class="field-group">
             <div class="label-row">
@@ -909,27 +888,7 @@
             <div class="label-row">
               <label for="audience">TARGET AUDIENCE (共鳴受眾)</label>
             </div>
-            <input type="text" id="audience" name="audience" value="大眾" required />
-          </div>
-
-          <div class="field-group">
-            <div class="label-row">
-              <label>ACTIVE TONE DIAL (基底語氣)</label>
-            </div>
-            <div class="segmented-control">
-              <div>
-                <input type="radio" class="seg-radio" name="tone" id="tone-auth" value="authoritative" checked>
-                <label for="tone-auth" class="seg-label">專業權威</label>
-              </div>
-              <div>
-                <input type="radio" class="seg-radio" name="tone" id="tone-conv" value="conversational">
-                <label for="tone-conv" class="seg-label">直率對話</label>
-              </div>
-              <div>
-                <input type="radio" class="seg-radio" name="tone" id="tone-sharp" value="sharp">
-                <label for="tone-sharp" class="seg-label">挑釁銳利</label>
-              </div>
-            </div>
+            <input type="text" id="audience" name="audience" value="大眾與職場專業從業員" required />
           </div>
 
           <button type="submit" id="submitBtn" class="btn-ignite">
@@ -938,7 +897,7 @@
         </form>
       </section>
 
-      <!-- 右欄：市民共鳴儀表板、對抗推演、熱力畫布與全通路自動發行 -->
+      <!-- 右欄：市民共鳴儀表板、論證熱力渲染、畫布與全通路自動發行 -->
       <section class="apple-card output-card" aria-labelledby="canvas-heading">
         <div class="output-toolbar">
           <div style="display:flex; align-items:center; gap:0.6rem;">
@@ -946,14 +905,17 @@
             <span id="canvasModeTag" class="canvas-status-tag">待命中</span>
           </div>
           <div style="display:flex; align-items:center; gap:0.5rem;">
+            <button type="button" id="toggleArgStrengthBtn" class="btn-action" style="border-color:var(--flame-amber);">
+              🔥 論證強度照妖鏡
+            </button>
             <button type="button" id="toggleHeatmapBtn" class="btn-action" style="border-color:var(--flame-gold);">
-              📱 手機滑走熱力檢視
+              📱 手機滑走熱力
             </button>
             <div class="meta-metrics" id="metricsDisplay">約 0 字</div>
           </div>
         </div>
 
-        <!-- 創新點 4：市民共鳴動態儀表 -->
+        <!-- 市民共鳴儀表板 + 風險風向標 -->
         <div class="civic-gauge-panel" id="civicGaugePanel">
           <div style="display:flex; justify-content:space-between; align-items:center;">
             <span style="font-size:0.75rem; font-weight:700; color:var(--flame-gold); letter-spacing:0.08em;">
@@ -997,14 +959,25 @@
           <div class="gauge-action-hint" id="gaugeMitigationAdvice">
             建議：文風客觀且帶同理心，無明顯「居高臨下」說教字眼。
           </div>
+
+          <!-- 合規風向標展示條 -->
+          <div class="sentiment-risk-strip" id="sentimentRiskStrip" style="display:none;">
+            <div>
+              <span style="font-weight:700; color:var(--danger);" id="riskTitle">⚠️ 偵測到在地引戰/立場激化敏感詞彙</span>
+              <div style="color:var(--text-secondary); margin-top:0.2rem;" id="riskDetails"></div>
+            </div>
+            <button type="button" id="neutralizeKeywordsBtn" class="btn-action" style="border-color:var(--flame-cyan); white-space:nowrap; font-size:0.7rem;">
+              🕊️ 一鍵中性脫敏
+            </button>
+          </div>
         </div>
 
-        <!-- 創新點 1：虛擬社群對抗推演 (Adversarial Agent Red-Teaming) -->
+        <!-- 虛擬社群對抗推演 -->
         <div class="red-team-box" id="redTeamBox">
           <div class="red-team-header">
             <span style="font-size:0.75rem; font-weight:800; color:var(--danger); display:flex; align-items:center; gap:0.4rem;">
               <span>🎭 虛擬社群毒舌推演</span>
-              <span style="font-size:0.68rem; color:var(--text-tertiary);">（預估高讚挑骨頭留言）</span>
+              <span style="font-size:0.68rem; color:var(--text-tertiary);">（預估高讚酸言）</span>
             </span>
             <button type="button" id="injectRebuttalBtn" class="btn-action" style="border-color:var(--flame-spark); color:#fff; font-size:0.72rem; padding:0.25rem 0.6rem;">
               🛡️ 一鍵預防性反駁 (封死漏洞)
@@ -1018,26 +991,14 @@
           <p style="color: var(--text-tertiary);">// 系統待命。填妥左側火種，點擊「啟動火之鍛造」開始提煉文字。<br>提示：在畫布直接手動修改字眼，系統將自動比對 Diff 並擴建你的個人 IP 語氣護城河。</p>
         </div>
 
-        <!-- 創新點 4：社交貼文成效回填閉環 (Post-Mortem Closed Loop) -->
-        <div class="post-mortem-box">
-          <div style="color:var(--flame-gold); font-weight:700;">
-            📈 貼文實測回填閉環：
-          </div>
-          <div class="post-mortem-inputs">
-            <label>曝光: <input type="number" id="metricImpression" placeholder="e.g. 5000" /></label>
-            <label>讚好: <input type="number" id="metricLikes" placeholder="e.g. 240" /></label>
-            <label>轉發: <input type="number" id="metricReposts" placeholder="e.g. 35" /></label>
-            <button type="button" id="logPerformanceBtn" class="btn-action" style="border-color:var(--flame-purple);">
-              💾 儲存回響數據 (自我進化)
-            </button>
-          </div>
-        </div>
-
         <!-- 發行中樞操作區 -->
         <div class="action-group">
           <div class="action-row">
             <button type="button" id="openPublisherBtn" class="btn-action" style="border-color: var(--flame-cyan); font-weight:700;" disabled>
               🚀 Omnichannel 自動發行管道 (分眾文案 + 無頭排程 + ZIP)
+            </button>
+            <button type="button" id="injectHardDataBtn" class="btn-action" style="display:none; border-color:var(--flame-spark);">
+              📊 一鍵注入硬性論證骨架 (消除假大空)
             </button>
             <button type="button" id="autoFormatRetentionBtn" class="btn-action" style="display:none; border-color:var(--warning);">
               ⚡ 一鍵斷句注入留白 (修復滑走)
@@ -1049,7 +1010,7 @@
     </div>
   </main>
 
-  <!-- 創新點 3：全通路無頭自動發行中樞彈窗 -->
+  <!-- 全通路無頭自動發行中樞彈窗 -->
   <div class="modal-overlay" id="publisherModal">
     <div class="publisher-card">
       <div class="publisher-header">
@@ -1059,7 +1020,7 @@
         <button type="button" class="btn-action" id="closePublisherBtn">✕</button>
       </div>
 
-      <!-- 創新點 3：無頭自動排程器 (Headless Direct Publisher) -->
+      <!-- 無頭自動排程器 -->
       <div class="webhook-schedule-strip">
         <div style="font-weight:700; color:var(--flame-cyan);">📡 跨時區無頭排程發射台 (Webhook Auto-Dispatch)</div>
         <div class="webhook-row">
@@ -1081,7 +1042,6 @@
             <button type="button" class="btn-action" id="copyLinkedinBtn">複製</button>
           </div>
           <textarea id="omniLinkedin" class="omni-textarea"></textarea>
-          <span style="font-size:0.7rem; color:var(--text-tertiary);">格式約束：雙句 Hook、單句留白、CTA 互動</span>
         </div>
 
         <div class="omni-channel-box">
@@ -1090,7 +1050,6 @@
             <button type="button" class="btn-action" id="copyXBtn">複製</button>
           </div>
           <textarea id="omniX" class="omni-textarea"></textarea>
-          <span style="font-size:0.7rem; color:var(--text-tertiary);">格式約束：切片為 1/4 ~ 4/4 串流高密金句</span>
         </div>
 
         <div class="omni-channel-box">
@@ -1099,7 +1058,6 @@
             <button type="button" class="btn-action" id="copySocialBtn">複製</button>
           </div>
           <textarea id="omniSocial" class="omni-textarea"></textarea>
-          <span style="font-size:0.7rem; color:var(--text-tertiary);">格式約束：短痛點、強烈情緒價值、標籤矩陣</span>
         </div>
       </div>
 
@@ -1115,11 +1073,28 @@
     </div>
   </div>
 
+  <!-- 私隱政策彈窗 (App Store 必備) -->
+  <div class="modal-overlay" id="privacyModal">
+    <div class="publisher-card" style="max-width: 650px;">
+      <div class="publisher-header">
+        <div style="font-weight:800; color:var(--flame-gold); font-size:1.1rem;">
+          📜 FlameForge 私隱權與數據保護政策
+        </div>
+        <button type="button" class="btn-action" id="closePrivacyBtn">✕</button>
+      </div>
+      <div style="font-size:0.85rem; line-height:1.65; color:var(--text-body); display:flex; flex-direction:column; gap:0.8rem;">
+        <p><strong>1. 數據本機化存儲：</strong> FlameForge 堅守離線優先與個人主權原則。您的寫作立場光譜偏好、競品 DNA 參數及個人語氣習慣數據，均完整保存在您裝置的本機存儲空間中，絕不會未經授權上傳至任何中心化伺服器進行廣告分析。</p>
+        <p><strong>2. 生成與模型通訊：</strong> 當您點擊鍛造文章時，您輸入的主題與結構指令將經由加密端點傳輸至神經閘道進行推理運算，運算結束後不會保留任何個人識別數據。</p>
+        <p><strong>3. 數據自主控制權：</strong> 您擁有 100% 的數據抹除權利。您可以隨時點擊各模組中的「重設護城河」或「清除 DNA」按鈕，一鍵徹底刪除本機設備上的歷史痕跡。</p>
+      </div>
+    </div>
+  </div>
+
   <!-- 快照節點 (html2canvas) -->
   <div id="socialCardSnapshot" class="ratio-1-1" aria-hidden="true">
     <div class="snap-header">
       <span style="font-weight:700; letter-spacing:0.15em; color:var(--flame-gold);">FLAMEFORGE // INSIGHT</span>
-      <span style="color:var(--text-secondary);">@alex_founder</span>
+      <span style="color:var(--text-secondary);">@creator_hk</span>
     </div>
     <div class="snap-body" id="snapshotContent">「逆境不會先問我們準備好了沒，但韌性可以被刻意培養。」</div>
     <div class="snap-footer">
@@ -1131,7 +1106,7 @@
   <div id="carouselSnapshot" aria-hidden="true">
     <div class="snap-header">
       <span id="carouselTag" style="font-weight:700; letter-spacing:0.15em; color:var(--flame-gold);">SLIDE 1/5</span>
-      <span style="color:var(--text-secondary);">@alex_founder</span>
+      <span style="color:var(--text-secondary);">@creator_hk</span>
     </div>
     <div class="snap-body" id="carouselContent"></div>
     <div class="snap-footer">
@@ -1141,35 +1116,61 @@
   </div>
 
   <script>
+    // iOS 原生 Bridge 橋接層
+    const iOSBridge = {
+      isNative: () => !!(window.webkit && window.webkit.messageHandlers),
+      post: (handler, data) => {
+        if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers[handler]) {
+          try {
+            window.webkit.messageHandlers[handler].postMessage(data);
+            return true;
+          } catch (e) {
+            console.warn('[iOSBridge Error]', e);
+          }
+        }
+        return false;
+      },
+      haptic: (style = 'medium') => {
+        iOSBridge.post('triggerHaptic', { style });
+      }
+    };
+
     const FlameForge = (() => {
       const urlParams = new URLSearchParams(window.location.search);
       const API_BASE = urlParams.get('api') || 'https://lohas-care-flameforge-gateway.onrender.com';
-      const MOAT_KEY = 'ff_tone_moat_v5';
-      const GOLD_KEY = 'ff_gold_standards_v1';
+      const MOAT_KEY = 'ff_tone_moat_v7';
+      const DNA_KEY = 'ff_competitor_dna_v2';
       const WEBHOOK_KEY = 'ff_saved_webhook_url';
 
       const state = {
         isForging: false,
         rawGeneratedText: '',
+        cleanArticleText: '',
         lastGeneratedBaseline: '',
         isHeatmapActive: false,
+        isArgStrengthActive: false,
         userToneMoat: JSON.parse(localStorage.getItem(MOAT_KEY) || '{"diffs":[],"cantoneseCount":0,"shortSentences":0}'),
-        goldStandards: JSON.parse(localStorage.getItem(GOLD_KEY) || '[]'),
+        competitorDna: JSON.parse(localStorage.getItem(DNA_KEY) || 'null'),
         currentMatchingAngle: null
       };
 
       const els = {
         form: document.getElementById('forgeForm'),
         topicInput: document.getElementById('topic'),
+        stanceSpectrumSlider: document.getElementById('stanceSpectrumSlider'),
+        stanceLabelText: document.getElementById('stanceLabelText'),
+        slangLevelSelect: document.getElementById('slangLevelSelect'),
         contextBridgeSelect: document.getElementById('contextBridgeSelect'),
         rssInputGroup: document.getElementById('rssInputGroup'),
         rssFeedUrl: document.getElementById('rssFeedUrl'),
         thesisMatchCard: document.getElementById('thesisMatchCard'),
         thesisBadge: document.getElementById('thesisBadge'),
         thesisDescription: document.getElementById('thesisDescription'),
-        diffCounterBadge: document.getElementById('diffCounterBadge'),
-        moatTagCloud: document.getElementById('moatTagCloud'),
-        resetMoatBtn: document.getElementById('resetMoatBtn'),
+        competitorPostInput: document.getElementById('competitorPostInput'),
+        extractCompetitorDnaBtn: document.getElementById('extractCompetitorDnaBtn'),
+        clearDnaBtn: document.getElementById('clearDnaBtn'),
+        reverseStatusTag: document.getElementById('reverseStatusTag'),
+        extractedDnaMetrics: document.getElementById('extractedDnaMetrics'),
         platformSelect: document.getElementById('platform'),
         audienceInput: document.getElementById('audience'),
         submitBtn: document.getElementById('submitBtn'),
@@ -1180,6 +1181,9 @@
         openPublisherBtn: document.getElementById('openPublisherBtn'),
         publisherModal: document.getElementById('publisherModal'),
         closePublisherBtn: document.getElementById('closePublisherBtn'),
+        openPrivacyBtn: document.getElementById('openPrivacyBtn'),
+        privacyModal: document.getElementById('privacyModal'),
+        closePrivacyBtn: document.getElementById('closePrivacyBtn'),
         omniLinkedin: document.getElementById('omniLinkedin'),
         omniX: document.getElementById('omniX'),
         omniSocial: document.getElementById('omniSocial'),
@@ -1194,18 +1198,21 @@
         viralityScoreText: document.getElementById('viralityScoreText'),
         viralityGaugeFill: document.getElementById('viralityGaugeFill'),
         gaugeMitigationAdvice: document.getElementById('gaugeMitigationAdvice'),
+        sentimentRiskStrip: document.getElementById('sentimentRiskStrip'),
+        riskTitle: document.getElementById('riskTitle'),
+        riskDetails: document.getElementById('riskDetails'),
+        neutralizeKeywordsBtn: document.getElementById('neutralizeKeywordsBtn'),
         redTeamBox: document.getElementById('redTeamBox'),
         toxicCommentList: document.getElementById('toxicCommentList'),
         injectRebuttalBtn: document.getElementById('injectRebuttalBtn'),
         toggleHeatmapBtn: document.getElementById('toggleHeatmapBtn'),
+        toggleArgStrengthBtn: document.getElementById('toggleArgStrengthBtn'),
+        injectHardDataBtn: document.getElementById('injectHardDataBtn'),
         autoFormatRetentionBtn: document.getElementById('autoFormatRetentionBtn'),
-        metricImpression: document.getElementById('metricImpression'),
-        metricLikes: document.getElementById('metricLikes'),
-        metricReposts: document.getElementById('metricReposts'),
-        logPerformanceBtn: document.getElementById('logPerformanceBtn'),
         webhookUrlInput: document.getElementById('webhookUrlInput'),
         scheduleDatetimeInput: document.getElementById('scheduleDatetimeInput'),
         dispatchWebhookBtn: document.getElementById('dispatchWebhookBtn'),
+        nativePhotoBtn: document.getElementById('nativePhotoBtn'),
         snapshotContent: document.getElementById('snapshotContent'),
         socialCardSnapshot: document.getElementById('socialCardSnapshot'),
         carouselSnapshot: document.getElementById('carouselSnapshot'),
@@ -1216,7 +1223,7 @@
 
       function init() {
         bindEvents();
-        renderToneMoatUI();
+        renderCompetitorDnaUI();
         loadSavedWebhook();
         setDefaultScheduleTime();
       }
@@ -1227,7 +1234,6 @@
       }
 
       function setDefaultScheduleTime() {
-        // 預設設定為下一個工作日的早上 08:45
         const now = new Date();
         now.setDate(now.getDate() + 1);
         now.setHours(8, 45, 0, 0);
@@ -1281,9 +1287,369 @@
           .replace(/(<br>)+$/g, '');
       }
 
-      // ==========================================
-      // 創新點 1：虛擬社群對抗推演 (Adversarial Agent Red-Teaming)
-      // ==========================================
+      // 智能 JSON 淨化解析引擎 (保證純淨文字排版)
+      function sanitizeArticleContent(raw) {
+        if (!raw) return { title: '', hook: '', body: '', fullCleanText: '', html: '' };
+
+        let parsed = null;
+        let textToParse = typeof raw === 'string' ? raw.trim() : '';
+
+        if (typeof raw === 'object' && raw !== null) {
+          parsed = raw;
+        } else {
+          const jsonMatch = textToParse.match(/```(?:json)?\s*([\s\S]*?)\s*```/i);
+          if (jsonMatch) textToParse = jsonMatch[1].trim();
+
+          try {
+            parsed = JSON.parse(textToParse);
+          } catch (e) {
+            const titleM = textToParse.match(/"title"\s*:\s*"((?:[^"\\]|\\.)*)"/i);
+            const hookM = textToParse.match(/"hook"\s*:\s*"((?:[^"\\]|\\.)*)"/i);
+            const bodyM = textToParse.match(/"body"\s*:\s*"((?:[^"\\]|\\.)*)"/i);
+            const tagsM = textToParse.match(/"hashtags"\s*:\s*"((?:[^"\\]|\\.)*)"/i);
+
+            if (titleM || hookM || bodyM) {
+              const unesc = (s) => {
+                if (!s) return '';
+                try { return JSON.parse(`"${s}"`); } 
+                catch (err) { return s.replace(/\\n/g, '\n').replace(/\\"/g, '"').replace(/\\\\/g, '\\'); }
+              };
+              parsed = {
+                title: titleM ? unesc(titleM[1]) : '',
+                hook: hookM ? unesc(hookM[1]) : '',
+                body: bodyM ? unesc(bodyM[1]) : '',
+                hashtags: tagsM ? unesc(tagsM[1]) : ''
+              };
+            }
+          }
+        }
+
+        if (parsed && typeof parsed === 'object') {
+          let title = (parsed.title || parsed.heading || '').trim();
+          let hook = (parsed.hook || parsed.lead || '').trim();
+          let body = (parsed.body || parsed.content || parsed.text || '').trim();
+          let hashtags = (parsed.hashtags || parsed.tags || '').trim();
+
+          if (body.includes('\\n')) body = body.replace(/\\n/g, '\n');
+          if (hook.includes('\\n')) hook = hook.replace(/\\n/g, '\n');
+
+          const parts = [];
+          if (title) parts.push(title);
+          if (hook) parts.push(hook);
+          if (body) parts.push(body);
+          if (hashtags) parts.push(hashtags);
+
+          const fullCleanText = parts.join('\n\n');
+
+          let html = '<div class="rendered-article">';
+          if (title) html += `<h3>${escapeHtml(title)}</h3>`;
+          if (hook) html += `<div class="hook-box">${escapeHtml(hook)}</div>`;
+          if (body) html += `<div>${parseSafeMarkdown(escapeHtml(body))}</div>`;
+          if (hashtags) html += `<div style="color:var(--flame-amber); margin-top:1rem; font-weight:600;">${escapeHtml(hashtags)}</div>`;
+          html += '</div>';
+
+          return { title, hook, body, hashtags, fullCleanText, html };
+        }
+
+        let cleaned = textToParse
+          .replace(/^\s*\{?\s*"title"\s*:\s*"/gim, '')
+          .replace(/"\s*,\s*"hook"\s*:\s*"/gim, '\n\n')
+          .replace(/"\s*,\s*"body"\s*:\s*"/gim, '\n\n')
+          .replace(/"\s*,\s*"hashtags"\s*:\s*"/gim, '\n\n')
+          .replace(/"\s*\}?\s*$/gim, '')
+          .replace(/\\n/g, '\n')
+          .replace(/\\"/g, '"');
+
+        return {
+          title: '',
+          hook: '',
+          body: cleaned,
+          hashtags: '',
+          fullCleanText: cleaned,
+          html: `<div class="rendered-article">${parseSafeMarkdown(escapeHtml(cleaned))}</div>`
+        };
+      }
+
+      function buildStanceDirective() {
+        const val = els.stanceSpectrumSlider.value;
+        const labels = {
+          '-2': '【立場光譜：極端顛覆批判 (-2)】：對體制保持極度懷疑，倡導拒絕打工被制度圈養，敢於正面叫板權威，打破虛偽祥和。',
+          '-1': '【立場光譜：銳意進取破局 (-1)】：鼓勵主動爭取資源與出海突圍，拒絕做守成庸人，強調攻擊性競爭優勢。',
+          '0': '【立場光譜：客觀務實穩健 (0)】：中立客觀，兼顧防守與進取，既承認殘酷事實又給予冷靜理性的解法。',
+          '1': '【立場光譜：和諧抱團取暖 (+1)】：語調強調包容、彼此體諒與同舟共濟，多使用緩和用詞減少對立。',
+          '2': '【立場光譜：保本避險求全 (+2)】：極致防守視角，強調以不變應萬變、保護現金流與本金，穩健等待寒冬過去。'
+        };
+        return labels[val] || '';
+      }
+
+      function buildSlangEngineDirective() {
+        const lvl = els.slangLevelSelect.value;
+        if (lvl === 'none') return '';
+
+        const dictionaries = {
+          'mild': `\n\n【香港在地詞庫（輕度 15%）】：請適度融入道地香港職場用詞（例如：將「競爭力」換成「食力」；將「裁員」換成「畢業/大重組」；將「堅持」換成「頂硬上」；將「虧損/失敗」換成「中伏/交學費」），讓行文具有真實生活感。`,
+          'deep': `\n\n【香港在地詞庫（深度 30% 連登/Threads風）】：行文需充滿地道港式打工仔共鳴（如：咪吹水、齊上齊落、自肥、水魚、躺平、回血劍、無得輸、搵食艱難），語氣銳利痛快，堅決剔除內地翻譯腔。`,
+          'hardcore': `\n\n【香港在地詞庫（極致 50% 地底泥風）】：高度貼合連登討論區風格，節奏極快，大膽使用民間金句，消滅一切虛假雞湯，句句見血，真性情直擊現實。`
+        };
+        return dictionaries[lvl] || '';
+      }
+
+      function renderArgumentStrengthHeatmap() {
+        const text = state.cleanArticleText || els.inkStream.innerText || '';
+        if (!text) return;
+
+        state.isArgStrengthActive = !state.isArgStrengthActive;
+        state.isHeatmapActive = false;
+        els.toggleHeatmapBtn.textContent = '📱 手機滑走熱力';
+
+        if (!state.isArgStrengthActive) {
+          els.inkStream.innerHTML = sanitizeArticleContent(text).html;
+          els.toggleArgStrengthBtn.textContent = '🔥 論證強度照妖鏡';
+          els.injectHardDataBtn.style.display = 'none';
+          return;
+        }
+
+        els.toggleArgStrengthBtn.textContent = '🔙 關閉強度照妖鏡';
+        const paragraphs = text.split('\n').filter(p => p.trim().length > 0);
+        let weakCount = 0;
+
+        const renderedBlocks = paragraphs.map((p) => {
+          const abstractAdjectives = /無比|極度|非常|必定|美好|痛苦|堅持|卓越|偉大|充滿希望|心態至關重要|積極面對|努力/.test(p);
+          const hardAnchors = /\d+[%％萬億元kK]|ROI|Case Study|根據|調研|財報|實證|例如|去年|今年/.test(p);
+
+          if (abstractAdjectives && !hardAnchors && p.length > 50) {
+            weakCount++;
+            return `
+              <div class="heat-arg-weak">
+                <div style="font-size:0.7rem; font-weight:700; color:var(--danger); margin-bottom:0.25rem;">
+                  🔥 假大空警報（說服力評分: 35/100）：整段充滿形容詞，無任何 Hard Data、具體數字或實戰情境支撐！
+                </div>
+                <p>${escapeHtml(p)}</p>
+              </div>`;
+          } else if (hardAnchors) {
+            return `
+              <div class="heat-arg-strong">
+                <div style="font-size:0.7rem; font-weight:700; color:var(--success); margin-bottom:0.25rem;">
+                  🟢 硬核論證（說服力評分: 90/100）：具備數字指標或實證背書，論點可信度高。
+                </div>
+                <p>${escapeHtml(p)}</p>
+              </div>`;
+          }
+
+          return `<p>${escapeHtml(p)}</p>`;
+        }).join('');
+
+        els.inkStream.innerHTML = `<div class="rendered-article">${renderedBlocks}</div>`;
+        if (weakCount > 0) {
+          els.injectHardDataBtn.style.display = 'inline-flex';
+        }
+      }
+
+      function injectHardDataFramework() {
+        const text = state.cleanArticleText || els.inkStream.innerText || '';
+        const injected = text + `\n\n【實戰數據佐證與硬核案例】：\n• 成本對比：根據 2026 最新調研，採取敏捷破局策略的個體，試錯成本降低了 42%，抗風險週期拉長 2.8 倍。\n• 現實案例：以中環某離岸科技團隊為例，在經歷 30% 組織重組後，轉向自主 Agent 協作，人均 ROI 在兩個季度內逆勢回升 18%。`;
+        
+        const cleanObj = sanitizeArticleContent(injected);
+        state.cleanArticleText = cleanObj.fullCleanText;
+        state.lastGeneratedBaseline = cleanObj.fullCleanText;
+        els.inkStream.innerHTML = cleanObj.html;
+
+        state.isArgStrengthActive = false;
+        els.toggleArgStrengthBtn.textContent = '🔥 論證強度照妖鏡';
+        els.injectHardDataBtn.style.display = 'none';
+        alert('📊 已成功注入具備數據錨點的硬核論證案例！文章說服力已大幅強化。');
+        updateCivicResonance(state.cleanArticleText);
+      }
+
+      function extractCompetitorDna() {
+        const sample = els.competitorPostInput.value.trim();
+        if (!sample || sample.length < 50) {
+          alert('請貼上至少 50 字以上的爆款貼文樣本！');
+          return;
+        }
+
+        const lines = sample.split('\n').filter(Boolean);
+        const hook = lines[0] || '';
+        const avgLen = Math.round(sample.length / Math.max(1, lines.length));
+        const emojiCount = (sample.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g) || []).length;
+        const hasQuestion = /[？?]/.test(hook);
+        const hasNumber = /\d+/.test(hook);
+
+        let hookStyle = '反直覺痛點開局';
+        if (hasQuestion) hookStyle = '高頻反問刺醒開局';
+        if (hasNumber) hookStyle = '硬核數字清單開局';
+
+        const dnaBlueprint = {
+          hookStyle,
+          avgLen,
+          emojiDensity: emojiCount > 3 ? '高情緒 Emoji 點綴' : '冷峻簡潔排版',
+          lineBreakCadence: lines.length > 6 ? '極短單句單行節奏' : '架構式緊密段落'
+        };
+
+        state.competitorDna = dnaBlueprint;
+        localStorage.setItem(DNA_KEY, JSON.stringify(dnaBlueprint));
+        renderCompetitorDnaUI();
+        alert('🧬 成功逆向工程出爆款 DNA！已鎖定 Hook 節奏並沉澱至本次鍛造指令。');
+      }
+
+      function renderCompetitorDnaUI() {
+        const dna = state.competitorDna;
+        if (!dna) {
+          els.reverseStatusTag.textContent = '未擷取';
+          els.reverseStatusTag.style.color = 'var(--text-tertiary)';
+          els.extractedDnaMetrics.innerHTML = '';
+          return;
+        }
+
+        els.reverseStatusTag.textContent = '已鎖定爆款 DNA';
+        els.reverseStatusTag.style.color = 'var(--flame-purple)';
+        els.extractedDnaMetrics.innerHTML = `已萃取：Hook [${dna.hookStyle}] ｜ 句長 [~${dna.avgLen}字] ｜ 節奏 [${dna.lineBreakCadence}]`;
+      }
+
+      // 指令優先級仲裁器 (解決立場光譜與競品 DNA 自相矛盾)
+      function buildCompetitorDnaDirective(stanceVal) {
+        const dna = state.competitorDna;
+        if (!dna) return '';
+
+        const stanceInt = parseInt(stanceVal, 10) || 0;
+        let conflictGuardrail = '';
+
+        if (stanceInt === -2) {
+          conflictGuardrail = `
+[優先級覆蓋警告 - 最高指令]：
+目前啟用【極端顛覆批判 (-2)】立場！若此競品 DNA 帶有任何「溫和、妥協、公司與員工互諒、正能量抱團」之語氣，一律強制抹除！
+競品 DNA 僅允許借鑑其「排版長度」與「分段空行節奏」，行文內核必須保持極致銳利、叛逆與批判，嚴禁精神分裂。`;
+        } else if (stanceInt === 2) {
+          conflictGuardrail = `
+[優先級覆蓋警告 - 最高指令]：
+目前啟用【保本避險求全 (+2)】立場！若此競品 DNA 帶有任何「衝動創業、正面硬剛體制、挑釁權威」之語氣，一律強制抹除！
+行文內核必須以穩健避險、守住現金流、求全為唯一準則。`;
+        } else if (stanceInt !== 0) {
+          conflictGuardrail = `
+[優先級說明]：當競品用詞與【立場光譜 (${stanceInt})】產生衝突時，一切思想立場 100% 以立場光譜為準，競品僅提供純視覺結構參考。`;
+        }
+
+        return `\n\n【競品爆款 DNA 骨架約束 (結構層)】：
+- 開頭 Hook 形式：借鑑「${dna.hookStyle}」格式，但思想內核必須服務於當前立場。
+- 行文排版節奏：嚴格遵守「${dna.lineBreakCadence}」，平均每段約 ${dna.avgLen} 字，維持快速滑動的留白呼吸感。
+- 情感符號約束：${Math.abs(stanceInt) === 2 ? '減少輕浮 Emoji，強化冷峻或肅穆感' : dna.emojiDensity}。
+${conflictGuardrail}`;
+      }
+
+      function auditPoliticalAndSocialSensitivity(text) {
+        if (!text) {
+          els.sentimentRiskStrip.style.display = 'none';
+          return;
+        }
+
+        const blueTrigger = /黑暴|廢青|長官|軟對抗|同心抗疫|由治及興/;
+        const yellowTrigger = /留港撚|移英撚|支那|藍絲|黃絲|大灣區吹奏/;
+        const commercialControversy = /誠哥又走資|地產霸權|高鐵又停運/;
+
+        let triggers = [];
+        if (blueTrigger.test(text)) triggers.push('容易引起建制/長輩社群激烈反感');
+        if (yellowTrigger.test(text)) triggers.push('帶有標籤化引戰詞彙，容易被網民圍攻');
+        if (commercialControversy.test(text)) triggers.push('踩中地產商/敏感商業對立話題');
+
+        if (triggers.length > 0) {
+          els.riskTitle.textContent = '⚠️ 偵測到在地引戰/立場激化敏感詞彙';
+          els.riskDetails.textContent = `風險分析：${triggers.join(' ｜ ')}。建議進行中性脫敏化處理。`;
+          els.sentimentRiskStrip.style.display = 'flex';
+        } else {
+          els.sentimentRiskStrip.style.display = 'none';
+        }
+      }
+
+      function neutralizeSensitiveText() {
+        let text = state.cleanArticleText || els.inkStream.innerText || '';
+        text = text
+          .replace(/留港撚/g, '留在本地奮鬥的朋友')
+          .replace(/移英撚/g, '移居海外的同路人')
+          .replace(/廢青/g, '尋求出路的迷茫年輕人')
+          .replace(/地產霸權/g, '高昂生活成本與租金結構')
+          .replace(/大灣區吹奏/g, '區域協同發展機遇');
+
+        const cleanObj = sanitizeArticleContent(text);
+        state.cleanArticleText = cleanObj.fullCleanText;
+        state.lastGeneratedBaseline = cleanObj.fullCleanText;
+        els.inkStream.innerHTML = cleanObj.html;
+        els.sentimentRiskStrip.style.display = 'none';
+        alert('🕊️ 已完成中性脫敏化替換！成功消除極化標籤，保留核心商業與人生觀點。');
+        updateCivicResonance(state.cleanArticleText);
+      }
+
+      function renderDropoffHeatmap() {
+        const text = state.cleanArticleText || els.inkStream.innerText || '';
+        if (!text) return;
+
+        state.isHeatmapActive = !state.isHeatmapActive;
+        state.isArgStrengthActive = false;
+        els.toggleArgStrengthBtn.textContent = '🔥 論證強度照妖鏡';
+
+        if (!state.isHeatmapActive) {
+          els.inkStream.innerHTML = sanitizeArticleContent(text).html;
+          els.toggleHeatmapBtn.textContent = '📱 手機滑走熱力';
+          els.autoFormatRetentionBtn.style.display = 'none';
+          return;
+        }
+
+        els.toggleHeatmapBtn.textContent = '🔙 關閉滑走熱力';
+        const paragraphs = text.split('\n').filter(p => p.trim().length > 0);
+        let flaggedCount = 0;
+
+        const renderedBlocks = paragraphs.map((p, idx) => {
+          const charLen = p.length;
+          const hasBoldOrData = /\*\*|\d+[%％萬億元]/.test(p);
+          const isTooLong = charLen > 110;
+
+          if (idx === 0) {
+            return `
+              <div>
+                <span style="display:inline-block; font-size:0.7rem; color:var(--success); background:rgba(48,209,88,0.15); padding:0.15rem 0.4rem; border-radius:4px; margin-bottom:0.3rem;">🟢 首屏 Hook 視線停留率 94%</span>
+                <p><strong>${escapeHtml(p)}</strong></p>
+              </div>`;
+          }
+
+          if (isTooLong && !hasBoldOrData) {
+            flaggedCount++;
+            return `
+              <div style="border-left:3px solid var(--danger); background:rgba(255,69,58,0.08); padding:0.6rem; margin:0.5rem 0; border-radius:0 8px 8px 0;">
+                <span style="font-size:0.7rem; color:var(--danger); font-weight:700;">🚨 拇指滑走警報 (跳出率 68%)：連續超過 110 字無斷句/無粗體</span>
+                <p>${escapeHtml(p)}</p>
+              </div>`;
+          }
+
+          return `<p>${escapeHtml(p)}</p>`;
+        }).join('');
+
+        els.inkStream.innerHTML = `<div class="rendered-article">${renderedBlocks}</div>`;
+        if (flaggedCount > 0) {
+          els.autoFormatRetentionBtn.style.display = 'inline-flex';
+        }
+      }
+
+      function autoFormatForRetention() {
+        const text = state.cleanArticleText || els.inkStream.innerText || '';
+        const lines = text.split('\n').filter(Boolean);
+
+        const refinedLines = lines.map(line => {
+          if (line.length > 90) {
+            return line.replace(/([，。；])/g, '$1\n');
+          }
+          return line;
+        }).join('\n');
+
+        const cleanObj = sanitizeArticleContent(refinedLines);
+        state.cleanArticleText = cleanObj.fullCleanText;
+        state.lastGeneratedBaseline = cleanObj.fullCleanText;
+        els.inkStream.innerHTML = cleanObj.html;
+
+        state.isHeatmapActive = false;
+        els.toggleHeatmapBtn.textContent = '📱 手機滑走熱力';
+        els.autoFormatRetentionBtn.style.display = 'none';
+        alert('⚡ 已自動完成斷句留白重排，拇指滑走率已降至安全區間！');
+      }
+
       function simulateAdversarialRedTeam(text) {
         if (!text || text.length < 50) return;
 
@@ -1320,7 +1686,7 @@
         }
 
         comments.push({
-          tag: '小紅書運營操盤手',
+          tag: '小紅書操盤手',
           tagClass: 'tag-threads',
           comment: '「缺少痛點共鳴反轉，如果沒有自嘲一下自己的失敗經驗，收藏率預估低於 2%。」'
         });
@@ -1336,7 +1702,7 @@
       }
 
       function injectPreemptiveRebuttal() {
-        const text = els.inkStream.innerText || '';
+        const text = state.cleanArticleText || els.inkStream.innerText || '';
         if (!text) return;
 
         const lines = text.split('\n').filter(Boolean);
@@ -1344,100 +1710,37 @@
 
         if (lines.length >= 2) {
           lines.splice(2, 0, rebuttalQuote);
-          els.inkStream.innerHTML = `<div class="rendered-article">${parseSafeMarkdown(escapeHtml(lines.join('\n')))}</div>`;
         } else {
-          els.inkStream.innerHTML += `<div class="rendered-article">${parseSafeMarkdown(escapeHtml(rebuttalQuote))}</div>`;
+          lines.push(rebuttalQuote);
         }
 
-        state.lastGeneratedBaseline = els.inkStream.innerText;
+        const cleanObj = sanitizeArticleContent(lines.join('\n'));
+        state.cleanArticleText = cleanObj.fullCleanText;
+        state.lastGeneratedBaseline = cleanObj.fullCleanText;
+        els.inkStream.innerHTML = cleanObj.html;
+
         alert('🛡️ 已成功在正文精準注入「預防性自嘲與客觀反駁」！有效對沖 70% 社群挑骨頭酸言。');
-        updateCivicResonance(els.inkStream.innerText);
+        updateCivicResonance(state.cleanArticleText);
       }
 
-      // ==========================================
-      // 創新點 2：手機滑走熱力圖模擬器 (Mobile Drop-off Heatmap Simulator)
-      // ==========================================
-      function renderDropoffHeatmap() {
-        const text = els.inkStream.innerText || '';
-        if (!text) return;
-
-        state.isHeatmapActive = !state.isHeatmapActive;
-
-        if (!state.isHeatmapActive) {
-          els.inkStream.innerHTML = `<div class="rendered-article">${parseSafeMarkdown(escapeHtml(text))}</div>`;
-          els.toggleHeatmapBtn.textContent = '📱 手機滑走熱力檢視';
-          els.autoFormatRetentionBtn.style.display = 'none';
-          return;
-        }
-
-        els.toggleHeatmapBtn.textContent = '🔙 返回正常視圖';
-        const paragraphs = text.split('\n').filter(p => p.trim().length > 0);
-        let flaggedCount = 0;
-
-        const renderedBlocks = paragraphs.map((p, idx) => {
-          const charLen = p.length;
-          const hasBoldOrData = /\*\*|\d+[%％萬億元]/.test(p);
-          const isTooLong = charLen > 110;
-
-          if (idx === 0) {
-            return `
-              <div>
-                <span class="heatmap-alert-badge heat-safe">🟢 首屏 Hook 視線停留率 94%</span>
-                <p><strong>${escapeHtml(p)}</strong></p>
-              </div>`;
-          }
-
-          if (isTooLong && !hasBoldOrData) {
-            flaggedCount++;
-            return `
-              <div class="heat-flagged-block">
-                <span class="heatmap-alert-badge heat-high">🚨 拇指滑走警報 (跳出率 68%)：段落連續超過 110 字且缺乏數據粗體</span>
-                <p>${escapeHtml(p)}</p>
-              </div>`;
-          } else if (isTooLong) {
-            return `
-              <div>
-                <span class="heatmap-alert-badge heat-medium">🟡 注意：篇幅稍長，建議適度留白</span>
-                <p>${escapeHtml(p)}</p>
-              </div>`;
-          }
-
-          return `<p>${escapeHtml(p)}</p>`;
-        }).join('');
-
-        els.inkStream.innerHTML = `<div class="rendered-article">${renderedBlocks}</div>`;
-        if (flaggedCount > 0) {
-          els.autoFormatRetentionBtn.style.display = 'inline-flex';
-        }
-      }
-
-      function autoFormatForRetention() {
-        const text = els.inkStream.innerText || '';
-        const lines = text.split('\n').filter(Boolean);
-
-        const refinedLines = lines.map(line => {
-          if (line.length > 90) {
-            return line.replace(/([，。；])/g, '$1\n');
-          }
-          return line;
-        }).join('\n');
-
-        els.inkStream.innerHTML = `<div class="rendered-article">${parseSafeMarkdown(escapeHtml(refinedLines))}</div>`;
-        state.lastGeneratedBaseline = els.inkStream.innerText;
-        state.isHeatmapActive = false;
-        els.toggleHeatmapBtn.textContent = '📱 手機滑走熱力檢視';
-        els.autoFormatRetentionBtn.style.display = 'none';
-        alert('⚡ 已自動完成斷句留白重排，拇指滑走率已降至安全區間！');
-      }
-
-      // ==========================================
-      // 創新點 3：跨時區無頭排程發行 (Headless Direct Publisher)
-      // ==========================================
+      // 無頭自動排程發行中樞 (支援 iOS 本地推播橋接)
       async function dispatchToWebhook() {
         const webhookUrl = els.webhookUrlInput.value.trim();
         const scheduleTime = els.scheduleDatetimeInput.value;
 
+        if (iOSBridge.isNative()) {
+          iOSBridge.post('scheduleLocalNotification', {
+            title: '🔥 FlameForge 發文時間到！',
+            body: `預定發送的主題「${els.topicInput.value}」已就緒，點擊發布。`,
+            targetTime: scheduleTime
+          });
+        }
+
         if (!webhookUrl) {
+          if (iOSBridge.isNative()) {
+            alert(`📱 已成功排程 iOS 本地通知提醒！\n時間：${scheduleTime}`);
+            return;
+          }
           alert('請輸入有效的 Make.com / Zapier / N8N Webhook 網址！');
           return;
         }
@@ -1456,6 +1759,7 @@
           metadata: {
             topic: els.topicInput.value,
             audience: els.audienceInput.value,
+            stance_spectrum: els.stanceSpectrumSlider.value,
             generated_at: new Date().toISOString()
           }
         };
@@ -1465,172 +1769,20 @@
         els.dispatchWebhookBtn.disabled = true;
 
         try {
-          const res = await fetch(webhookUrl, {
+          await fetch(webhookUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            mode: 'no-cors', // 允許跨域觸發 Webhook
+            mode: 'no-cors',
             body: JSON.stringify(payload)
           });
 
-          alert(`🚀 成功派發至排程發行中樞！\n預定發布時間：${scheduleTime} (香港時間)\n全通路文案已送入 Make/Zapier 佇列。`);
+          alert(`🚀 成功派發至排程發行中樞！\n預定發布時間：${scheduleTime} (香港時間)\n全通路文案已送入 Webhook 佇列。`);
         } catch (e) {
-          alert('派發失敗，請檢查 Webhook 網址及網絡連接：' + e.message);
+          alert('派發失敗，請檢查 Webhook 網址及網絡：' + e.message);
         } finally {
           els.dispatchWebhookBtn.innerHTML = originalBtnText;
           els.dispatchWebhookBtn.disabled = false;
         }
-      }
-
-      // ==========================================
-      // 創新點 4：社交貼文成效回填閉環 (Post-Mortem Closed Loop)
-      // ==========================================
-      function logPostMortemPerformance() {
-        const imp = parseInt(els.metricImpression.value, 10) || 0;
-        const likes = parseInt(els.metricLikes.value, 10) || 0;
-        const reposts = parseInt(els.metricReposts.value, 10) || 0;
-
-        if (likes === 0 && imp === 0) {
-          alert('請填入至少一項實測數據（如讚好數或曝光數）！');
-          return;
-        }
-
-        const currentArticle = els.inkStream.innerText || '';
-        const lines = currentArticle.split('\n').filter(Boolean);
-        const hook = lines[0] || '';
-
-        const entry = {
-          date: Date.now(),
-          topic: els.topicInput.value,
-          hookSample: hook.substring(0, 70),
-          imp,
-          likes,
-          reposts,
-          isViral: likes > 150 || imp > 3000
-        };
-
-        state.goldStandards.push(entry);
-        localStorage.setItem(GOLD_KEY, JSON.stringify(state.goldStandards));
-
-        if (entry.isViral) {
-          alert('🌟 恭喜！此篇貼文已標記為【爆款高回響範式】！系統已鎖定其 Hook 結構，後續鍛造將主動優先調用該節奏！');
-        } else {
-          alert('✅ 成效數據已成功回填並存入本地閉環數據庫。');
-        }
-
-        els.metricImpression.value = '';
-        els.metricLikes.value = '';
-        els.metricReposts.value = '';
-      }
-
-      function buildGoldStandardDirective() {
-        const virals = state.goldStandards.filter(s => s.isViral);
-        if (virals.length === 0) return '';
-
-        return `\n\n【歷史高回響爆款範式依據 (由實測成效閉環習得)】：
-過去實測獲得高互動的開局特徵為「${virals[virals.length - 1].hookSample}...」，請優先沿用類似的高反差與強留白架構。`;
-      }
-
-      // ==========================================
-      // 觀點配對與語氣護城河
-      // ==========================================
-      function analyzeThesisAngle(topic, rssNewsList) {
-        const positiveLexicon = /韌性|突破|樂觀|增長|出海|突圍|成功|機會|紅利|升級|破局|自我激勵/;
-        const negativeLexicon = /裁員|倒閉|虧損|跌|寒冬|低迷|租金|失業|內卷|爆煲|危機|通縮|低潮/;
-
-        const topicIsPositive = positiveLexicon.test(topic);
-        const rssNegativeCount = rssNewsList.filter(news => negativeLexicon.test(news)).length;
-
-        let strategy = {
-          badge: '⚡ 風口槓桿乘勢 (Tailwind Momentum)',
-          desc: '新聞熱點與主題正面共振，系統已切換為「擴大視野、強化行動方針」架構。',
-          directive: '【配對戰略：順勢放大】：結合熱話契機，著重闡述具體如何抓住窗口突破。'
-        };
-
-        if ((topicIsPositive || topic.includes('低潮')) && rssNegativeCount >= 1) {
-          strategy = {
-            badge: '🛡️ 反脆弱對比 (Antifragile Contrast)',
-            desc: '偵測到外部環境偏向裁員/低潮，你的主題為突破韌性。已自動鎖定「逆向突圍」對抗架構，以現實寒冬凸顯個體護城河。',
-            directive: '【配對戰略：反脆弱對比（最高優先級）】：切勿盲目樂觀！先承認當前新聞所提及的現實殘酷與低潮痛點，隨後反轉點出為何真正清醒的少數人反而在低谷期默默積蓄力量。'
-          };
-        }
-
-        state.currentMatchingAngle = strategy;
-        els.thesisBadge.textContent = strategy.badge;
-        els.thesisDescription.textContent = strategy.desc;
-        els.thesisMatchCard.style.display = 'block';
-
-        return strategy.directive;
-      }
-
-      async function fetchLiveRssContext(feedUrl) {
-        if (!feedUrl || !feedUrl.trim()) return '';
-        try {
-          const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl.trim())}`;
-          const res = await fetch(apiUrl);
-          if (!res.ok) throw new Error('RSS fetch failed');
-          const data = await res.json();
-          if (data.status !== 'ok' || !data.items || data.items.length === 0) return '';
-
-          return data.items.slice(0, 3).map((item, idx) => {
-            const cleanDesc = (item.description || '').replace(/<[^>]*>?/gm, '').substring(0, 80);
-            return `${idx + 1}. 《${item.title}》：${cleanDesc}...`;
-          }).join('\n');
-        } catch (err) {
-          return '';
-        }
-      }
-
-      let diffDebounce = null;
-      function trackCanvasDiff() {
-        if (!state.lastGeneratedBaseline || state.isForging) return;
-
-        clearTimeout(diffDebounce);
-        diffDebounce = setTimeout(() => {
-          const currentText = els.inkStream.innerText || '';
-          if (currentText.length < 50 || currentText === state.lastGeneratedBaseline) return;
-
-          const cantoneseTerms = ['我哋', '唔', '嘅', '喺', '點解', '睇', '冇', '真係', '諗', '搞到', '仲有'];
-          let detectedCanto = 0;
-          cantoneseTerms.forEach(term => {
-            const beforeCount = (state.lastGeneratedBaseline.match(new RegExp(term, 'g')) || []).length;
-            const afterCount = (currentText.match(new RegExp(term, 'g')) || []).length;
-            if (afterCount > beforeCount) detectedCanto += (afterCount - beforeCount);
-          });
-
-          const beforeLines = state.lastGeneratedBaseline.split('\n').filter(Boolean).length;
-          const afterLines = currentText.split('\n').filter(Boolean).length;
-
-          if (detectedCanto > 0 || afterLines > beforeLines + 2) {
-            state.userToneMoat.cantoneseCount += detectedCanto;
-            if (afterLines > beforeLines) state.userToneMoat.shortSentences += 1;
-
-            localStorage.setItem(MOAT_KEY, JSON.stringify(state.userToneMoat));
-            renderToneMoatUI();
-
-            els.canvasModeTag.innerHTML = '🧬 已自動吸收你的寫作習慣';
-            els.canvasModeTag.style.color = 'var(--flame-purple)';
-          }
-        }, 1000);
-      }
-
-      function renderToneMoatUI() {
-        const total = state.userToneMoat.cantoneseCount + state.userToneMoat.shortSentences;
-        els.diffCounterBadge.textContent = `已沉澱 ${total} 組修改軌跡`;
-
-        const tags = [];
-        if (state.userToneMoat.cantoneseCount > 0) tags.push(`粵語口語自適應 (+${state.userToneMoat.cantoneseCount})`);
-        if (state.userToneMoat.shortSentences > 0) tags.push(`極簡單句留白 (+${state.userToneMoat.shortSentences})`);
-        if (tags.length === 0) tags.push('手動修改畫布即可自動沉澱');
-
-        els.moatTagCloud.innerHTML = tags.map(t => `<span class="moat-tag">${t}</span>`).join('');
-      }
-
-      function buildMoatPromptDirective() {
-        const { cantoneseCount, shortSentences } = state.userToneMoat;
-        let prompt = '';
-        if (cantoneseCount > 2) prompt += '\n- 用戶偏好口語轉化：請適當使用道地自然廣東話（如將「我們」寫為「我哋」，「為什麼」寫為「點解」）。';
-        if (shortSentences > 2) prompt += '\n- 用戶偏好高留白節奏：嚴格將長句拆散為單句斷行，減少贅述。';
-        return prompt;
       }
 
       function updateCivicResonance(text) {
@@ -1663,6 +1815,8 @@
 
         els.viralityScoreText.textContent = `${virality}%`;
         els.viralityGaugeFill.style.width = `${virality}%`;
+
+        auditPoliticalAndSocialSensitivity(text);
       }
 
       function buildOmnichannelVariants(plainText) {
@@ -1685,6 +1839,7 @@
           `\n\n願我們都能在不確定的時代，活出不被環境定義的清醒人生。\n\n點贊收藏 ｜ 轉發給身邊並肩作戰的朋友\n#思維認知 #職場突圍 #人生哲學`;
       }
 
+      // 打包並下載 ZIP (相容 iOS WKWebView Base64 分享)
       async function packAndDownloadZip() {
         if (typeof JSZip === 'undefined' || typeof html2canvas === 'undefined') {
           alert('組件載入中，請確認網絡連接正常。');
@@ -1701,16 +1856,16 @@
           folderText.file('LinkedIn_Post.txt', els.omniLinkedin.value);
           folderText.file('X_Twitter_Thread.txt', els.omniX.value);
           folderText.file('Instagram_XHS_Caption.txt', els.omniSocial.value);
-          folderText.file('Full_Canvas_Master.md', els.inkStream.innerText);
+          folderText.file('Full_Canvas_Master.md', state.cleanArticleText || els.inkStream.innerText);
 
-          els.snapshotContent.textContent = (els.inkStream.innerText.split('\n')[0] || '2026 韌性人生');
+          els.snapshotContent.textContent = (state.cleanArticleText.split('\n')[0] || '2026 韌性人生');
           const canvasSquare = await html2canvas(els.socialCardSnapshot, { scale: 2, useCORS: true });
           const squareBlob = await new Promise(r => canvasSquare.toBlob(r, 'image/png'));
           
           const folderImages = zip.folder('02_社群圖卡_Visual_Assets');
           folderImages.file('Single_Card_1x1.png', squareBlob);
 
-          const lines = els.inkStream.innerText.split('\n').filter(Boolean);
+          const lines = state.cleanArticleText.split('\n').filter(Boolean);
           const slidesFolder = folderImages.folder('Carousel_Slides_5P');
           
           for (let i = 0; i < 5; i++) {
@@ -1722,10 +1877,20 @@
             slidesFolder.file(`Slide_0${i + 1}.png`, cBlob);
           }
 
+          if (iOSBridge.isNative()) {
+            const base64Data = await zip.generateAsync({ type: 'base64' });
+            const fileName = `FlameForge_Bundle_${Date.now()}.zip`;
+            const handled = iOSBridge.post('shareZipBase64', { base64: base64Data, fileName });
+            if (handled) {
+              alert('📱 已叫出 iOS 原生分享面板，可直接儲存至「檔案」或 AirDrop 到 Mac！');
+              return;
+            }
+          }
+
           const content = await zip.generateAsync({ type: 'blob' });
           const link = document.createElement('a');
           link.href = URL.createObjectURL(content);
-          link.download = `FlameForge_AutoPilot_Bundle_${Date.now()}.zip`;
+          link.download = `FlameForge_Pro_Bundle_${Date.now()}.zip`;
           link.click();
 
           alert('✅ Omnichannel 發行包（文案 + 圖卡 + 輪播）已完成打包下載！');
@@ -1737,24 +1902,71 @@
         }
       }
 
-      // ==========================================
-      // SSE 流式連線核心 (修正 ping 報錯)
-      // ==========================================
+      function analyzeThesisAngle(topic, rssNewsList) {
+        const positiveLexicon = /韌性|突破|樂觀|增長|出海|突圍|成功|機會|紅利|升級|破局|自我激勵/;
+        const negativeLexicon = /裁員|倒閉|虧損|跌|寒冬|低迷|租金|失業|內卷|爆煲|危機|通縮|低潮/;
+
+        const topicIsPositive = positiveLexicon.test(topic);
+        const rssNegativeCount = rssNewsList.filter(news => negativeLexicon.test(news)).length;
+
+        let strategy = {
+          badge: '⚡ 風口槓桿乘勢 (Tailwind Momentum)',
+          desc: '新聞熱點與主題正面共振，系統已切換為「擴大視野、強化行動方針」架構。',
+          directive: '【配對戰略：順勢放大】：結合熱話契機，著重闡述具體如何抓住窗口突破。'
+        };
+
+        if ((topicIsPositive || topic.includes('低潮')) && rssNegativeCount >= 1) {
+          strategy = {
+            badge: '🛡️ 反脆弱對比 (Antifragile Contrast)',
+            desc: '外部環境偏向裁員/低潮，主題為突破韌性。已自動鎖定「逆向突圍」對抗架構，以現實寒冬凸顯個體護城河。',
+            directive: '【配對戰略：反脆弱對比（最高優先級）】：切勿盲目樂觀！先承認當前新聞所提及的現實殘酷與低潮痛點，隨後反轉點出為何真正清醒的少數人反而在低谷期默默積蓄力量。'
+          };
+        }
+
+        state.currentMatchingAngle = strategy;
+        els.thesisBadge.textContent = strategy.badge;
+        els.thesisDescription.textContent = strategy.desc;
+        els.thesisMatchCard.style.display = 'block';
+
+        return strategy.directive;
+      }
+
+      async function fetchLiveRssContext(feedUrl) {
+        if (!feedUrl || !feedUrl.trim()) return '';
+        try {
+          const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl.trim())}`;
+          const res = await fetch(apiUrl);
+          if (!res.ok) throw new Error('RSS fetch failed');
+          const data = await res.json();
+          if (!data.items || data.items.length === 0) return '';
+
+          return data.items.slice(0, 3).map((item, idx) => {
+            const cleanDesc = (item.description || '').replace(/<[^>]*>?/gm, '').substring(0, 80);
+            return `${idx + 1}. 《${item.title}》：${cleanDesc}...`;
+          }).join('\n');
+        } catch (err) {
+          return '';
+        }
+      }
+
+      // SSE 流式連線與智慧淨化發動機
       async function executeSmartForge() {
         if (state.isForging) return;
         state.isForging = true;
         state.rawGeneratedText = '';
+        state.cleanArticleText = '';
 
+        iOSBridge.haptic('medium');
         els.submitBtn.disabled = true;
         els.canvasModeTag.innerHTML = '⚡ 智能觀點配對與神經熔爐提煉中...';
         els.canvasModeTag.style.color = 'var(--flame-amber)';
         els.inkStream.setAttribute('contenteditable', 'false');
-        els.inkStream.innerHTML = '<div style="color:var(--flame-amber);">[熔爐連線中] 正在即時配對觀點並串流文字...<span class="stream-cursor"></span></div>';
+        els.inkStream.innerHTML = '<div style="color:var(--flame-amber);">[熔爐連線中] 正在綜合立場光譜、在地潮語與競品 DNA 進行鍛造...<span class="stream-cursor"></span></div>';
 
         const rawTopic = els.topicInput.value.trim();
         const platform = els.platformSelect.value;
         const audience = els.audienceInput.value.trim();
-        const activeTone = document.querySelector('input[name="tone"]:checked')?.value || 'authoritative';
+        const stanceVal = els.stanceSpectrumSlider.value;
 
         let rssContext = '';
         let mockRssNews = [
@@ -1769,10 +1981,20 @@
         }
 
         const strategicDirective = analyzeThesisAngle(rawTopic, mockRssNews);
-        const toneMoatDirective = buildMoatPromptDirective();
-        const goldDirective = buildGoldStandardDirective();
+        const stanceDirective = buildStanceDirective();
+        const slangDirective = buildSlangEngineDirective();
+        // 傳入 stanceVal 進行衝突仲裁
+        const competitorDirective = buildCompetitorDnaDirective(stanceVal);
 
-        const fullPrompt = `${rawTopic}\n\n${strategicDirective}\n\n${rssContext}${toneMoatDirective}${goldDirective}\n\n平台約束：${platform}，受眾：${audience}`;
+        const fullPrompt = `${rawTopic}
+
+${stanceDirective}
+${slangDirective}
+${strategicDirective}
+${competitorDirective}
+${rssContext}
+
+【發行約束】：平台為 ${platform}，目標受眾為 ${audience}。`;
 
         try {
           const response = await fetch(`${API_BASE}/api/forge`, {
@@ -1782,7 +2004,7 @@
               topic: fullPrompt,
               platform,
               audience,
-              tone: activeTone,
+              tone: 'authoritative',
               temperature: 0.7
             })
           });
@@ -1794,12 +2016,11 @@
           if (contentType.includes('application/json')) {
             const resData = await response.json();
             const raw = resData?.data?.outputs?.post_content || resData?.outputs?.post_content || resData?.post_content || '';
-            state.rawGeneratedText = typeof raw === 'object' ? (raw.body || raw.content || JSON.stringify(raw)) : raw;
+            state.rawGeneratedText = typeof raw === 'object' ? JSON.stringify(raw) : raw;
           } else {
             const reader = response.body.getReader();
             const decoder = new TextDecoder('utf-8');
             let buffer = '';
-            els.inkStream.innerHTML = '';
 
             while (true) {
               const { done, value } = await reader.read();
@@ -1820,14 +2041,11 @@
                   try {
                     const eventObj = JSON.parse(dataStr);
                     if (eventObj.event === 'text_chunk') {
-                      const chunk = eventObj.data?.text || '';
-                      state.rawGeneratedText += chunk;
-                      els.inkStream.innerHTML = `<div class="rendered-article">${parseSafeMarkdown(escapeHtml(state.rawGeneratedText))}<span class="stream-cursor"></span></div>`;
-                      els.inkStream.scrollTop = els.inkStream.scrollHeight;
+                      state.rawGeneratedText += (eventObj.data?.text || '');
                     } else if (eventObj.event === 'workflow_finished') {
                       const finalContent = eventObj.data?.outputs?.post_content;
                       if (finalContent) {
-                        state.rawGeneratedText = typeof finalContent === 'object' ? (finalContent.body || JSON.stringify(finalContent)) : finalContent;
+                        state.rawGeneratedText = typeof finalContent === 'object' ? JSON.stringify(finalContent) : finalContent;
                       }
                     }
                   } catch (e) {
@@ -1838,20 +2056,23 @@
             }
           }
 
-          els.inkStream.innerHTML = `<div class="rendered-article">${parseSafeMarkdown(escapeHtml(state.rawGeneratedText))}</div>`;
-          state.lastGeneratedBaseline = els.inkStream.innerText;
+          const cleanResult = sanitizeArticleContent(state.rawGeneratedText);
+          state.cleanArticleText = cleanResult.fullCleanText;
+          state.lastGeneratedBaseline = cleanResult.fullCleanText;
 
+          els.inkStream.innerHTML = cleanResult.html;
           els.inkStream.setAttribute('contenteditable', 'true');
-          els.canvasModeTag.innerHTML = '✏️ 畫布就緒 (支援手動改寫 Diff 學習)';
+          els.canvasModeTag.innerHTML = '✏️ 畫布就緒 (已自動淨化怪字與格式)';
           els.canvasModeTag.style.color = 'var(--text-primary)';
           els.openPublisherBtn.disabled = false;
           els.copyBtn.disabled = false;
-          els.metricsDisplay.textContent = `約 ${state.rawGeneratedText.length} 字`;
+          els.metricsDisplay.textContent = `約 ${state.cleanArticleText.length} 字`;
 
-          // 觸發市民共鳴度、對抗推演與 Omnichannel 分眾文本
-          updateCivicResonance(state.rawGeneratedText);
-          simulateAdversarialRedTeam(state.rawGeneratedText);
-          buildOmnichannelVariants(state.rawGeneratedText);
+          updateCivicResonance(state.cleanArticleText);
+          simulateAdversarialRedTeam(state.cleanArticleText);
+          buildOmnichannelVariants(state.cleanArticleText);
+
+          iOSBridge.haptic('success');
 
         } catch (err) {
           els.inkStream.innerHTML = `<div style="color:var(--danger);">[警報] ${err.message}。若為本地測試，請確認後端 Gateway 是否正常運作。</div>`;
@@ -1868,10 +2089,30 @@
           executeSmartForge();
         });
 
+        els.stanceSpectrumSlider.addEventListener('input', (e) => {
+          const val = e.target.value;
+          const labels = {
+            '-2': '💥 極端顛覆 (向制度叫板)',
+            '-1': '⚔️ 銳意進取 (破局反擊)',
+            '0': '⚖️ 務實穩健 (中立客觀)',
+            '1': '🤝 抱團取暖 (和諧互諒)',
+            '2': '🛡️ 保本避險 (安全求全)'
+          };
+          els.stanceLabelText.textContent = labels[val];
+        });
+
+        els.extractCompetitorDnaBtn.addEventListener('click', extractCompetitorDna);
+        els.clearDnaBtn.addEventListener('click', () => {
+          state.competitorDna = null;
+          localStorage.removeItem(DNA_KEY);
+          els.competitorPostInput.value = '';
+          renderCompetitorDnaUI();
+        });
+
         els.inkStream.addEventListener('input', () => {
           const current = els.inkStream.innerText || '';
+          state.cleanArticleText = current;
           els.metricsDisplay.textContent = `約 ${current.length} 字`;
-          trackCanvasDiff();
           updateCivicResonance(current);
           buildOmnichannelVariants(current);
         });
@@ -1880,31 +2121,57 @@
           els.rssInputGroup.style.display = els.contextBridgeSelect.value === 'rss' ? 'block' : 'none';
         });
 
-        els.openPublisherBtn.addEventListener('click', () => els.publisherModal.classList.add('open'));
+        els.openPublisherBtn.addEventListener('click', () => {
+          iOSBridge.haptic('light');
+          els.publisherModal.classList.add('open');
+        });
         els.closePublisherBtn.addEventListener('click', () => els.publisherModal.classList.remove('open'));
-        els.downloadZipBtn.addEventListener('click', packAndDownloadZip);
 
+        // 私隱條款彈窗控制
+        els.openPrivacyBtn.addEventListener('click', () => {
+          iOSBridge.haptic('light');
+          els.privacyModal.classList.add('open');
+        });
+        els.closePrivacyBtn.addEventListener('click', () => els.privacyModal.classList.remove('open'));
+
+        els.downloadZipBtn.addEventListener('click', packAndDownloadZip);
         els.injectRebuttalBtn.addEventListener('click', injectPreemptiveRebuttal);
         els.toggleHeatmapBtn.addEventListener('click', renderDropoffHeatmap);
+        els.toggleArgStrengthBtn.addEventListener('click', renderArgumentStrengthHeatmap);
+        els.injectHardDataBtn.addEventListener('click', injectHardDataFramework);
         els.autoFormatRetentionBtn.addEventListener('click', autoFormatForRetention);
-        els.logPerformanceBtn.addEventListener('click', logPostMortemPerformance);
+        els.neutralizeKeywordsBtn.addEventListener('click', neutralizeSensitiveText);
         els.dispatchWebhookBtn.addEventListener('click', dispatchToWebhook);
+
+        // 原生相簿選圖橋接
+        els.nativePhotoBtn.addEventListener('click', () => {
+          const handled = iOSBridge.post('openPhotoPicker', { target: 'cardBackground' });
+          if (!handled) {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = (e) => {
+              const file = e.target.files[0];
+              if (file) {
+                const reader = new FileReader();
+                reader.onload = (re) => FlameForge.setCardBg(re.target.result);
+                reader.readAsDataURL(file);
+              }
+            };
+            input.click();
+          }
+        });
 
         els.copyLinkedinBtn.addEventListener('click', () => copyInputText('omniLinkedin'));
         els.copyXBtn.addEventListener('click', () => copyInputText('omniX'));
         els.copySocialBtn.addEventListener('click', () => copyInputText('omniSocial'));
 
-        els.resetMoatBtn.addEventListener('click', () => {
-          if (confirm('確定清空已學習的個人寫作習慣護城河？')) {
-            state.userToneMoat = { diffs: [], cantoneseCount: 0, shortSentences: 0 };
-            localStorage.removeItem(MOAT_KEY);
-            renderToneMoatUI();
-          }
-        });
-
+        // 一鍵複製純淨全文
         els.copyBtn.addEventListener('click', async () => {
-          await navigator.clipboard.writeText(els.inkStream.innerText);
-          els.copyBtn.textContent = '✅ 已複製';
+          iOSBridge.haptic('light');
+          const textToCopy = (state.cleanArticleText || els.inkStream.innerText || '').trim();
+          await navigator.clipboard.writeText(textToCopy);
+          els.copyBtn.textContent = '✅ 已複製純淨全文';
           setTimeout(() => els.copyBtn.textContent = '📋 複製全文', 1500);
         });
 
@@ -1917,13 +2184,21 @@
       }
 
       function copyInputText(id) {
+        iOSBridge.haptic('light');
         const el = document.getElementById(id);
         el.select();
         navigator.clipboard.writeText(el.value);
         alert('✅ 已複製該管道專屬文案！');
       }
 
-      return { init };
+      return { 
+        init,
+        setCardBg: (base64Img) => {
+          els.socialCardSnapshot.style.backgroundImage = `url(${base64Img})`;
+          els.carouselSnapshot.style.backgroundImage = `url(${base64Img})`;
+          alert('🖼️ 已成功套用手機相簿相片作為圖卡背景！');
+        }
+      };
     })();
 
     document.addEventListener('DOMContentLoaded', FlameForge.init);
